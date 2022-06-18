@@ -1,0 +1,6 @@
+.btn-table .btn-primary,
+.btn-table .btn-success,
+.btn-table .btn-danger {
+    font-size: 14px !important;
+    padding: 2px 10px !important;
+}

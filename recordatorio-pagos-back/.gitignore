@@ -1,0 +1,15 @@
+/.mvn/
+/.settings/
+/target/
+.classpath
+.project
+.settings
+.idea
+/build/classes
+/build/libs/dependency-jars
+/build/reports
+/build/resources
+/build/test-results
+/build/tmp
+/build/
+/build/libs

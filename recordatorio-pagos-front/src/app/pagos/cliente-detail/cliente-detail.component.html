@@ -1,0 +1,36 @@
+<div class="container">
+    <br />
+    <mat-card>
+        <mat-card-title>Cliente</mat-card-title>
+        <br />
+        <mat-card-actions>
+            <form class="form-horizontal" #clienteForm="ngForm" (ngSubmit)="save()">
+                <div class="mb-3 row">
+                    <label for="inputRuc" class="col-sm-2 col-form-label">Ruc</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" [(ngModel)]="cliente.ruc" #inputRuc="ngModel"
+                            id="inputRuc" name="inputRuc" required>
+                        <div *ngIf="inputRuc.invalid && (clienteForm.submitted || inputRuc.dirty || inputRuc.touched)"
+                            class="alert alert-danger">
+                            <div>Ruc es requerido</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="inputNombre" class="col-sm-2 col-form-label">Nombre</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" [(ngModel)]="cliente.nombre" #inputNombre="ngModel"
+                            id="inputNombre" name="inputNombre" required>
+                        <div *ngIf="inputNombre.invalid && (clienteForm.submitted || inputNombre.dirty || inputNombre.touched)"
+                            class="alert alert-danger">
+                            <div>Nombre es requerido</div>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-primary" type="submit"> Guardar</button>&nbsp;&nbsp;
+                <a href="/clientes" class="btn btn-secondary" type="button"> Atras </a>
+            </form>
+            <br />
+        </mat-card-actions>
+    </mat-card>
+</div>

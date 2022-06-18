@@ -1,0 +1,33 @@
+<div class="container">
+    <br />
+    <mat-card>
+        <mat-card-title>Clientes</mat-card-title>
+        <mat-card-actions>
+            <a href="/clientes/editar/0" class="btn btn-primary text-right" type="button"> Crear Cliente </a>
+            <br />
+            <br />
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Ruc</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let cliente of clientes;">
+                        <th scope="row">{{ cliente.ruc }}</th>
+                        <td>{{ cliente.nombre }} </td>
+                        <td class="btn-table">
+                            <button class="btn btn-primary" type="button" (click)="editar(cliente.idCliente)"> Editar
+                            </button>&nbsp;
+                            <button class="btn btn-danger" type="button" (click)="confirmarEliminar(cliente)"> Eliminar
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <br />
+        </mat-card-actions>
+    </mat-card>
+</div>

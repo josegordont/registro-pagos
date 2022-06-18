@@ -1,0 +1,42 @@
+<div class="container">
+    <br />
+    <mat-card>
+        <mat-card-title>Facturas</mat-card-title>
+        <mat-card-actions>
+            <a href="/facturas/editar/0" class="btn btn-primary text-right" type="button"> Crear Factura </a>
+            <br />
+            <br />
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Cliente</th>
+                        <th scope="col">Proyecto</th>
+                        <th scope="col">Tipo Factura</th>
+                        <th scope="col">Número Factura</th>
+                        <th scope="col">Monto</th>
+                        <th scope="col">Fecha Inicio</th>
+                        <th scope="col">Fecha Fin</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let factura of facturas;">
+                        <th scope="row">{{ factura.nombreCliente }}</th>
+                        <td>{{ factura.nombreProyecto }} </td>
+                        <td>{{ factura.tipo }}</td>
+                        <td>{{ factura.numeroFactura }}</td>
+                        <td>{{ factura.monto }}</td>
+                        <td>{{ factura.fechaPago | date:'dd/MMMM/yyyy' }}</td>
+                        <td>{{ factura.fechaPago | date:'dd/MMMM/yyyy' }}</td>
+                        <td class="btn-table">
+                            <button class="btn btn-primary" type="button" (click)="editar(factura.idFactura)"> Editar </button>&nbsp;
+                            <button class="btn btn-success" type="button" (click)="cerrar(factura)"> Cerrar </button>&nbsp;
+                            <button class="btn btn-danger" type="button" (click)="confirmarEliminar(factura)"> Eliminar </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <br />
+        </mat-card-actions>
+    </mat-card>
+</div>

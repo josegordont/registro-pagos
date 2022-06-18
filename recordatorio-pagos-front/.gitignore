@@ -1,0 +1,14 @@
+# compiled output
+/dist
+.idea
+package-lock.json
+# dependencies
+/node_modules
+
+# test
+/coverage
+*.DS_Store
+
+# cover
+/src/assets/images/home
+.angular/
