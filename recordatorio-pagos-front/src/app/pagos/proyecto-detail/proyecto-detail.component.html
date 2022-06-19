@@ -1,3 +1,5 @@
+<app-navigation></app-navigation>
+
 <div class="container">
     <br />
     <mat-card>
@@ -22,7 +24,7 @@
                     <label for="inputNombre" class="col-sm-2 col-form-label">Nombre</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" [(ngModel)]="proyecto.nombre" #inputNombre="ngModel"
-                            id="inputNombre" name="inputNombre" required>
+                            id="inputNombre" name="inputNombre" placeholder="Nombre proyecto" required>
                         <div *ngIf="inputNombre.invalid && (proyectoForm.submitted || inputNombre.dirty || inputNombre.touched)"
                             class="alert alert-danger">
                             <div>Nombre es requerido</div>
@@ -33,7 +35,8 @@
                     <label for="inputDescripcion" class="col-sm-2 col-form-label">Descripción</label>
                     <div class="col-sm-10">
                         <textarea type="text" class="form-control" [(ngModel)]="proyecto.descripcion"
-                            #inputDescripcion="ngModel" id="inputDescripcion" name="inputDescripcion" required>
+                            placeholder="Descripción del proyecto" #inputDescripcion="ngModel" id="inputDescripcion"
+                            name="inputDescripcion" required>
                         </textarea>
                         <div *ngIf="inputDescripcion.invalid && (proyectoForm.submitted || inputDescripcion.dirty || inputDescripcion.touched)"
                             class="alert alert-danger">
@@ -47,7 +50,7 @@
                     </div>
                 </div>
                 <button class="btn btn-primary" type="submit"> Guardar</button>&nbsp;&nbsp;
-                <a href="/proyectos" class="btn btn-secondary" type="button"> Atras </a>
+                <a (click)="navegar('/proyectos')" class="btn btn-secondary" type="button"> Atras </a>
             </form>
             <br />
         </mat-card-actions>

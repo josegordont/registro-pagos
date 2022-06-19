@@ -1,3 +1,5 @@
+<app-navigation></app-navigation>
+
 <div class="container">
     <br />
     <mat-card>
@@ -6,13 +8,26 @@
         <mat-card-actions>
             <form class="form-horizontal" #usuarioForm="ngForm" (ngSubmit)="save()">
                 <div class="mb-3 row">
-                    <label for="inputCorreo" class="col-sm-2 col-form-label">Correo</label>
+                    <label for="inputCorreo" class="col-sm-2 col-form-label">Usuario (id)</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" [(ngModel)]="usuario.correo" #inputCorreo="ngModel"
-                            id="inputCorreo" name="inputCorreo" required>
+                            placeholder="Identificación usuario" id="inputCorreo" name="inputCorreo"
+                            onkeydown="return /[a-z,0-9,-,_]/i.test(event.key)" required>
                         <div *ngIf="inputCorreo.invalid && (usuarioForm.submitted || inputCorreo.dirty || inputCorreo.touched)"
                             class="alert alert-danger">
-                            <div>Correo es requerido</div>
+                            <div>Usuario (id) es requerido</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3 row" *ngIf="usuario.idUsuario === null || usuario.idUsuario === undefined">
+                    <label for="inputContrasena" class="col-sm-2 col-form-label">Contraseña</label>
+                    <div class="col-sm-10">
+                        <input type="password" class="form-control" [(ngModel)]="usuario.contrasena"
+                            placeholder="Contraseña" #inputContrasena="ngModel" id="inputContrasena"
+                            name="inputContrasena" required>
+                        <div *ngIf="inputContrasena.invalid && (usuarioForm.submitted || inputContrasena.dirty || inputContrasena.touched)"
+                            class="alert alert-danger">
+                            <div>Contraseña es requerido</div>
                         </div>
                     </div>
                 </div>
@@ -20,7 +35,7 @@
                     <label for="inputNombres" class="col-sm-2 col-form-label">Nombres</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" [(ngModel)]="usuario.nombres" #inputNombres="ngModel"
-                            id="inputNombres" name="inputNombres" required>
+                            id="inputNombres" name="inputNombres" placeholder="Nombres" required>
                         <div *ngIf="inputNombres.invalid && (usuarioForm.submitted || inputNombres.dirty || inputNombres.touched)"
                             class="alert alert-danger">
                             <div>Apellidos es requerido</div>
@@ -30,8 +45,8 @@
                 <div class="mb-3 row">
                     <label for="inputApellidos" class="col-sm-2 col-form-label">Apellidos</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" [(ngModel)]="usuario.nombres" #inputApellidos="ngModel"
-                            id="inputApellidos" name="inputApellidos" required>
+                        <input type="text" class="form-control" [(ngModel)]="usuario.apellidos" placeholder="Apellidos"
+                            #inputApellidos="ngModel" id="inputApellidos" name="inputApellidos" required>
                         <div *ngIf="inputApellidos.invalid && (usuarioForm.submitted || inputApellidos.dirty || inputApellidos.touched)"
                             class="alert alert-danger">
                             <div>Apellidos es requerido</div>
@@ -39,26 +54,24 @@
                     </div>
                 </div>
                 <div class="mb-3 row">
-                    <label for="inputRol" class="col-sm-2 col-form-label">Cliente</label>
+                    <label for="inputRol" class="col-sm-2 col-form-label">Rol</label>
                     <div class="col-sm-10">
                         <ng-select [items]="roles" [(ngModel)]="usuario.rol" #inputRol="ngModel" name="inputRol"
-                            placeholder="Selecciona un cliente">
+                            placeholder="Selecciona un rol">
                         </ng-select>
                         <div *ngIf="inputRol.invalid && (usuarioForm.submitted || inputRol.dirty || inputRol.touched)"
                             class="alert alert-danger">
-                            <div>Cliente es requerido</div>
+                            <div>Rol es requerido</div>
                         </div>
                     </div>
                 </div>
-
-                <div class="mb-3 row">
+                <div *ngIf="tieneError" class="mb-3 row">
                     <div class="alert alert-danger">
                         <div>{{error}}</div>
                     </div>
                 </div>
-
                 <button class="btn btn-primary" type="submit"> Guardar</button>&nbsp;&nbsp;
-                <a href="/usuarios" class="btn btn-secondary" type="button"> Atras </a>
+                <a (click)="navegar('/usuarios')" class="btn btn-secondary" type="button"> Atras </a>
             </form>
             <br />
         </mat-card-actions>

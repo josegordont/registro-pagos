@@ -65,5 +65,9 @@ export class ClienteComponent implements OnInit {
 
     });
   }
+
+  navegar(ruta: string) {
+    this.router.navigateByUrl(ruta);
+  }
 }
 

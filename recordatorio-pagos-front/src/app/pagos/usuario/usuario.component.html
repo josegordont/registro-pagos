@@ -5,13 +5,13 @@
     <mat-card>
         <mat-card-title>Usuarios</mat-card-title>
         <mat-card-actions>
-            <a href="/usuarios/editar/0" class="btn btn-primary text-right" type="button"> Crear Usuario </a>
+            <a (click)="navegar('/usuarios/editar/0')" class="btn btn-primary text-right" type="button"> Crear Usuario </a>
             <br />
             <br />
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th scope="col">Correo</th>
+                        <th scope="col">Usuario (id)</th>
                         <th scope="col">Apellidos</th>
                         <th scope="col">Nombre</th>
                         <th scope="col">Rol</th>
@@ -20,8 +20,8 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let usuario of usuarios;">
-                        <th scope="row">{{ usuario.correo }}</th>
-                        <th>{{ usuario.apellidos }}</th>
+                        <td scope="row">{{ usuario.correo }}</td>
+                        <td>{{ usuario.apellidos }}</td>
                         <td>{{ usuario.nombres }} </td>
                         <td>{{ usuario.rol }} </td>
                         <td class="btn-table">

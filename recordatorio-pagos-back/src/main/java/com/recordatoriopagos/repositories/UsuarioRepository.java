@@ -10,4 +10,6 @@ import com.recordatoriopagos.models.Usuario;
 @Repository
 public interface UsuarioRepository extends CrudRepository<Usuario, BigInteger> {
 
+	public abstract Usuario findByCorreo(String correo);
+
 }

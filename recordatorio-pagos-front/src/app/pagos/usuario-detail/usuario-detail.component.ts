@@ -16,8 +16,9 @@ import { UsuarioService } from 'src/app/service/usuario.service';
 export class UsuarioDetailComponent implements OnInit {
 
   usuario: any = new Usuario();
-  roles: string[] = ["consulta", "admin"];
+  roles: string[] = ["ingreso", "admin"];
   error: string;
+  tieneError: boolean;
 
   @ViewChild('usuarioForm') usuarioForm: FormGroup;
 
@@ -41,10 +42,12 @@ export class UsuarioDetailComponent implements OnInit {
   save() {
     if (this.usuarioForm.valid) {
       this.usuariosService.guardarUsuario(this.usuario).subscribe(data => {
+        this.tieneError = false;
         this.snackBarService.success('Usuario guardado!');
         this.router.navigateByUrl("/usuarios");
-      }, error => {
-
+      }, err => {
+        this.tieneError = true;
+        this.error = err.error;
       });
     }
   }
@@ -55,6 +58,10 @@ export class UsuarioDetailComponent implements OnInit {
     }, error => {
 
     });
+  }
+
+  navegar(ruta: string) {
+    this.router.navigateByUrl(ruta);
   }
 
 }

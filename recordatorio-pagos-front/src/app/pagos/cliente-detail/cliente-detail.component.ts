@@ -58,4 +58,8 @@ export class ClienteDetailComponent implements OnInit {
     });
   }
 
+  navegar(ruta: string) {
+    this.router.navigateByUrl(ruta);
+  }
+
 }

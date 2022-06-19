@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Usuario } from 'src/app/model/usuario';
+import { SnackBarService } from 'src/app/service/snack-bar.service';
 import { UsuarioService } from 'src/app/service/usuario.service';
 import { DialogAnimationComponent } from '../dialog-animation/dialog-animation.component';
 
@@ -17,7 +18,8 @@ export class UsuarioComponent implements OnInit {
   constructor(
     private usuariosService: UsuarioService,
     private router: Router,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private snackBarService: SnackBarService
   ) { }
 
   ngOnInit(): void {
@@ -33,12 +35,7 @@ export class UsuarioComponent implements OnInit {
   }
 
   editar(idUsuario: string) {
-    console.log('test');
     this.router.navigateByUrl(`/usuarios/editar/${idUsuario}`);
-  }
-
-  cerrar(usuario: Usuario) {
-
   }
 
   confirmarEliminar(usuario: Usuario) {
@@ -58,11 +55,19 @@ export class UsuarioComponent implements OnInit {
 
   eliminar(idUsuario: number) {
     this.usuariosService.eliminarPorId(idUsuario).subscribe(data => {
-      console.log(data);
-      this.obtenerUsuarios();
+      if (data) {
+        this.snackBarService.success('Usuario eliminado!');
+        this.obtenerUsuarios();
+      } else {
+        this.snackBarService.success('Se a producido un error en el sistema');
+      }
     }, error => {
-      console.log(error);
+
     });
+  }
+
+  navegar(ruta: string) {
+    this.router.navigateByUrl(ruta);
   }
 }
 

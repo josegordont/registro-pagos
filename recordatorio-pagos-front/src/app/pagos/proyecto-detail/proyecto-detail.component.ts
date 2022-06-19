@@ -69,4 +69,8 @@ export class ProyectoDetailComponent implements OnInit {
     });
   }
 
+  navegar(ruta: string) {
+    this.router.navigateByUrl(ruta);
+  }
+
 }

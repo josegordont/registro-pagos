@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
 import com.recordatoriopagos.models.Usuario;
@@ -26,6 +27,11 @@ public class UsuarioService {
 	}
 
 	public Usuario guardarUsuario(Usuario usuario) {
+		if (usuario.getIdUsuario() != null) {
+			usuario.setContrasena(usuarioRepository.findById(usuario.getIdUsuario()).get().getContrasena());
+		} else {
+			usuario.setContrasena(BCrypt.hashpw(usuario.getContrasena(), BCrypt.gensalt()));
+		}
 		if (usuario.getFechaCreacion() == null) {
 			usuario.setFechaCreacion(new Date());
 		} else {
@@ -44,6 +50,10 @@ public class UsuarioService {
 	}
 
 	public Boolean login(Usuario usuario) {
-		return true;
+		Usuario usuarioEncontrado = usuarioRepository.findByCorreo(usuario.getCorreo());
+		if (usuarioEncontrado == null) {
+			return false;
+		}
+		return BCrypt.checkpw(usuario.getContrasena(), usuarioEncontrado.getContrasena());
 	}
 }

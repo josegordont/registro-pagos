@@ -69,5 +69,9 @@ export class FacturasComponent implements OnInit {
 
     });
   }
+
+  navegar(ruta: string) {
+    this.router.navigateByUrl(ruta);
+  }
 }
 
