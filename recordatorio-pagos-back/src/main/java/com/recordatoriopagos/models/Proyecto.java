@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "proyecto")
@@ -21,6 +22,9 @@ public class Proyecto {
 
 	private BigInteger idCliente;
 
+	@Transient
+	private String nombreCliente;
+
 	private String nombre;
 
 	private String descripcion;
@@ -28,6 +32,16 @@ public class Proyecto {
 	private Date fechaCreacion;
 
 	private Date fechaActualizacion;
+
+	public Proyecto() {
+	}
+
+	public Proyecto(BigInteger idProyecto, String nombreCliente, String nombre, String descripcion) {
+		this.idProyecto = idProyecto;
+		this.nombreCliente = nombreCliente;
+		this.nombre = nombre;
+		this.descripcion = descripcion;
+	}
 
 	public BigInteger getIdProyecto() {
 		return idProyecto;
@@ -43,6 +57,14 @@ public class Proyecto {
 
 	public void setIdCliente(BigInteger idCliente) {
 		this.idCliente = idCliente;
+	}
+
+	public String getNombreCliente() {
+		return nombreCliente;
+	}
+
+	public void setNombreCliente(String nombreCliente) {
+		this.nombreCliente = nombreCliente;
 	}
 
 	public String getNombre() {

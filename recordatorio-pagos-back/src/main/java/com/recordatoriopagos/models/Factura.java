@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "factura")
@@ -37,6 +38,33 @@ public class Factura {
 	private Date fechaCreacion;
 
 	private Date fechaActualizacion;
+
+	@Transient
+	private BigInteger idCliente;
+
+	@Transient
+	private String nombreCliente;
+
+	@Transient
+	private String nombreProyecto;
+
+	public Factura() {
+
+	}
+
+	public Factura(BigInteger idCliente, String nombreCliente, BigInteger idProyecto, String nombreProyecto,
+			BigInteger idFactura, String tipo, String numeroFactura, BigDecimal monto, Date fechaPago, Date fechaFin) {
+		this.idCliente = idCliente;
+		this.nombreCliente = nombreCliente;
+		this.idProyecto = idProyecto;
+		this.nombreProyecto = nombreProyecto;
+		this.idFactura = idFactura;
+		this.tipo = tipo;
+		this.numeroFactura = numeroFactura;
+		this.monto = monto;
+		this.fechaPago = fechaPago;
+//		this.fechaFin = fechaFin;
+	}
 
 	public BigInteger getIdFactura() {
 		return idFactura;
@@ -116,6 +144,30 @@ public class Factura {
 
 	public void setFechaActualizacion(Date fechaActualizacion) {
 		this.fechaActualizacion = fechaActualizacion;
+	}
+
+	public BigInteger getIdCliente() {
+		return idCliente;
+	}
+
+	public void setIdCliente(BigInteger idCliente) {
+		this.idCliente = idCliente;
+	}
+
+	public String getNombreCliente() {
+		return nombreCliente;
+	}
+
+	public void setNombreCliente(String nombreCliente) {
+		this.nombreCliente = nombreCliente;
+	}
+
+	public String getNombreProyecto() {
+		return nombreProyecto;
+	}
+
+	public void setNombreProyecto(String nombreProyecto) {
+		this.nombreProyecto = nombreProyecto;
 	}
 
 }

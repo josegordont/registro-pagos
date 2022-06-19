@@ -61,7 +61,7 @@ export class UsuarioComponent implements OnInit {
       console.log(data);
       this.obtenerUsuarios();
     }, error => {
-
+      console.log(error);
     });
   }
 }

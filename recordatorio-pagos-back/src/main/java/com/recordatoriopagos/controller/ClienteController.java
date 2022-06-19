@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,8 +36,20 @@ public class ClienteController {
 	}
 
 	@PostMapping()
-	public Cliente guardarCliente(@RequestBody Cliente cliente) {
-		return this.clienteService.guardarCliente(cliente);
+	public ResponseEntity<?> guardarCliente(@RequestBody Cliente cliente) {
+		try {
+			clienteService.guardarCliente(cliente);
+			return new ResponseEntity<Cliente>(HttpStatus.OK);
+		} catch (Exception e) {
+			String error = "Se produjo un error en el sistema";
+			if (e.getMessage().contains("could not execute statement; SQL [n/a]; constraint [cliente.ruc];")) {
+				error = "Ya existe un cliente registrado con ese ruc";
+			}
+			if (e.getMessage().contains("could not execute statement; SQL [n/a]; constraint [cliente.nombre];")) {
+				error = "Ya existe un cliente registrado con ese nombre";
+			}
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
+		}
 	}
 
 	@DeleteMapping(path = "/{id}")

@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Cliente } from 'src/app/model/cliente';
 import { ClienteService } from 'src/app/service/cliente.service';
+import { SnackBarService } from 'src/app/service/snack-bar.service';
 import { DialogAnimationComponent } from '../dialog-animation/dialog-animation.component';
 
 @Component({
@@ -17,7 +18,8 @@ export class ClienteComponent implements OnInit {
   constructor(
     private clientesService: ClienteService,
     private router: Router,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private snackBarService: SnackBarService
   ) { }
 
   ngOnInit(): void {
@@ -33,19 +35,14 @@ export class ClienteComponent implements OnInit {
   }
 
   editar(idCliente: string) {
-    console.log('test');
     this.router.navigateByUrl(`/clientes/editar/${idCliente}`);
-  }
-
-  cerrar(cliente: Cliente) {
-
   }
 
   confirmarEliminar(cliente: Cliente) {
     const dialogRef = this.dialog.open(DialogAnimationComponent, {
       width: '250px',
       data: {
-        'body': `¿Estás seguro que deseas eliminar la cliente <b> ${cliente.nombre}</b>?`
+        'body': `¿Estás seguro que deseas eliminar el cliente <b> ${cliente.nombre}</b>?`
       }
     });
 
@@ -58,8 +55,12 @@ export class ClienteComponent implements OnInit {
 
   eliminar(idCliente: number) {
     this.clientesService.eliminarPorId(idCliente).subscribe(data => {
-      console.log(data);
-      this.obtenerClientes();
+      if (data) {
+        this.snackBarService.success('Cliente eliminado!');
+        this.obtenerClientes();
+      } else {
+        this.snackBarService.success('No se puede borrar el cliente porque tiene atado facturas');
+      }
     }, error => {
 
     });

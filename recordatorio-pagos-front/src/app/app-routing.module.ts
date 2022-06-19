@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './authentication/login/login.component';
+import { NavigationComponent } from './layout/navigation/navigation.component';
 import { ClienteDetailComponent } from './pagos/cliente-detail/cliente-detail.component';
 import { ClienteComponent } from './pagos/cliente/cliente.component';
 import { FacturasDetailComponent } from './pagos/facturas-detail/facturas-detail.component';
@@ -11,9 +12,20 @@ import { UsuarioDetailComponent } from './pagos/usuario-detail/usuario-detail.co
 import { UsuarioComponent } from './pagos/usuario/usuario.component';
 
 const routes: Routes = [
-  { path: '', component: LoginComponent },
+  {
+    path: '',
+    children: [
+      {
+        path: '', redirectTo: '/login', pathMatch: 'full'
+      },
+      {
+        path: 'login',
+        component: LoginComponent
+      }
+    ]
+  },
   { path: 'facturas', component: FacturasComponent },
-  { path: 'facturas/editar/:id', component: FacturasDetailComponent },
+  { path: 'facturas/editar/:id/:idCliente', component: FacturasDetailComponent },
   { path: 'clientes', component: ClienteComponent },
   { path: 'clientes/editar/:id', component: ClienteDetailComponent },
   { path: 'proyectos', component: ProyectoComponent },

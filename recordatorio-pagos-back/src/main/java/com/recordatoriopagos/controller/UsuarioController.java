@@ -42,4 +42,10 @@ public class UsuarioController {
 	public Boolean eliminarPorId(@PathVariable("id") BigInteger id) {
 		return this.usuarioService.eliminarUsuario(id);
 	}
+
+	@PostMapping(path = "/login")
+	public Boolean login(@RequestBody Usuario usuario) {
+		return this.usuarioService.login(usuario);
+	}
+
 }

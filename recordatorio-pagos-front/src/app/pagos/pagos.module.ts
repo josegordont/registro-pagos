@@ -7,9 +7,11 @@ import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgxMaskModule } from 'ngx-mask';
 import { CustomDirectiveModule } from '../directives/custom-format.directive';
+import { NavigationComponent } from '../layout/navigation/navigation.component';
 import { ClienteDetailComponent } from './cliente-detail/cliente-detail.component';
 import { ClienteComponent } from './cliente/cliente.component';
 import { DialogAnimationComponent } from './dialog-animation/dialog-animation.component';
@@ -30,7 +32,8 @@ import { UsuarioComponent } from './usuario/usuario.component';
     ProyectoComponent,
     ProyectoDetailComponent,
     UsuarioComponent,
-    UsuarioDetailComponent
+    UsuarioDetailComponent,
+    NavigationComponent
   ],
   imports: [
     CommonModule,
@@ -44,7 +47,8 @@ import { UsuarioComponent } from './usuario/usuario.component';
     MatButtonModule,
     MatFormFieldModule,
     MatRippleModule,
-    MatDialogModule
+    MatDialogModule,
+    MatSnackBarModule
   ]
 })
 export class PagosModule { }

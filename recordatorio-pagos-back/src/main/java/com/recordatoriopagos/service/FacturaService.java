@@ -18,7 +18,7 @@ public class FacturaService {
 	FacturaRepository facturaRepository;
 
 	public List<Factura> obtenerFacturas() {
-		return (List<Factura>) facturaRepository.findAll();
+		return facturaRepository.obtenerFacturas();
 	}
 
 	public Optional<Factura> obtenerPorId(BigInteger id) {

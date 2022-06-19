@@ -5,6 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { DEFAULT_LANGUAGE } from 'src/app/directives/constants';
 import { Cliente } from 'src/app/model/cliente';
 import { ClienteService } from 'src/app/service/cliente.service';
+import { SnackBarService } from 'src/app/service/snack-bar.service';
 
 @Component({
   selector: 'app-cliente-detail',
@@ -14,6 +15,8 @@ import { ClienteService } from 'src/app/service/cliente.service';
 export class ClienteDetailComponent implements OnInit {
 
   cliente: any = new Cliente();
+  error: string;
+  tieneError: boolean = false;
 
   @ViewChild('clienteForm') clienteForm: FormGroup;
 
@@ -21,7 +24,8 @@ export class ClienteDetailComponent implements OnInit {
     private translate: TranslateService,
     private clientesService: ClienteService,
     private activeteRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private snackBarService: SnackBarService
   ) {
     this.translate.setDefaultLang(DEFAULT_LANGUAGE);
   }
@@ -36,10 +40,12 @@ export class ClienteDetailComponent implements OnInit {
   save() {
     if (this.clienteForm.valid) {
       this.clientesService.guardarCliente(this.cliente).subscribe(data => {
-        console.log(data);
+        this.tieneError = false;
+        this.snackBarService.success('Cliente guardado!');
         this.router.navigateByUrl("/clientes");
-      }, error => {
-
+      }, err => {
+        this.tieneError = true;
+        this.error = err.error;
       });
     }
   }

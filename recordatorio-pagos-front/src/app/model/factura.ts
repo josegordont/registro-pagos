@@ -1,4 +1,5 @@
 export class Factura {
+    public idCliente?: number;
     public nombreCliente?: string;
     public nombreProyecto?: string;
     public idFactura: number;

@@ -5,6 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { DEFAULT_LANGUAGE } from 'src/app/directives/constants';
 import { Cliente } from 'src/app/model/cliente';
 import { Usuario } from 'src/app/model/usuario';
+import { SnackBarService } from 'src/app/service/snack-bar.service';
 import { UsuarioService } from 'src/app/service/usuario.service';
 
 @Component({
@@ -16,6 +17,7 @@ export class UsuarioDetailComponent implements OnInit {
 
   usuario: any = new Usuario();
   roles: string[] = ["consulta", "admin"];
+  error: string;
 
   @ViewChild('usuarioForm') usuarioForm: FormGroup;
 
@@ -23,7 +25,8 @@ export class UsuarioDetailComponent implements OnInit {
     private translate: TranslateService,
     private usuariosService: UsuarioService,
     private activeteRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private snackBarService: SnackBarService
   ) {
     this.translate.setDefaultLang(DEFAULT_LANGUAGE);
   }
@@ -38,7 +41,7 @@ export class UsuarioDetailComponent implements OnInit {
   save() {
     if (this.usuarioForm.valid) {
       this.usuariosService.guardarUsuario(this.usuario).subscribe(data => {
-        console.log(data);
+        this.snackBarService.success('Usuario guardado!');
         this.router.navigateByUrl("/usuarios");
       }, error => {
 

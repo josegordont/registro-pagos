@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Proyecto } from 'src/app/model/proyecto';
 import { ProyectoService } from 'src/app/service/proyecto.service';
+import { SnackBarService } from 'src/app/service/snack-bar.service';
 import { DialogAnimationComponent } from '../dialog-animation/dialog-animation.component';
 
 @Component({
@@ -17,7 +18,8 @@ export class ProyectoComponent implements OnInit {
   constructor(
     private proyectosService: ProyectoService,
     private router: Router,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private snackBarService: SnackBarService
   ) { }
 
   ngOnInit(): void {
@@ -33,7 +35,6 @@ export class ProyectoComponent implements OnInit {
   }
 
   editar(idProyecto: string) {
-    console.log('test');
     this.router.navigateByUrl(`/proyectos/editar/${idProyecto}`);
   }
 
@@ -58,8 +59,12 @@ export class ProyectoComponent implements OnInit {
 
   eliminar(idProyecto: number) {
     this.proyectosService.eliminarPorId(idProyecto).subscribe(data => {
-      console.log(data);
-      this.obtenerProyectos();
+      if (data) {
+        this.snackBarService.success('Proyecto eliminado!');
+        this.obtenerProyectos();
+      } else {
+        this.snackBarService.success('No se puede borrar el proyecto porque tiene atado facturas');
+      }
     }, error => {
 
     });

@@ -27,6 +27,11 @@
                         </div>
                     </div>
                 </div>
+                <div *ngIf="tieneError" class="mb-3 row">
+                    <div class="alert alert-danger">
+                        <div>{{error}}</div>
+                    </div>
+                </div>
                 <button class="btn btn-primary" type="submit"> Guardar</button>&nbsp;&nbsp;
                 <a href="/clientes" class="btn btn-secondary" type="button"> Atras </a>
             </form>

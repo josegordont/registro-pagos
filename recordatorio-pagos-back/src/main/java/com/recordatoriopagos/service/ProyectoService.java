@@ -18,7 +18,11 @@ public class ProyectoService {
 	ProyectoRepository proyectoRepository;
 
 	public List<Proyecto> obtenerProyectos() {
-		return (List<Proyecto>) proyectoRepository.findAll();
+		return proyectoRepository.obtenerProyectos();
+	}
+
+	public List<Proyecto> obtenerProyectosPorCliente(BigInteger idCliente) {
+		return proyectoRepository.findByIdCliente(idCliente);
 	}
 
 	public Optional<Proyecto> obtenerPorId(BigInteger id) {
@@ -36,6 +40,9 @@ public class ProyectoService {
 
 	public boolean eliminarUsuario(BigInteger idProyecto) {
 		try {
+			if (proyectoRepository.obtenerFacturasPorProyecto(idProyecto).size() > 0) {
+				return false;
+			}
 			proyectoRepository.deleteById(idProyecto);
 			return true;
 		} catch (Exception err) {

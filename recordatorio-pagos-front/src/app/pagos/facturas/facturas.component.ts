@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Factura } from 'src/app/model/factura';
 import { FacturaService } from 'src/app/service/factura.service';
+import { SnackBarService } from 'src/app/service/snack-bar.service';
 import { DialogAnimationComponent } from '../dialog-animation/dialog-animation.component';
 
 @Component({
@@ -17,7 +18,8 @@ export class FacturasComponent implements OnInit {
   constructor(
     private facturasService: FacturaService,
     private router: Router,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private snackBarService: SnackBarService
   ) { }
 
   ngOnInit(): void {
@@ -32,9 +34,8 @@ export class FacturasComponent implements OnInit {
     });
   }
 
-  editar(idFactura: string) {
-    console.log('test');
-    this.router.navigateByUrl(`/facturas/editar/${idFactura}`);
+  editar(idFactura: string, idCliente: string) {
+    this.router.navigateByUrl(`/facturas/editar/${idFactura}/${idCliente}`);
   }
 
   cerrar(factura: Factura) {
@@ -58,10 +59,14 @@ export class FacturasComponent implements OnInit {
 
   eliminar(idFactura: number) {
     this.facturasService.eliminarPorId(idFactura).subscribe(data => {
-      console.log(data);
-      this.obtenerFacturas();
+      if (data) {
+        this.snackBarService.success('Factura eliminada!');
+        this.obtenerFacturas();
+      } else {
+        this.snackBarService.success('Se produjo un error en el sistema');
+      }
     }, error => {
-      
+
     });
   }
 }

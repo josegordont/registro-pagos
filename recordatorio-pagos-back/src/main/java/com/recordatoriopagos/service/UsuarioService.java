@@ -42,4 +42,8 @@ public class UsuarioService {
 			return false;
 		}
 	}
+
+	public Boolean login(Usuario usuario) {
+		return true;
+	}
 }

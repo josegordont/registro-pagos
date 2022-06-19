@@ -45,4 +45,12 @@ export class UsuarioService {
       headers: header
     });
   }
+
+  login(usuario: Usuario) {
+    let header = new HttpHeaders().
+      set('Content-Type', 'application/json');
+    return this.httpClient.post(`${this.path}/login`, usuario, {
+      headers: header
+    });
+  }
 }
