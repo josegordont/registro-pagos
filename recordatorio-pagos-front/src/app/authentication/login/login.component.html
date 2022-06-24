@@ -2,7 +2,8 @@
     <div class="row justify-content-center align-items-center minh-100">
         <form style="background: #FFFFFF;" #loginForm="ngForm" (ngSubmit)="login()">
             <br><br>
-            <img class="mb-4" src="/assets/images/logo.jpg" alt="" width="160" height="100" style="margin-left: 75px;">
+            <img class="mb-4" src="/assets/images/logo-grupo-plaza.svg" alt="" width="250" height="120"
+                style="margin-left: 20px;">
             <h1 class="h3 mb-3 fw-normal" style="margin-left: 45px;">Recordatorio Pagos</h1>
 
             <div class="form-floating">
@@ -20,8 +21,10 @@
                     <div>{{error}}</div>
                 </div>
             </div>
-
-            <button class="w-100 btn btn-lg btn-primary" type="submit">Ingresar</button>
+            <button [disabled]="loading" class="w-100 btn btn-lg btn-primary" type="submit">
+                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                Ingresar
+            </button>
             <br><br>
             <br><br>
         </form>

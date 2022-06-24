@@ -8,7 +8,8 @@ export class Factura {
     public numeroFactura: string;
     public monto: number;
     public estado: string;
-    public fechaPago: Date;
+    public fechaInicio: Date;
+    public fechaFin: Date;
     public numNotificaciones: number;
 
     constructor() {

@@ -1,13 +1,17 @@
-
-
 <app-navigation></app-navigation>
 
 <div class="container">
     <br />
-    <mat-card>
+    <mat-card class="shadow">
         <mat-card-title>Facturas</mat-card-title>
-        <mat-card-actions>
-            <a (click)="navegar('/facturas/editar/0/0')" class="btn btn-primary text-right" type="button"> Crear Factura </a>
+        <mat-card-subtitle>
+            Ingresa uno o más filtros para buscar una factura o da clic en el botón 'Crear' para registrar una nueva
+            factura.
+        </mat-card-subtitle>
+        <mat-card-actions class="overflow-auto">
+            <a (click)="navegar('/facturas/editar/0/0')" class="btn btn-primary text-right" type="button">
+                Crear
+            </a>
             <br />
             <br />
             <table class="table table-striped">
@@ -15,7 +19,6 @@
                     <tr>
                         <th scope="col">Cliente</th>
                         <th scope="col">Proyecto</th>
-                        <th scope="col">Tipo Factura</th>
                         <th scope="col">Número Factura</th>
                         <th scope="col">Monto</th>
                         <th scope="col">Fecha Inicio</th>
@@ -25,17 +28,19 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let factura of facturas;">
-                        <th scope="row">{{ factura.nombreCliente }}</th>
+                        <td scope="row">{{ factura.nombreCliente }}</td>
                         <td>{{ factura.nombreProyecto }} </td>
-                        <td>{{ factura.tipo }}</td>
-                        <td>{{ factura.numeroFactura }}</td>
+                        <th>{{ factura.numeroFactura }}</th>
                         <td>{{ factura.monto }}</td>
-                        <td>{{ factura.fechaPago | date:'dd/MMMM/yyyy' }}</td>
-                        <td>{{ factura.fechaPago | date:'dd/MMMM/yyyy' }}</td>
+                        <td>{{ factura.fechaInicio | date:'dd/MMM/yyyy' }}</td>
+                        <td>{{ factura.fechaFin | date:'dd/MMM/yyyy' }}</td>
                         <td class="btn-table">
-                            <button class="btn btn-primary" type="button" (click)="editar(factura.idFactura, factura.idCliente)"> Editar </button>&nbsp;
-                            <button class="btn btn-success" type="button" (click)="cerrar(factura)"> Cerrar </button>&nbsp;
-                            <button class="btn btn-danger" type="button" (click)="confirmarEliminar(factura)"> Eliminar </button>
+                            <button class="btn btn-primary" type="button"
+                                (click)="editar(factura.idFactura, factura.idCliente)"> Editar </button>&nbsp;
+                            <button class="btn btn-success" type="button" (click)="cerrar(factura)"> Cerrar
+                            </button>&nbsp;
+                            <button class="btn btn-danger" type="button" (click)="confirmarEliminar(factura)"> Eliminar
+                            </button>
                         </td>
                     </tr>
                 </tbody>

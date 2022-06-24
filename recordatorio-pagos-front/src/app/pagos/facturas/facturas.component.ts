@@ -14,6 +14,7 @@ import { DialogAnimationComponent } from '../dialog-animation/dialog-animation.c
 export class FacturasComponent implements OnInit {
 
   facturas: any;
+  page: number = 1;
 
   constructor(
     private facturasService: FacturaService,

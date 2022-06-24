@@ -2,11 +2,16 @@
 
 <div class="container">
     <br />
-    <mat-card>
-        <mat-card-title>Factura</mat-card-title>
+    <mat-card class="shadow">
+        <mat-card-title *ngIf="factura.idFactura === undefined">Crear Factura</mat-card-title>
+        <mat-card-title *ngIf="factura.idFactura !== undefined">Editar Factura</mat-card-title>
+        <mat-card-subtitle class="subtitle-detal">
+            Ingresa todos los campos requeridos y presiona guardar para registrar la factura ó presiona atras para
+            regresar a la pantalla anterior.
+        </mat-card-subtitle>
         <br />
         <mat-card-actions>
-            <form class="form-horizontal" #facturaForm="ngForm" (ngSubmit)="save()">
+            <form class="form-horizontal" #facturaForm="ngForm" (ngSubmit)="guardar()">
                 <div class="mb-3 row">
                     <label for="inputCliente" class="col-sm-2 col-form-label">Cliente</label>
                     <div class="col-sm-10">
@@ -34,22 +39,11 @@
                     </div>
                 </div>
                 <div class="mb-3 row">
-                    <label for="inputTipo" class="col-sm-2 col-form-label">Tipo Factura</label>
-                    <div class="col-sm-10">
-                        <ng-select [items]="tipos" [(ngModel)]="factura.tipo" #inputTipo="ngModel"
-                            placeholder="Selecciona un tipo" name="inputTipo" required>
-                        </ng-select>
-                        <div *ngIf="inputTipo.invalid && (facturaForm.submitted || inputTipo.dirty || inputTipo.touched)"
-                            class="alert alert-danger">
-                            <div>Tipo es requerido</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="mb-3 row">
                     <label for="inputNumeroFactura" class="col-sm-2 col-form-label">Número Factura</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" [(ngModel)]="factura.numeroFactura" placeholder="Número Factura"
-                            #inputNumeroFactura="ngModel" id="inputNumeroFactura" name="inputNumeroFactura" required>
+                        <input type="text" class="form-control" [(ngModel)]="factura.numeroFactura"
+                            placeholder="Número Factura" #inputNumeroFactura="ngModel" id="inputNumeroFactura"
+                            name="inputNumeroFactura" required>
                         <div *ngIf="inputNumeroFactura.invalid && (facturaForm.submitted || inputNumeroFactura.dirty || inputNumeroFactura.touched)"
                             class="alert alert-danger">
                             <div>Número Factura es requerido</div>
@@ -71,19 +65,42 @@
                     </div>
                 </div>
                 <div class="mb-3 row">
-                    <label for="inputFechaPago" class="col-sm-2 col-form-label">Fecha Pago</label>
+                    <label for="inputFechaInicio" class="col-sm-2 col-form-label">Fecha Inicio</label>
                     <div class="col-md-5">
                         <div class="input-group mb-2">
                             <span class="input-group-text">dd/mm/aaaa</span>
-                            <input matInput [matDatepicker]="fechaPago" [(ngModel)]="factura.fechaPago"
-                                #inputFechaPago="ngModel" name="inputFechaPago" class="form-control" name="fechaPago"
-                                placeholder="Selecciona una fecha" required>
-                            <mat-datepicker-toggle matSuffiX [for]="fechaPago"></mat-datepicker-toggle>
-                            <mat-datepicker #fechaPago></mat-datepicker>
+                            <input matInput [matDatepicker]="fechaInicio" [(ngModel)]="factura.fechaInicio"
+                                #inputFechaInicio="ngModel" name="inputFechaInicio" class="form-control"
+                                name="fechaInicio" placeholder="Selecciona una fecha" required>
+                            <mat-datepicker-toggle matSuffiX [for]="fechaInicio"></mat-datepicker-toggle>
+                            <mat-datepicker #fechaInicio></mat-datepicker>
                         </div>
-                        <div *ngIf="inputFechaPago.invalid && (facturaForm.submitted || inputFechaPago.dirty || inputFechaPago.touched)"
+                        <div *ngIf="inputFechaInicio.invalid && (facturaForm.submitted || inputFechaInicio.dirty || inputFechaInicio.touched)"
                             class="alert alert-danger">
-                            <div>Fecha pago es requerido</div>
+                            <div>Fecha inicio es requerido</div>
+                        </div>
+                        <div *ngIf="factura.fechaInicio < fechaActual" class="alert alert-warning">
+                            <div>Fecha ingresada menor a la actual</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="inputFechaFin" class="col-sm-2 col-form-label">Fecha Fin</label>
+                    <div class="col-md-5">
+                        <div class="input-group mb-2">
+                            <span class="input-group-text">dd/mm/aaaa</span>
+                            <input matInput [matDatepicker]="fechaFin" [(ngModel)]="factura.fechaFin"
+                                #inputFechaFin="ngModel" name="inputFechaFin" class="form-control" name="fechaFin"
+                                placeholder="Selecciona una fecha" (dateChange)="cambioFechaFin( $event)" required>
+                            <mat-datepicker-toggle matSuffiX [for]="fechaFin"></mat-datepicker-toggle>
+                            <mat-datepicker #fechaFin></mat-datepicker>
+                        </div>
+                        <div *ngIf="inputFechaFin.invalid && (facturaForm.submitted || inputFechaFin.dirty || inputFechaFin.touched)"
+                            class="alert alert-danger">
+                            <div>Fecha fin es requerido</div>
+                        </div>
+                        <div *ngIf="!fechaFinIgualSugerida" class="alert alert-warning">
+                            <div>Fecha ingresada diferente a la sugerida ({{fechaSugerida | date:'dd/MM/yyyy'}}).</div>
                         </div>
                     </div>
                 </div>

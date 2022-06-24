@@ -24,9 +24,13 @@ import { SnackBarService } from 'src/app/service/snack-bar.service';
 export class FacturasDetailComponent implements OnInit {
 
   factura: any = new Factura();
+  idFactura: any;
   clientes: any = [];
   proyectos: any = [];
-  tipos: string[] = ["Garantias", "Mensual"];
+  fechaActual: Date = new Date();
+  diasVencimiento: number;
+  fechaSugerida: Date = new Date();
+  fechaFinIgualSugerida: boolean;
 
   @ViewChild('facturaForm') facturaForm: FormGroup;
 
@@ -40,13 +44,20 @@ export class FacturasDetailComponent implements OnInit {
     private snackBarService: SnackBarService
   ) {
     this.translate.setDefaultLang(DEFAULT_LANGUAGE);
+    this.fechaActual.setHours(0);
+    this.fechaActual.setMinutes(0);
+    this.fechaActual.setSeconds(0);
+    this.fechaActual.setMilliseconds(0);
+    this.factura.fechaInicio = this.fechaActual;
   }
 
   ngOnInit(): void {
     this.obtenerClientes();
-    let id = this.activeteRoute.snapshot.paramMap.get('id');
-    if (id !== undefined && id !== '0') {
-      this.obtenerFacturaPorId(id);
+    this.idFactura = this.activeteRoute.snapshot.paramMap.get('id');
+    if (this.idFactura !== undefined && this.idFactura !== '0') {
+      this.obtenerFacturaPorId(this.idFactura);
+    } else {
+      this.obtenerParametros();
     }
   }
 
@@ -62,7 +73,7 @@ export class FacturasDetailComponent implements OnInit {
     if (cliente !== undefined) {
       this.proyectosService.obtenerProyectosPorCliente(cliente.idCliente).subscribe(data => {
         this.proyectos = data;
-      }, error => {
+      }, err => {
 
       });
     } else {
@@ -70,14 +81,14 @@ export class FacturasDetailComponent implements OnInit {
     }
   }
 
-  save() {
+  guardar() {
     if (this.facturaForm.valid) {
-        this.facturasService.guardarFactura(this.factura).subscribe(data => {
-          this.snackBarService.success('Factura guardada!');
-          this.router.navigateByUrl("/facturas");
-        }, error => {
+      this.facturasService.guardarFactura(this.factura).subscribe(data => {
+        this.snackBarService.success('Factura guardada!');
+        this.router.navigateByUrl("/facturas");
+      }, error => {
 
-        });
+      });
     }
   }
 
@@ -87,13 +98,37 @@ export class FacturasDetailComponent implements OnInit {
       let idCliente = Number(this.activeteRoute.snapshot.paramMap.get('idCliente'));
       this.factura.idCliente = idCliente;
       this.obtenerProyectosPorCliente({ idCliente: idCliente, ruc: '', nombre: '' });
-    }, error => {
+      this.obtenerParametros();
+    }, err => {
 
     });
   }
 
   navegar(ruta: string) {
     this.router.navigateByUrl(ruta);
+  }
+
+  obtenerParametros() {
+    this.diasVencimiento = 20;
+    this.fechaSugerida.setDate(new Date(this.factura.fechaInicio).getDate() + this.diasVencimiento);
+    if (this.idFactura === '0') {
+      this.factura.fechaFin = this.fechaSugerida;
+      this.fechaFinIgualSugerida = true;
+    } else {
+      this.fechasIguales(new Date(this.factura.fechaFin), this.fechaSugerida);
+    }
+  }
+
+  cambioFechaFin(event: any) {
+    if (event.value) {
+      this.fechaFinIgualSugerida = this.fechasIguales(event.value._d, this.fechaSugerida);
+    }
+  }
+
+  fechasIguales(fecha1: Date, fecha2: Date) {
+    return fecha1.getFullYear() === fecha2.getFullYear() &&
+      fecha1.getMonth() === fecha2.getMonth() &&
+      fecha1.getDay() === fecha2.getDay();
   }
 
 }

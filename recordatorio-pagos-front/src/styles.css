@@ -11,3 +11,23 @@ body {
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+
+/* Botones */
+.btn-primary {
+    background-color: rgb(4, 12, 100, 0.8) !important;
+}
+
+.btn-primary:hover {
+    background-color: rgb(4, 12, 100, 1) !important;
+}
+
+/* Títulos */
+.mat-card-title {
+    color: rgb(244, 148, 4, 1);
+}
+
+/* Color texto */
+.subtitle-detal {
+    color: rgb(4, 12, 100, 0.8);
+    margin: 0 !important;
+}
