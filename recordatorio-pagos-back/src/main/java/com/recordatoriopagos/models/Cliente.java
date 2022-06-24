@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "cliente")
 public class Cliente {
@@ -23,8 +25,10 @@ public class Cliente {
 
 	private String nombre;
 
+	@JsonIgnore
 	private Date fechaCreacion;
 
+	@JsonIgnore
 	private Date fechaActualizacion;
 
 	public BigInteger getIdCliente() {

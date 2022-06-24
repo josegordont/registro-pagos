@@ -55,7 +55,7 @@ public class UsuarioController {
 	}
 
 	@PostMapping(path = "/login")
-	public Boolean login(@RequestBody Usuario usuario) {
+	public Usuario login(@RequestBody Usuario usuario) {
 		return this.usuarioService.login(usuario);
 	}
 

@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "factura")
 public class Factura {
@@ -23,20 +25,22 @@ public class Factura {
 
 	private BigInteger idProyecto;
 
-	private String tipo;
-
 	private String numeroFactura;
 
 	private BigDecimal monto;
 
 	private String estado;
 
-	private Date fechaPago;
+	private Date fechaInicio;
+
+	private Date fechaFin;
 
 	private Integer numNotificaciones;
 
+	@JsonIgnore
 	private Date fechaCreacion;
 
+	@JsonIgnore
 	private Date fechaActualizacion;
 
 	@Transient
@@ -53,17 +57,16 @@ public class Factura {
 	}
 
 	public Factura(BigInteger idCliente, String nombreCliente, BigInteger idProyecto, String nombreProyecto,
-			BigInteger idFactura, String tipo, String numeroFactura, BigDecimal monto, Date fechaPago, Date fechaFin) {
+			BigInteger idFactura, String numeroFactura, BigDecimal monto, Date fechaInicio, Date fechaFin) {
 		this.idCliente = idCliente;
 		this.nombreCliente = nombreCliente;
 		this.idProyecto = idProyecto;
 		this.nombreProyecto = nombreProyecto;
 		this.idFactura = idFactura;
-		this.tipo = tipo;
 		this.numeroFactura = numeroFactura;
 		this.monto = monto;
-		this.fechaPago = fechaPago;
-//		this.fechaFin = fechaFin;
+		this.fechaInicio = fechaInicio;
+		this.fechaFin = fechaFin;
 	}
 
 	public BigInteger getIdFactura() {
@@ -80,14 +83,6 @@ public class Factura {
 
 	public void setIdProyecto(BigInteger idProyecto) {
 		this.idProyecto = idProyecto;
-	}
-
-	public String getTipo() {
-		return tipo;
-	}
-
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
 	}
 
 	public String getNumeroFactura() {
@@ -114,12 +109,20 @@ public class Factura {
 		this.estado = estado;
 	}
 
-	public Date getFechaPago() {
-		return fechaPago;
+	public Date getFechaInicio() {
+		return fechaInicio;
 	}
 
-	public void setFechaPago(Date fechaPago) {
-		this.fechaPago = fechaPago;
+	public void setFechaInicio(Date fechaInicio) {
+		this.fechaInicio = fechaInicio;
+	}
+
+	public Date getFechaFin() {
+		return fechaFin;
+	}
+
+	public void setFechaFin(Date fechaFin) {
+		this.fechaFin = fechaFin;
 	}
 
 	public Integer getNumNotificaciones() {

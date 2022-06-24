@@ -49,11 +49,14 @@ public class UsuarioService {
 		}
 	}
 
-	public Boolean login(Usuario usuario) {
+	public Usuario login(Usuario usuario) {
 		Usuario usuarioEncontrado = usuarioRepository.findByCorreo(usuario.getCorreo());
 		if (usuarioEncontrado == null) {
-			return false;
+			return null;
 		}
-		return BCrypt.checkpw(usuario.getContrasena(), usuarioEncontrado.getContrasena());
+		if (BCrypt.checkpw(usuario.getContrasena(), usuarioEncontrado.getContrasena())) {
+			return usuarioEncontrado;
+		}
+		return null;
 	}
 }

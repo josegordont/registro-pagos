@@ -10,6 +10,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 @Entity
 @Table(name = "usuario")
 public class Usuario {
@@ -21,6 +24,7 @@ public class Usuario {
 
 	private String correo;
 
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private String contrasena;
 
 	private String nombres;
@@ -29,8 +33,10 @@ public class Usuario {
 
 	private String rol;
 
+	@JsonIgnore
 	private Date fechaCreacion;
 
+	@JsonIgnore
 	private Date fechaActualizacion;
 
 	public BigInteger getIdUsuario() {

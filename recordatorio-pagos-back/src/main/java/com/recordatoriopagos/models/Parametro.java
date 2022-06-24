@@ -9,25 +9,21 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name = "proyecto")
-public class Proyecto {
+@Table(name = "parametro")
+public class Parametro {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "idProyecto")
-	private BigInteger idProyecto;
+	@Column(name = "idParametro")
+	private BigInteger idParametro;
 
-	private BigInteger idCliente;
+	private String clave;
 
-	@Transient
-	private String nombreCliente;
-
-	private String nombre;
+	private String valor;
 
 	private String descripcion;
 
@@ -37,46 +33,28 @@ public class Proyecto {
 	@JsonIgnore
 	private Date fechaActualizacion;
 
-	public Proyecto() {
+	public BigInteger getIdParametro() {
+		return idParametro;
 	}
 
-	public Proyecto(BigInteger idProyecto, String nombreCliente, String nombre, String descripcion) {
-		this.idProyecto = idProyecto;
-		this.nombreCliente = nombreCliente;
-		this.nombre = nombre;
-		this.descripcion = descripcion;
+	public void setIdParametro(BigInteger idParametro) {
+		this.idParametro = idParametro;
 	}
 
-	public BigInteger getIdProyecto() {
-		return idProyecto;
+	public String getClave() {
+		return clave;
 	}
 
-	public void setIdProyecto(BigInteger idProyecto) {
-		this.idProyecto = idProyecto;
+	public void setClave(String clave) {
+		this.clave = clave;
 	}
 
-	public BigInteger getIdCliente() {
-		return idCliente;
+	public String getValor() {
+		return valor;
 	}
 
-	public void setIdCliente(BigInteger idCliente) {
-		this.idCliente = idCliente;
-	}
-
-	public String getNombreCliente() {
-		return nombreCliente;
-	}
-
-	public void setNombreCliente(String nombreCliente) {
-		this.nombreCliente = nombreCliente;
-	}
-
-	public String getNombre() {
-		return nombre;
-	}
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+	public void setValor(String valor) {
+		this.valor = valor;
 	}
 
 	public String getDescripcion() {
