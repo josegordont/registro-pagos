@@ -14,6 +14,8 @@ import { DialogAnimationComponent } from '../dialog-animation/dialog-animation.c
 export class ClienteComponent implements OnInit {
 
   clientes: any;
+  clientesFiltro: any;
+  cliente: Cliente = new Cliente();
 
   constructor(
     private clientesService: ClienteService,
@@ -28,6 +30,7 @@ export class ClienteComponent implements OnInit {
 
   obtenerClientes() {
     this.clientesService.obtenerClientes().subscribe(data => {
+      this.clientesFiltro = data;
       this.clientes = data;
     }, error => {
 
@@ -68,6 +71,20 @@ export class ClienteComponent implements OnInit {
 
   navegar(ruta: string) {
     this.router.navigateByUrl(ruta);
+  }
+
+  filtrarLista(event: any) {
+    this.clientesFiltro = this.clientes;
+    if (this.cliente.nombre !== undefined && this.cliente.nombre !== null) {
+      this.clientesFiltro = this.clientesFiltro.filter((cliente: any) =>
+        cliente.nombre.toUpperCase().includes(this.cliente.nombre.toUpperCase())
+      );
+    }
+    if (this.cliente.ruc !== undefined && this.cliente.ruc !== null) {
+      this.clientesFiltro = this.clientesFiltro.filter((cliente: any) =>
+        cliente.ruc.toUpperCase().includes(this.cliente.ruc.toUpperCase())
+      );
+    }
   }
 }
 

@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Factura } from '../model/factura';
+import { Garantia } from '../model/garantia';
 
 @Injectable({
   providedIn: 'root'
@@ -45,4 +46,21 @@ export class FacturaService {
       headers: header
     });
   }
+
+  cerrarFacturasPorProyecto(garantia: Garantia) {
+    let header = new HttpHeaders().
+      set('Content-Type', 'application/json');
+    return this.httpClient.post(`${this.path}/cerrarFacturasPorProyecto`, garantia, {
+      headers: header
+    });
+  }
+
+  abrirFacturasPorProyecto(idProyecto: number) {
+    let header = new HttpHeaders().
+      set('Content-Type', 'application/json');
+    return this.httpClient.put(`${this.path}/abrirFacturasPorProyecto`, idProyecto, {
+      headers: header
+    });
+  }
+
 }

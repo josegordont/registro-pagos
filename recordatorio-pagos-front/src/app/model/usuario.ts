@@ -5,4 +5,5 @@ export class Usuario {
     public nombres: string;
     public apellidos: string;
     public rol: string;
+    public cambiarContrasena: boolean;
 }

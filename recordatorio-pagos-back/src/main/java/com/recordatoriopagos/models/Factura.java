@@ -37,7 +37,6 @@ public class Factura {
 
 	private Integer numNotificaciones;
 
-	@JsonIgnore
 	private Date fechaCreacion;
 
 	@JsonIgnore

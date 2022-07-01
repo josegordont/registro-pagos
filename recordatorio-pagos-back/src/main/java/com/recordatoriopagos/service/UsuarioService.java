@@ -5,12 +5,18 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
+import com.recordatoriopagos.dto.CambioContrasenaDto;
 import com.recordatoriopagos.models.Usuario;
 import com.recordatoriopagos.repositories.UsuarioRepository;
+import com.recordatoriopagos.util.Contrasena;
+import com.recordatoriopagos.util.EnvioMail;
 
 @Service
 public class UsuarioService {
@@ -26,18 +32,30 @@ public class UsuarioService {
 		return usuarioRepository.findById(id);
 	}
 
-	public Usuario guardarUsuario(Usuario usuario) {
+	public void guardarUsuario(Usuario usuario) throws AddressException, MessagingException {
 		if (usuario.getIdUsuario() != null) {
-			usuario.setContrasena(usuarioRepository.findById(usuario.getIdUsuario()).get().getContrasena());
-		} else {
-			usuario.setContrasena(BCrypt.hashpw(usuario.getContrasena(), BCrypt.gensalt()));
-		}
-		if (usuario.getFechaCreacion() == null) {
-			usuario.setFechaCreacion(new Date());
-		} else {
 			usuario.setFechaActualizacion(new Date());
+			usuario.setContrasena(usuarioRepository.findById(usuario.getIdUsuario()).get().getContrasena());
+			usuarioRepository.save(usuario);
+		} else {
+			StringBuilder bodyMail = new StringBuilder();
+			bodyMail.append("<p>Estimado <b>{{nombres}}</b><br><br>");
+			bodyMail.append(
+					"Para acceder a la aplicaci&oacute;n recordatorio de pagos por favor utiliza la siguiente contrase&ntilde;a:<br>");
+			bodyMail.append("<b>{{contrasena}}</b><br><br>");
+			bodyMail.append("Saludos,<br>Recordatorio Pagos.</p>");
+			String contrasena = Contrasena.alphaNumericString();
+			usuario.setFechaCreacion(new Date());
+			usuario.setContrasena(BCrypt.hashpw(contrasena, BCrypt.gensalt()));
+			usuario.setCambiarContrasena(Boolean.TRUE);
+			EnvioMail envioMail = new EnvioMail();
+			envioMail
+					.sendEmail(
+							"Usuario Recordatorio de Pagos", bodyMail.toString()
+									.replace("{{nombres}}", usuario.getNombres()).replace("{{contrasena}}", contrasena),
+							new String[] { usuario.getCorreo() });
+			usuarioRepository.save(usuario);
 		}
-		return usuarioRepository.save(usuario);
 	}
 
 	public boolean eliminarUsuario(BigInteger idUsuario) {
@@ -58,5 +76,19 @@ public class UsuarioService {
 			return usuarioEncontrado;
 		}
 		return null;
+	}
+
+	public String cambioContrasena(CambioContrasenaDto cambioContrasenaDto) {
+		Usuario usuario = usuarioRepository.findByCorreo(cambioContrasenaDto.getCorreo());
+		if (usuario == null) {
+			return "El usuario ingresado no existe";
+		}
+		if (!BCrypt.checkpw(cambioContrasenaDto.getContrasena(), usuario.getContrasena())) {
+			return "La contraseña actual es incorrecta";
+		}
+		usuario.setContrasena(BCrypt.hashpw(cambioContrasenaDto.getNuevaContrasena(), BCrypt.gensalt()));
+		usuario.setCambiarContrasena(Boolean.FALSE);
+		usuarioRepository.save(usuario);
+		return "OK";
 	}
 }

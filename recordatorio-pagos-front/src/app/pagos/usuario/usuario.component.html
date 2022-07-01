@@ -4,14 +4,45 @@
     <br />
     <mat-card>
         <mat-card-title>Usuarios</mat-card-title>
+        <mat-card-subtitle>
+            Ingresa uno o más filtros para buscar un usuario o da clic en el botón 'Crear' para registrar un nuevo
+            usuario.
+        </mat-card-subtitle>
         <mat-card-actions>
-            <a (click)="navegar('/usuarios/editar/0')" class="btn btn-primary text-right" type="button"> Crear Usuario </a>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <label class="control-label text-right col-md-3 col-form-label">Apellidos y Nombres:
+                        </label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" [(ngModel)]="usuario.nombres"
+                                placeholder="Apellidos y Nombres" #nombres="ngModel" id="nombres" name="nombres"
+                                (ngModelChange)="filtrarLista($event)" (paste)="filtrarLista($event)">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <label class="control-label text-right col-md-3 col-form-label">Correo:
+                        </label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" [(ngModel)]="usuario.correo" placeholder="Correo"
+                                #correo="ngModel" id="correo" name="correo" (ngModelChange)="filtrarLista($event)"
+                                (paste)="filtrarLista($event)">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </mat-card-actions>
+        <mat-card-actions>
+            <a (click)="navegar('/usuarios/editar/0')" class="btn btn-primary text-right" type="button"> Crear Usuario
+            </a>
             <br />
             <br />
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th scope="col">Usuario (id)</th>
+                        <th scope="col">Correo</th>
                         <th scope="col">Apellidos</th>
                         <th scope="col">Nombre</th>
                         <th scope="col">Rol</th>
@@ -19,7 +50,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let usuario of usuarios;">
+                    <tr *ngFor="let usuario of usuariosFiltro;">
                         <td scope="row">{{ usuario.correo }}</td>
                         <td>{{ usuario.apellidos }}</td>
                         <td>{{ usuario.nombres }} </td>

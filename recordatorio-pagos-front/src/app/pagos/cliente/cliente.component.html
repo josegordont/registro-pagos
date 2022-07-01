@@ -4,8 +4,39 @@
     <br />
     <mat-card>
         <mat-card-title>Clientes</mat-card-title>
+        <mat-card-subtitle>
+            Ingresa uno o más filtros para buscar un cliente o da clic en el botón 'Crear' para registrar un nuevo
+            Cliente.
+        </mat-card-subtitle>
         <mat-card-actions>
-            <a (click)="navegar('/clientes/editar/0')" class="btn btn-primary text-right" type="button"> Crear Cliente </a>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <label class="control-label text-right col-md-3 col-form-label">Ruc:
+                        </label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" [(ngModel)]="cliente.ruc" placeholder="Ruc"
+                                #inputRuc="ngModel" id="inputRuc" name="inputRuc" (ngModelChange)="filtrarLista($event)"
+                                (paste)="filtrarLista($event)">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <label class="control-label text-right col-md-3 col-form-label">Cliente:
+                        </label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" [(ngModel)]="cliente.nombre" placeholder="Cliente"
+                                #inputCliente="ngModel" id="inputCliente" name="inputCliente"
+                                (ngModelChange)="filtrarLista($event)" (paste)="filtrarLista($event)">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </mat-card-actions>
+        <mat-card-actions>
+            <a (click)="navegar('/clientes/editar/0')" class="btn btn-primary text-right" type="button"> Crear Cliente
+            </a>
             <br />
             <br />
             <table class="table table-striped">
@@ -17,8 +48,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let cliente of clientes;">
-                        <th scope="row">{{ cliente.ruc }}</th>
+                    <tr *ngFor="let cliente of clientesFiltro;">
+                        <td>{{ cliente.ruc }}</td>
                         <td>{{ cliente.nombre }} </td>
                         <td class="btn-table">
                             <button class="btn btn-primary" type="button" (click)="editar(cliente.idCliente)"> Editar

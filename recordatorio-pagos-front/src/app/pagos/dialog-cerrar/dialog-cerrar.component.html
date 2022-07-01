@@ -1,0 +1,33 @@
+<div mat-dialog-content>
+    <div class="col-md-12">
+        <span [innerHtml]="data.body"></span>
+    </div>
+    <div class="col-md-12">
+        <label for="inputFechaFin" class="col-form-label">Fecha devolución garantía:</label>
+        <div class="input-group mb-2">
+            <span class="input-group-text">dd/mm/aaaa</span>
+            <input matInput [matDatepicker]="fechaFin" [(ngModel)]="garantia.fechaFin" #inputFechaFin="ngModel"
+                name="inputFechaFin" class="form-control" name="fechaFin" placeholder="Selecciona una fecha"
+                (dateChange)="compararFechas()" required>
+            <mat-datepicker-toggle matSuffiX [for]="fechaFin"></mat-datepicker-toggle>
+            <mat-datepicker #fechaFin></mat-datepicker>
+        </div>
+        <div *ngIf="errorFechas < 0" class="alert alert-warning">
+            <div>Fecha de devolución antes de fecha sugerida ({{fechaSugerida | date:'dd/MM/yyyy'}}).</div>
+        </div>
+        <div *ngIf="errorFechas > 0" class="alert alert-warning">
+            <div> Fecha de devolución despues de fecha sugerida ({{fechaSugerida | date:'dd/MM/yyyy'}}).</div>
+        </div>
+        <div *ngIf="inputFechaFin.invalid" class="alert alert-danger">
+            <div *ngIf="inputFechaFin.hasError('required') && !inputFechaFin.hasError('matDatepickerParse')"> Fecha de
+                devolución es requerida. </div>
+            <div *ngIf="inputFechaFin.hasError('matDatepickerParse')"> La fecha esta en formato incorrecto. </div>
+        </div>
+    </div>
+</div>
+<div mat-dialog-actions class="rounded float-end">
+    <button class="btn btn-secondary" type="button" [mat-dialog-close]="false"> No </button>&nbsp;&nbsp;&nbsp;
+    <button class="btn btn-primary" type="button" [disabled]="inputFechaFin.invalid"
+        [mat-dialog-close]="garantia.fechaFin" cdkFocusInitial> Si
+    </button>
+</div>

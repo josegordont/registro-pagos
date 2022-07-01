@@ -1,0 +1,42 @@
+<main class="form-signin">
+    <div class="row justify-content-center align-items-center minh-100">
+        <form style="background: #FFFFFF;" #cambiarContrasenaForm="ngForm" (ngSubmit)="cambiarContrasena()">
+            <br><br>
+            <img class="mb-4" src="/assets/images/logo-grupo-plaza.svg" alt="" width="250" height="120"
+                style="margin-left: 20px;">
+            <h1 class="h3 mb-3 fw-normal" style="margin-left: 25px; color: rgb(244, 148, 4, 0.8);">
+                Cambio Contraseña
+            </h1>
+
+            <div class="form-floating">
+                <input type="password" [(ngModel)]="contrasenaActualInput" #contrasenaActual="ngModel"
+                    name="contrasenaActual" class="form-control" id="inputCorreo" placeholder="Contraseña Actual"
+                    required>
+                <label for="contrasenaActual">Contraseña Actual</label>
+            </div>
+            <div class="form-floating">
+                <input type="password" [(ngModel)]="nuevaContrasenaInput" #nuevaContrasena="ngModel"
+                    name="nuevaContrasena" class="form-control" id="nuevaContrasena" placeholder="Nueva Contraseña"
+                    required>
+                <label for="nuevaContrasena">Nueva Contraseña</label>
+            </div>
+            <div class="form-floating">
+                <input type="password" [(ngModel)]="confirmacionContrasenaInput" #confirmacionContrasena="ngModel"
+                    name="confirmacionContrasena" class="form-control" id="confirmacionContrasena"
+                    placeholder="Confirmar Nueva Contraseña" required>
+                <label for="confirmacionContrasena">Confirmar Nueva Contraseña</label>
+            </div>
+            <div *ngIf="tieneError" class="form-floating">
+                <div class="alert alert-danger">
+                    <div>{{error}}</div>
+                </div>
+            </div>
+            <button [disabled]="loading" class="w-100 btn btn-lg btn-primary" type="submit">
+                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                Cambiar Contraseña
+            </button>
+            <br><br>
+            <br><br>
+        </form>
+    </div>
+</main>

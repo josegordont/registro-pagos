@@ -8,9 +8,65 @@
             Ingresa uno o más filtros para buscar una factura o da clic en el botón 'Crear' para registrar una nueva
             factura.
         </mat-card-subtitle>
+        <mat-card-actions>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <label class="control-label text-right col-md-3 col-form-label">Cliente:
+                        </label>
+                        <div class="col-md-9">
+                            <ng-select [items]="clientes" [(ngModel)]="factura.idCliente" #inputCliente="ngModel"
+                                name="inputCliente" placeholder="Selecciona un cliente" bindValue="idCliente"
+                                bindLabel="nombre" (change)="obtenerProyectosPorCliente($event)"
+                                (ngModelChange)="filtrarLista($event)" (paste)="filtrarLista($event)">
+                            </ng-select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <label class="control-label text-right col-md-3 col-form-label">Proyecto:
+                        </label>
+                        <div class="col-md-9">
+                            <ng-select [items]="proyectos" [(ngModel)]="factura.idProyecto" #inputProyecto="ngModel"
+                                bindValue="idProyecto" bindLabel="nombre" placeholder="Selecciona un proyecto"
+                                name="inputProyecto" (ngModelChange)="filtrarLista($event)"
+                                (paste)="filtrarLista($event)">
+                            </ng-select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <label class="control-label text-right col-md-3 col-form-label">Número Factura:
+                        </label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" [(ngModel)]="factura.numeroFactura"
+                                placeholder="Número Factura" #inputNumeroFactura="ngModel" id="inputNumeroFactura"
+                                name="inputNumeroFactura" (ngModelChange)="filtrarLista($event)"
+                                (paste)="filtrarLista($event)">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <label class="control-label text-right col-md-3 col-form-label">Estado:
+                        </label>
+                        <div class="col-md-9">
+                            <ng-select [items]="estados" [(ngModel)]="factura.estado" #inputEstado="ngModel"
+                                placeholder="Selecciona un estado" name="inputEstado"
+                                (ngModelChange)="filtrarLista($event)" (paste)="filtrarLista($event)">
+                            </ng-select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </mat-card-actions>
         <mat-card-actions class="overflow-auto">
-            <a (click)="navegar('/facturas/editar/0/0')" class="btn btn-primary text-right" type="button">
-                Crear
+            <a (click)="navegar('/facturas/editar/0/0')" class="btn btn-primary" type="button">
+                Crear Factura
             </a>
             <br />
             <br />
@@ -21,30 +77,50 @@
                         <th scope="col">Proyecto</th>
                         <th scope="col">Número Factura</th>
                         <th scope="col">Monto</th>
+                        <th scope="col">Estado</th>
                         <th scope="col">Fecha Inicio</th>
                         <th scope="col">Fecha Fin</th>
                         <th scope="col">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let factura of facturas;">
+                    <tr *ngFor="let factura of facturasFiltro | slice: (page-1) * pageSize : page * pageSize">
                         <td scope="row">{{ factura.nombreCliente }}</td>
                         <td>{{ factura.nombreProyecto }} </td>
                         <th>{{ factura.numeroFactura }}</th>
-                        <td>{{ factura.monto }}</td>
+                        <td class="text-end">{{ factura.monto | number:'.2-2' }}</td>
+                        <td>{{ factura.estado }}</td>
                         <td>{{ factura.fechaInicio | date:'dd/MMM/yyyy' }}</td>
                         <td>{{ factura.fechaFin | date:'dd/MMM/yyyy' }}</td>
                         <td class="btn-table">
                             <button class="btn btn-primary" type="button"
-                                (click)="editar(factura.idFactura, factura.idCliente)"> Editar </button>&nbsp;
-                            <button class="btn btn-success" type="button" (click)="cerrar(factura)"> Cerrar
+                                (click)="editar(factura.idFactura, factura.idCliente)"> Editar
+                            </button>&nbsp;
+                            <button *ngIf="factura.rankFechaFin === 1 && factura.estado === 'abierto'"
+                                class="btn btn-success" type="button" (click)="cerrarProyecto(factura)"> Cerrar
+                            </button>
+                            <button
+                                *ngIf="factura.rankFechaFin === 1 && factura.estado === 'cerrado' && rol === 'admin'"
+                                class="btn btn-success" type="button" (click)="abrirProyecto(factura)"> Abrir
                             </button>&nbsp;
                             <button class="btn btn-danger" type="button" (click)="confirmarEliminar(factura)"> Eliminar
                             </button>
                         </td>
                     </tr>
                 </tbody>
+                <tfoot>
+                    <tr>
+                        <th colspan="3" class="text-end">Total:</th>
+                        <th colspan="1" class="text-end">{{getTotal('monto') | number:'.2-2'}}</th>
+                        <th colspan="3" class="text-end"></th>
+                    </tr>
+                </tfoot>
             </table>
+            <ngb-pagination class="d-flex justify-content-end" [collectionSize]="facturasFiltro.length" [(page)]="page"
+                [boundaryLinks]="true" [pageSize]="pageSize">
+                <ng-template ngbPaginationPrevious>Atras</ng-template>
+                <ng-template ngbPaginationNext>Sig.</ng-template>
+            </ngb-pagination>
             <br />
         </mat-card-actions>
     </mat-card>

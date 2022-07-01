@@ -54,6 +54,6 @@ public class ClienteController {
 
 	@DeleteMapping(path = "/{id}")
 	public Boolean eliminarPorId(@PathVariable("id") BigInteger id) {
-		return this.clienteService.eliminarUsuario(id);
+		return this.clienteService.eliminarCliente(id);
 	}
 }

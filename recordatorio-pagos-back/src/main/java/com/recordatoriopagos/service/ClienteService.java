@@ -34,7 +34,7 @@ public class ClienteService {
 		return clienteRepository.save(cliente);
 	}
 
-	public boolean eliminarUsuario(BigInteger idCliente) {
+	public boolean eliminarCliente(BigInteger idCliente) {
 		try {
 			if (clienteRepository.obtenerFacturasPorCliente(idCliente).size() > 0) {
 				return false;

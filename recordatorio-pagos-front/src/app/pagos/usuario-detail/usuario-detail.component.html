@@ -3,31 +3,23 @@
 <div class="container">
     <br />
     <mat-card>
-        <mat-card-title>Usuario</mat-card-title>
+        <mat-card-title *ngIf="usuario.idUsuario === undefined">Crear Usuario</mat-card-title>
+        <mat-card-title *ngIf="usuario.idUsuario !== undefined">Editar Usuario</mat-card-title>
+        <mat-card-subtitle class="subtitle-detal">
+            Ingresa todos los campos requeridos y presiona guardar para registrar el usuario ó presiona atras para
+            regresar a la pantalla anterior.
+        </mat-card-subtitle>
         <br />
         <mat-card-actions>
             <form class="form-horizontal" #usuarioForm="ngForm" (ngSubmit)="save()">
                 <div class="mb-3 row">
-                    <label for="inputCorreo" class="col-sm-2 col-form-label">Usuario (id)</label>
+                    <label for="inputCorreo" class="col-sm-2 col-form-label">Correo</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" [(ngModel)]="usuario.correo" #inputCorreo="ngModel"
-                            placeholder="Identificación usuario" id="inputCorreo" name="inputCorreo"
-                            onkeydown="return /[a-z,0-9,-,_]/i.test(event.key)" required>
+                            placeholder="correo@email.com" id="inputCorreo" name="inputCorreo" required>
                         <div *ngIf="inputCorreo.invalid && (usuarioForm.submitted || inputCorreo.dirty || inputCorreo.touched)"
                             class="alert alert-danger">
-                            <div>Usuario (id) es requerido</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="mb-3 row" *ngIf="usuario.idUsuario === null || usuario.idUsuario === undefined">
-                    <label for="inputContrasena" class="col-sm-2 col-form-label">Contraseña</label>
-                    <div class="col-sm-10">
-                        <input type="password" class="form-control" [(ngModel)]="usuario.contrasena"
-                            placeholder="Contraseña" #inputContrasena="ngModel" id="inputContrasena"
-                            name="inputContrasena" required>
-                        <div *ngIf="inputContrasena.invalid && (usuarioForm.submitted || inputContrasena.dirty || inputContrasena.touched)"
-                            class="alert alert-danger">
-                            <div>Contraseña es requerido</div>
+                            <div>Correo es requerido</div>
                         </div>
                     </div>
                 </div>
@@ -70,7 +62,10 @@
                         <div>{{error}}</div>
                     </div>
                 </div>
-                <button class="btn btn-primary" type="submit"> Guardar</button>&nbsp;&nbsp;
+                <button [disabled]="loading" class="btn btn-primary" type="submit">
+                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                    Guardar
+                </button>&nbsp;&nbsp;
                 <a (click)="navegar('/usuarios')" class="btn btn-secondary" type="button"> Atras </a>
             </form>
             <br />

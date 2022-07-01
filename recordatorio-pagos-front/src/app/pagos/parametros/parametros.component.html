@@ -1,0 +1,76 @@
+<app-navigation></app-navigation>
+
+<div class="container">
+    <br />
+    <mat-card class="shadow">
+        <mat-card-title>Parámetros</mat-card-title>
+        <mat-card-subtitle class="subtitle-detal">
+            Actualiza el parámetro que requieras y presiona guardar.
+        </mat-card-subtitle>
+        <br />
+        <mat-card-actions>
+            <form class="form-horizontal" #parametroForm="ngForm" (ngSubmit)="guardar()">
+                <div class="mb-3 row">
+                    <label for="facturaMensual" class="col-sm-3 col-form-label">Días vencimiento factura mensual</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" name="facturaMensual" [(ngModel)]="facturaMensualInput"
+                            #facturaMensual="ngModel" onkeydown="return /[0-9]/i.test(event.key)" required>
+                        <div *ngIf="facturaMensual.invalid && (parametroForm.submitted || facturaMensual.dirty || facturaMensual.touched)"
+                            class="alert alert-danger">
+                            <div>Este parámetro es requerido</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="facturaAnual" class="col-sm-3 col-form-label">Días vencimiento factura anual
+                        (Garantía)</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" name="facturaAnual" [(ngModel)]="facturaAnualInput"
+                            #facturaAnual="ngModel" onkeydown="return /[0-9]/i.test(event.key)" required>
+                        <div *ngIf="facturaAnual.invalid && (parametroForm.submitted || facturaAnual.dirty || facturaAnual.touched)"
+                            class="alert alert-danger">
+                            <div>Este parámetro es requerido</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="notificacion1" class="col-sm-3 col-form-label">Días notificación 1</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" name="notificacion1" [(ngModel)]="notificacion1Input"
+                            #notificacion1="ngModel" onkeydown="return /[0-9]/i.test(event.key)" required>
+                        <div *ngIf="notificacion1.invalid && (parametroForm.submitted || notificacion1.dirty || notificacion1.touched)"
+                            class="alert alert-danger">
+                            <div>Este parámetro es requerido</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="diasNotificacion2" class="col-sm-3 col-form-label">Días notificación 2</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" name="diasNotificacion2"
+                            [(ngModel)]="notificacion2Input" #diasNotificacion2="ngModel"
+                            onkeydown="return /[0-9]/i.test(event.key)" required>
+                        <div *ngIf="diasNotificacion2.invalid && (parametroForm.submitted || diasNotificacion2.dirty || diasNotificacion2.touched)"
+                            class="alert alert-danger">
+                            <div>Este parámetro es requerido</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="correosNotificacion" class="col-sm-3 col-form-label">
+                        Correos Notificaión (separados por punto y coma)</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" name="correosNotificacion"
+                            [(ngModel)]="correosNotificacionInput" #correosNotificacion="ngModel" required>
+                        <div *ngIf="correosNotificacion.invalid && (parametroForm.submitted || correosNotificacion.dirty || correosNotificacion.touched)"
+                            class="alert alert-danger">
+                            <div>Este parámetro es requerido</div>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-primary" type="submit"> Guardar</button>&nbsp;&nbsp;
+            </form>
+            <br />
+        </mat-card-actions>
+    </mat-card>
+</div>

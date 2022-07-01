@@ -11,6 +11,7 @@ export class Factura {
     public fechaInicio: Date;
     public fechaFin: Date;
     public numNotificaciones: number;
+    public rankFechaFin:number;
 
     constructor() {
         this.estado = "abierto";

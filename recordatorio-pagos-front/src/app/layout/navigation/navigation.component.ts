@@ -27,4 +27,9 @@ export class NavigationComponent implements OnInit {
     this.router.navigateByUrl(ruta);
   }
 
+  salir() {
+    sessionStorage.removeItem(btoa('currentUser'));
+    this.router.navigateByUrl('/login');
+  }
+
 }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Proyecto } from 'src/app/model/proyecto';
+import { ClienteService } from 'src/app/service/cliente.service';
 import { ProyectoService } from 'src/app/service/proyecto.service';
 import { SnackBarService } from 'src/app/service/snack-bar.service';
 import { DialogAnimationComponent } from '../dialog-animation/dialog-animation.component';
@@ -14,20 +15,26 @@ import { DialogAnimationComponent } from '../dialog-animation/dialog-animation.c
 export class ProyectoComponent implements OnInit {
 
   proyectos: any;
+  proyectosFiltro: any;
+  proyecto: Proyecto = new Proyecto;
+  clientes: any = [];
 
   constructor(
     private proyectosService: ProyectoService,
     private router: Router,
     public dialog: MatDialog,
-    private snackBarService: SnackBarService
+    private snackBarService: SnackBarService,
+    private clienteService: ClienteService
   ) { }
 
   ngOnInit(): void {
     this.obtenerProyectos();
+    this.obtenerClientes();
   }
 
   obtenerProyectos() {
     this.proyectosService.obtenerProyectos().subscribe(data => {
+      this.proyectosFiltro = data;
       this.proyectos = data;
     }, error => {
 
@@ -73,5 +80,26 @@ export class ProyectoComponent implements OnInit {
   navegar(ruta: string) {
     this.router.navigateByUrl(ruta);
   }
+
+  obtenerClientes() {
+    this.clienteService.obtenerClientes().subscribe(data => {
+      this.clientes = data;
+    }, err => {
+
+    });
+  }
+
+  filtrarLista(event: any) {
+    this.proyectosFiltro = this.proyectos;
+    if (this.proyecto.idCliente !== undefined && this.proyecto.idCliente !== null) {
+      this.proyectosFiltro = this.proyectos.filter((proyecto: any) => proyecto.idCliente === this.proyecto.idCliente);
+    }
+    if (this.proyecto.nombre !== undefined && this.proyecto.nombre !== null) {
+      this.proyectosFiltro = this.proyectosFiltro.filter((proyecto: any) =>
+        proyecto.nombre.toUpperCase().includes(this.proyecto.nombre.toUpperCase())
+      );
+    }
+  }
+
 }
 

@@ -27,7 +27,6 @@ public class Parametro {
 
 	private String descripcion;
 
-	@JsonIgnore
 	private Date fechaCreacion;
 
 	@JsonIgnore

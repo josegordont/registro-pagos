@@ -13,7 +13,7 @@ import com.recordatoriopagos.models.Proyecto;
 @Repository
 public interface ProyectoRepository extends CrudRepository<Proyecto, BigInteger> {
 
-	@Query("SELECT new com.recordatoriopagos.models.Proyecto(p.idProyecto, c.nombre, p.nombre, p.descripcion) FROM Proyecto p LEFT JOIN Cliente c ON p.idCliente = c.idCliente")
+	@Query("SELECT new com.recordatoriopagos.models.Proyecto(p.idProyecto, c.idCliente, c.nombre, p.nombre, p.descripcion) FROM Proyecto p LEFT JOIN Cliente c ON p.idCliente = c.idCliente")
 	public abstract List<Proyecto> obtenerProyectos();
 
 	@Query(nativeQuery = true, value = "SELECT * FROM factura f WHERE idProyecto = :idProyecto")

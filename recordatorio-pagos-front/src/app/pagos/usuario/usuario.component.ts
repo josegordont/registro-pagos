@@ -14,6 +14,8 @@ import { DialogAnimationComponent } from '../dialog-animation/dialog-animation.c
 export class UsuarioComponent implements OnInit {
 
   usuarios: any;
+  usuariosFiltro: any;
+  usuario: Usuario = new Usuario();
 
   constructor(
     private usuariosService: UsuarioService,
@@ -28,6 +30,7 @@ export class UsuarioComponent implements OnInit {
 
   obtenerUsuarios() {
     this.usuariosService.obtenerUsuarios().subscribe(data => {
+      this.usuariosFiltro = data;
       this.usuarios = data;
     }, error => {
 
@@ -68,6 +71,21 @@ export class UsuarioComponent implements OnInit {
 
   navegar(ruta: string) {
     this.router.navigateByUrl(ruta);
+  }
+
+  filtrarLista(event: any) {
+    this.usuariosFiltro = this.usuarios;
+    if (this.usuario.nombres !== undefined && this.usuario.nombres !== null) {
+      this.usuariosFiltro = this.usuariosFiltro.filter((usuario: any) =>
+        usuario.nombres.toUpperCase().includes(this.usuario.nombres.toUpperCase()) ||
+        usuario.apellidos.toUpperCase().includes(this.usuario.nombres.toUpperCase())
+      );
+    }
+    if (this.usuario.correo !== undefined && this.usuario.correo !== null) {
+      this.usuariosFiltro = this.usuariosFiltro.filter((usuario: any) =>
+        usuario.correo.toUpperCase().includes(this.usuario.correo.toUpperCase())
+      );
+    }
   }
 }
 

@@ -4,8 +4,41 @@
     <br />
     <mat-card>
         <mat-card-title>Proyectos</mat-card-title>
+        <mat-card-subtitle>
+            Ingresa uno o más filtros para buscar un proyecto o da clic en el botón 'Crear' para registrar un nuevo
+            proyecto.
+        </mat-card-subtitle>
         <mat-card-actions>
-            <a (click)="navegar('/proyectos/editar/0')" class="btn btn-primary text-right" type="button"> Crear Proyecto </a>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <label class="control-label text-right col-md-3 col-form-label">Cliente:
+                        </label>
+                        <div class="col-md-9">
+                            <ng-select [items]="clientes" [(ngModel)]="proyecto.idCliente" #inputCliente="ngModel"
+                                name="inputCliente" placeholder="Selecciona un cliente" bindValue="idCliente"
+                                bindLabel="nombre" (ngModelChange)="filtrarLista($event)"
+                                (paste)="filtrarLista($event)">
+                            </ng-select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <label class="control-label text-right col-md-3 col-form-label">Proyecto:
+                        </label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" [(ngModel)]="proyecto.nombre" placeholder="Proyecto"
+                                #inputProyecto="ngModel" id="inputProyecto" name="inputProyecto"
+                                (ngModelChange)="filtrarLista($event)" (paste)="filtrarLista($event)">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </mat-card-actions>
+        <mat-card-actions>
+            <a (click)="navegar('/proyectos/editar/0')" class="btn btn-primary text-right" type="button"> Crear Proyecto
+            </a>
             <br />
             <br />
             <table class="table table-striped">
@@ -18,8 +51,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let proyecto of proyectos;">
-                        <th scope="row">{{ proyecto.nombreCliente }}</th>
+                    <tr *ngFor="let proyecto of proyectosFiltro;">
+                        <td>{{ proyecto.nombreCliente }}</td>
                         <th>{{ proyecto.nombre }}</th>
                         <td>{{ proyecto.descripcion }} </td>
                         <td class="btn-table">

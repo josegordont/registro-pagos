@@ -8,7 +8,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.recordatoriopagos.dto.FacturaDto;
 import com.recordatoriopagos.models.Factura;
+import com.recordatoriopagos.models.Garantia;
 import com.recordatoriopagos.repositories.FacturaRepository;
 
 @Service
@@ -17,7 +19,10 @@ public class FacturaService {
 	@Autowired
 	FacturaRepository facturaRepository;
 
-	public List<Factura> obtenerFacturas() {
+	@Autowired
+	GarantiaService garantiaService;
+
+	public List<FacturaDto> obtenerFacturas() {
 		return facturaRepository.obtenerFacturas();
 	}
 
@@ -34,7 +39,7 @@ public class FacturaService {
 		return facturaRepository.save(factura);
 	}
 
-	public boolean eliminarUsuario(BigInteger idFactura) {
+	public boolean eliminarFactura(BigInteger idFactura) {
 		try {
 			facturaRepository.deleteById(idFactura);
 			return true;
@@ -42,4 +47,17 @@ public class FacturaService {
 			return false;
 		}
 	}
+
+	public void cerrarFacturasPorProyecto(Garantia garantia) {
+		facturaRepository.cerrarFacturasPorProyecto(garantia.getIdProyecto());
+		garantiaService.eliminarGarantiaPorProyecto(garantia.getIdProyecto());
+		garantia.setEstado("abierto");
+		garantiaService.guardarGarantia(garantia);
+	}
+
+	public void abrirFacturasPorProyecto(BigInteger idProyecto) {
+		facturaRepository.abrirFacturasPorProyecto(idProyecto);
+		garantiaService.eliminarGarantiaPorProyecto(idProyecto);
+	}
+
 }

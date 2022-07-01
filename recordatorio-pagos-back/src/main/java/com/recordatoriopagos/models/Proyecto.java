@@ -31,7 +31,6 @@ public class Proyecto {
 
 	private String descripcion;
 
-	@JsonIgnore
 	private Date fechaCreacion;
 
 	@JsonIgnore
@@ -40,11 +39,13 @@ public class Proyecto {
 	public Proyecto() {
 	}
 
-	public Proyecto(BigInteger idProyecto, String nombreCliente, String nombre, String descripcion) {
+	public Proyecto(BigInteger idProyecto, BigInteger idCliente, String nombreCliente, String nombre,
+			String descripcion) {
 		this.idProyecto = idProyecto;
 		this.nombreCliente = nombreCliente;
 		this.nombre = nombre;
 		this.descripcion = descripcion;
+		this.idCliente = idCliente;
 	}
 
 	public BigInteger getIdProyecto() {

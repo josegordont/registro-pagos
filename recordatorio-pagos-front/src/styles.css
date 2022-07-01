@@ -1,6 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
-
 @import "~@ng-select/ng-select/themes/default.theme.css";
+@import "~bootstrap-icons/font/bootstrap-icons.css";
 
 html,
 body {
@@ -30,4 +30,36 @@ body {
 .subtitle-detal {
     color: rgb(4, 12, 100, 0.8);
     margin: 0 !important;
+}
+
+/**/
+.row {
+    margin: 5px;
+}
+
+/* paginacion */
+.page-item.active .page-link {
+    background-color: rgb(4, 12, 100, 0.8);
+    border-color: rgb(4, 12, 100, 0.8);
+    color: white;
+}
+
+.page-link {
+    color: rgb(4, 12, 100, 0.8);
+}
+
+/* Tabs */
+.mat-tab-body-content {
+    overflow: unset;
+    padding: 20px;
+}
+
+.mat-tab-label-active .mat-tab-label-content {
+    color: rgb(244, 148, 4, 1) !important;
+    font-size: 20px;
+}
+
+.mat-tab-label .mat-tab-label-content {
+    color: rgb(244, 148, 4, 0.5);
+    font-size: 20px;
 }

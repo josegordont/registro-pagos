@@ -32,9 +32,14 @@ export class LoginComponent implements OnInit {
       this.usuarioService.login(this.usuario).subscribe(data => {
         if (data !== undefined && data !== null) {
           this.tieneError = false;
-          sessionStorage.setItem(btoa('currentUser'), btoa(JSON.stringify(data)));
           this.loading = false;
-          this.router.navigateByUrl("/facturas");
+          if (data.cambiarContrasena) {
+            sessionStorage.setItem('correoUsuario', data.correo);
+            this.router.navigateByUrl("/cambiarcontrasena");
+          } else {
+            sessionStorage.setItem(btoa('currentUser'), btoa(JSON.stringify(data)));
+            this.router.navigateByUrl("/facturas");
+          }
         } else {
           this.tieneError = true;
           this.error = "Usuario o contraseña incorrectos";

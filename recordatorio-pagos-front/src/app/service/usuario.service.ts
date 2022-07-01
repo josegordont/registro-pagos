@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Usuario } from '../model/usuario';
 
@@ -46,11 +47,30 @@ export class UsuarioService {
     });
   }
 
-  login(usuario: Usuario) {
+  login(usuario: Usuario): Observable<Usuario> {
     let header = new HttpHeaders().
       set('Content-Type', 'application/json');
-    return this.httpClient.post(`${this.path}/login`, usuario, {
+    return this.httpClient.post<Usuario>(`${this.path}/login`, usuario, {
       headers: header
     });
   }
+
+  obtenerRol(): string {
+    const currentUserEncode = sessionStorage.getItem(btoa('currentUser'));
+    if (currentUserEncode) {
+      const currentUser: Usuario = JSON.parse(atob(currentUserEncode));
+      return currentUser.rol;
+    } else {
+      return '';
+    }
+  }
+
+  cambioContrasena(usuario: any): Observable<Usuario> {
+    let header = new HttpHeaders().
+      set('Content-Type', 'application/json');
+    return this.httpClient.put<Usuario>(`${this.path}/cambio-contrasena`, usuario, {
+      headers: header
+    });
+  }
+
 }

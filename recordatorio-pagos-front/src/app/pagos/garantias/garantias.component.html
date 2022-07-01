@@ -1,0 +1,135 @@
+<app-navigation></app-navigation>
+
+<div class="container">
+    <br />
+    <mat-card class="shadow">
+        <mat-card-title>Proyectos Anuales</mat-card-title>
+
+        <mat-tab-group mat-align-tabs="start">
+            <mat-tab label="A cerrarse">
+                <mat-card-actions>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="control-label text-right col-md-3 col-form-label">Cliente:
+                                </label>
+                                <div class="col-md-9">
+                                    <ng-select [items]="clientes" [(ngModel)]="garantia.idCliente"
+                                        #inputCliente="ngModel" name="inputCliente" placeholder="Selecciona un cliente"
+                                        bindValue="idCliente" bindLabel="nombre"
+                                        (change)="obtenerProyectosPorCliente($event)"
+                                        (ngModelChange)="filtrarLista($event)" (paste)="filtrarLista($event)">
+                                    </ng-select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="control-label text-right col-md-3 col-form-label">Proyecto:
+                                </label>
+                                <div class="col-md-9">
+                                    <ng-select [items]="proyectos" [(ngModel)]="garantia.idProyecto"
+                                        #inputProyecto="ngModel" bindValue="idProyecto" bindLabel="nombre"
+                                        placeholder="Selecciona un proyecto" name="inputProyecto"
+                                        (ngModelChange)="filtrarLista($event)" (paste)="filtrarLista($event)">
+                                    </ng-select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </mat-card-actions>
+                <mat-card-actions class="overflow-auto">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">Cliente</th>
+                                <th scope="col">Proyecto</th>
+                                <th scope="col">Fecha Devolución</th>
+                                <th scope="col">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let garantia of garantiasFiltro | slice: (page-1) * pageSize : page * pageSize">
+                                <td>{{ garantia.nombreCliente }}</td>
+                                <td>{{ garantia.nombreProyecto }} </td>
+                                <td>{{ garantia.fechaDevolucion | date:'dd/MMM/yyyy' }}</td>
+                                <td class="btn-table">
+                                    <button class="btn btn-success" type="button" (click)="cerrarGarantia(garantia)">
+                                        Cerrar
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <ngb-pagination class="d-flex justify-content-end" [collectionSize]="garantiasFiltro.length"
+                        [(page)]="page" [boundaryLinks]="true" [pageSize]="pageSize">
+                        <ng-template ngbPaginationPrevious>Atras</ng-template>
+                        <ng-template ngbPaginationNext>Sig.</ng-template>
+                    </ngb-pagination>
+                    <br />
+                </mat-card-actions>
+            </mat-tab>
+            <mat-tab label="Históricos">
+                <mat-card-actions>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="control-label text-right col-md-3 col-form-label">Cliente:
+                                </label>
+                                <div class="col-md-9">
+                                    <ng-select [items]="clientes" [(ngModel)]="garantiaHis.idCliente"
+                                        #inputCliente="ngModel" name="inputCliente" placeholder="Selecciona un cliente"
+                                        bindValue="idCliente" bindLabel="nombre"
+                                        (change)="obtenerProyectosPorCliente($event)"
+                                        (ngModelChange)="filtrarListaHis($event)" (paste)="filtrarLista($event)">
+                                    </ng-select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="control-label text-right col-md-3 col-form-label">Proyecto:
+                                </label>
+                                <div class="col-md-9">
+                                    <ng-select [items]="proyectos" [(ngModel)]="garantiaHis.idProyecto"
+                                        #inputProyecto="ngModel" bindValue="idProyecto" bindLabel="nombre"
+                                        placeholder="Selecciona un proyecto" name="inputProyecto"
+                                        (ngModelChange)="filtrarListaHis($event)" (paste)="filtrarLista($event)">
+                                    </ng-select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </mat-card-actions>
+                <mat-card-actions class="overflow-auto">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">Cliente</th>
+                                <th scope="col">Proyecto</th>
+                                <th scope="col">Fecha Devolución</th>
+                                <th scope="col">Fecha Cierre</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr
+                                *ngFor="let garantia of garantiasHisFiltro | slice: (page-1) * pageSize : page * pageSize">
+                                <td>{{ garantia.nombreCliente }}</td>
+                                <td>{{ garantia.nombreProyecto }} </td>
+                                <td>{{ garantia.fechaDevolucion | date:'dd/MMM/yyyy' }}</td>
+                                <td>{{ garantia.fechaCierre | date:'dd/MMM/yyyy' }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <ngb-pagination class="d-flex justify-content-end" [collectionSize]="garantiasHisFiltro.length"
+                        [(page)]="page" [boundaryLinks]="true" [pageSize]="pageSize">
+                        <ng-template ngbPaginationPrevious>Atras</ng-template>
+                        <ng-template ngbPaginationNext>Sig.</ng-template>
+                    </ngb-pagination>
+                    <br />
+                </mat-card-actions>
+            </mat-tab>
+        </mat-tab-group>
+
+    </mat-card>
+</div>

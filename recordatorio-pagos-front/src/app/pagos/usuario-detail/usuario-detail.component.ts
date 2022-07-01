@@ -3,7 +3,6 @@ import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { DEFAULT_LANGUAGE } from 'src/app/directives/constants';
-import { Cliente } from 'src/app/model/cliente';
 import { Usuario } from 'src/app/model/usuario';
 import { SnackBarService } from 'src/app/service/snack-bar.service';
 import { UsuarioService } from 'src/app/service/usuario.service';
@@ -19,6 +18,7 @@ export class UsuarioDetailComponent implements OnInit {
   roles: string[] = ["ingreso", "admin"];
   error: string;
   tieneError: boolean;
+  loading = false;
 
   @ViewChild('usuarioForm') usuarioForm: FormGroup;
 
@@ -41,13 +41,16 @@ export class UsuarioDetailComponent implements OnInit {
 
   save() {
     if (this.usuarioForm.valid) {
+      this.loading = true;
       this.usuariosService.guardarUsuario(this.usuario).subscribe(data => {
         this.tieneError = false;
         this.snackBarService.success('Usuario guardado!');
         this.router.navigateByUrl("/usuarios");
+        this.loading = false;
       }, err => {
         this.tieneError = true;
         this.error = err.error;
+        this.loading = false;
       });
     }
   }

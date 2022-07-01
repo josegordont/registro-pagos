@@ -102,6 +102,9 @@
                         <div *ngIf="!fechaFinIgualSugerida" class="alert alert-warning">
                             <div>Fecha ingresada diferente a la sugerida ({{fechaSugerida | date:'dd/MM/yyyy'}}).</div>
                         </div>
+                        <div *ngIf="inputFechaFin.hasError('matDatepickerParse')" class="alert alert-danger">
+                            <div> La fecha esta en formato incorrecto. </div>
+                        </div>
                     </div>
                 </div>
                 <button class="btn btn-primary" type="submit"> Guardar</button>&nbsp;&nbsp;

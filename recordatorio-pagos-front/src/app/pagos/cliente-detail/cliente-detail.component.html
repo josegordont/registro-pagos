@@ -3,7 +3,12 @@
 <div class="container">
     <br />
     <mat-card>
-        <mat-card-title>Cliente</mat-card-title>
+        <mat-card-title *ngIf="cliente.idCliente === undefined">Crear Cliente</mat-card-title>
+        <mat-card-title *ngIf="cliente.idCliente !== undefined">Editar Cliente</mat-card-title>
+        <mat-card-subtitle class="subtitle-detal">
+            Ingresa todos los campos requeridos y presiona guardar para registrar el cliente ó presiona atras para
+            regresar a la pantalla anterior.
+        </mat-card-subtitle>
         <br />
         <mat-card-actions>
             <form class="form-horizontal" #clienteForm="ngForm" (ngSubmit)="save()">

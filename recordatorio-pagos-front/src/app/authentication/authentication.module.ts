@@ -4,10 +4,12 @@ import { LoginComponent } from './login/login.component';
 
 import { MatCardModule } from '@angular/material/card';
 import { FormsModule } from '@angular/forms';
+import { CambiarContrasenaComponent } from './cambiar-contrasena/cambiar-contrasena.component';
 
 @NgModule({
   declarations: [
-    LoginComponent
+    LoginComponent,
+    CambiarContrasenaComponent
   ],
   imports: [
     CommonModule,

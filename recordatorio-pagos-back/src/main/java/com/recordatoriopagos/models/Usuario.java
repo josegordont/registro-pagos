@@ -33,8 +33,9 @@ public class Usuario {
 
 	private String rol;
 
-	@JsonIgnore
 	private Date fechaCreacion;
+
+	private Boolean cambiarContrasena;
 
 	@JsonIgnore
 	private Date fechaActualizacion;
@@ -101,6 +102,14 @@ public class Usuario {
 
 	public void setFechaActualizacion(Date fechaActualizacion) {
 		this.fechaActualizacion = fechaActualizacion;
+	}
+
+	public Boolean getCambiarContrasena() {
+		return cambiarContrasena;
+	}
+
+	public void setCambiarContrasena(Boolean cambiarContrasena) {
+		this.cambiarContrasena = cambiarContrasena;
 	}
 
 }

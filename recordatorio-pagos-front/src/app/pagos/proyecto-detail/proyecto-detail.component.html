@@ -3,7 +3,12 @@
 <div class="container">
     <br />
     <mat-card>
-        <mat-card-title>Proyecto</mat-card-title>
+        <mat-card-title *ngIf="proyecto.idProyecto === undefined">Crear Proyecto</mat-card-title>
+        <mat-card-title *ngIf="proyecto.idProyecto !== undefined">Editar Proyecto</mat-card-title>
+        <mat-card-subtitle class="subtitle-detal">
+            Ingresa todos los campos requeridos y presiona guardar para registrar el proyecto presiona atras para
+            regresar a la pantalla anterior.
+        </mat-card-subtitle>
         <br />
         <mat-card-actions>
             <form class="form-horizontal" #proyectoForm="ngForm" (ngSubmit)="save()">

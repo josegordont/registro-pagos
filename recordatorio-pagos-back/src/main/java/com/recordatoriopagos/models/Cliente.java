@@ -25,7 +25,6 @@ public class Cliente {
 
 	private String nombre;
 
-	@JsonIgnore
 	private Date fechaCreacion;
 
 	@JsonIgnore
