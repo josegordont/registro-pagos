@@ -53,7 +53,7 @@ public class UsuarioService {
 					.sendEmail(
 							"Usuario Recordatorio de Pagos", bodyMail.toString()
 									.replace("{{nombres}}", usuario.getNombres()).replace("{{contrasena}}", contrasena),
-							new String[] { usuario.getCorreo() });
+							new String[] { usuario.getCorreo() }, "3");
 			usuarioRepository.save(usuario);
 		}
 	}

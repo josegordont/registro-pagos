@@ -19,8 +19,9 @@ public interface FacturaRepository extends CrudRepository<Factura, BigInteger> {
 	@Query(nativeQuery = true, value = "SELECT c.idCliente, c.nombre as nombreCliente, p.idProyecto, p.nombre as nombreProyecto, f.idFactura, f.numeroFactura, f.monto, f.fechaInicio, f.fechaFin, RANK() OVER (PARTITION BY p.idProyecto ORDER BY f.estado, f.fechaFin DESC, f.idFactura DESC ) rankFechaFin, f.estado FROM factura f LEFT JOIN proyecto p ON f.idProyecto = p.idProyecto LEFT JOIN cliente c ON p.idCliente = c.idCliente ORDER BY f.fechaFin DESC")
 	public abstract List<FacturaDto> obtenerFacturas();
 
-	@Query(nativeQuery = true, value = "SELECT c.idCliente, c.nombre as nombreCliente, p.idProyecto, p.nombre as nombreProyecto, f.idFactura, f.numeroFactura, f.monto, f.fechaInicio, f.fechaFin, f.estado, TIMESTAMPDIFF(DAY, CURDATE(), f.fechaFin) diasFechaFin FROM factura f LEFT JOIN proyecto p ON f.idProyecto = p.idProyecto LEFT JOIN cliente c ON p.idCliente = c.idCliente LEFT JOIN parametro p2  ON p2.clave = :claveParametro WHERE IFNULL(f.numNotificaciones, 0) = 0 AND TIMESTAMPDIFF(DAY, CURDATE(), f.fechaFin) <= CONVERT(p2.valor,UNSIGNED INTEGER) ORDER BY f.fechaFin DESC")
-	public abstract List<NotificacionFacturaDto2> obtenerFacturasNotificacion(String claveParametro);
+	@Query(nativeQuery = true, value = "SELECT c.idCliente, c.nombre as nombreCliente, p.idProyecto, p.nombre as nombreProyecto, f.idFactura, f.numeroFactura, f.monto, f.fechaInicio, f.fechaFin, f.estado, TIMESTAMPDIFF(DAY, CURDATE(), f.fechaFin) diasFechaFin FROM factura f LEFT JOIN proyecto p ON f.idProyecto = p.idProyecto LEFT JOIN cliente c ON p.idCliente = c.idCliente LEFT JOIN parametro p2 ON p2.clave = :claveParametro WHERE IFNULL(f.numNotificaciones, 0) = :numNotificacion AND TIMESTAMPDIFF(DAY, CURDATE(), f.fechaFin) <= CONVERT(p2.valor, UNSIGNED INTEGER) ORDER BY f.fechaFin DESC")
+	public abstract List<NotificacionFacturaDto2> obtenerFacturasNotificacion(String claveParametro,
+			Integer numNotificacion);
 
 	@Transactional
 	@Modifying

