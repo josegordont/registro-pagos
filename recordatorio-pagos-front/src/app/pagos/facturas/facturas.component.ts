@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/material-moment-adapter';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MatDatepicker } from '@angular/material/datepicker';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import * as moment from 'moment';
+import { Moment } from 'moment';
 import { Cliente } from 'src/app/model/cliente';
 import { Factura } from 'src/app/model/factura';
 import { Garantia } from 'src/app/model/garantia';
@@ -13,10 +18,31 @@ import { UsuarioService } from 'src/app/service/usuario.service';
 import { DialogAnimationComponent } from '../dialog-animation/dialog-animation.component';
 import { DialogCerrarComponent } from '../dialog-cerrar/dialog-cerrar.component';
 
+export const MY_FORMATS = {
+  parse: {
+    dateInput: 'MM/YYYY',
+  },
+  display: {
+    dateInput: 'MM/YYYY',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
+
 @Component({
   selector: 'app-facturas',
   templateUrl: './facturas.component.html',
-  styleUrls: ['./facturas.component.css']
+  styleUrls: ['./facturas.component.css'],
+  providers: [
+    {
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS],
+    },
+
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
+  ]
 })
 export class FacturasComponent implements OnInit {
 
@@ -30,6 +56,7 @@ export class FacturasComponent implements OnInit {
   estados: string[] = ['abierto', 'cerrado'];
   diasGarantia: number;
   rol: string;
+  periodoInput: Date;
 
   constructor(
     private facturasService: FacturaService,
@@ -55,7 +82,7 @@ export class FacturasComponent implements OnInit {
       this.facturasFiltro = data;
       this.filtrarLista(null);
     }, err => {
-
+      this.snackBarService.success('Se ha producido un error en el sistema!');
     });
   }
 
@@ -87,12 +114,21 @@ export class FacturasComponent implements OnInit {
         this.snackBarService.success('Se produjo un error en el sistema');
       }
     }, err => {
-
+      this.snackBarService.success('Se ha producido un error en el sistema!');
     });
   }
 
   navegar(ruta: string) {
     this.router.navigateByUrl(ruta);
+  }
+
+  filtrarListaFecha(event: any) {
+    if (this.periodoInput instanceof moment) {
+      this.periodoInput = new Date(this.periodoInput);
+      this.filtrarLista(event);
+    } else {
+      this.filtrarLista(event);
+    }
   }
 
   filtrarLista(event: any) {
@@ -111,6 +147,13 @@ export class FacturasComponent implements OnInit {
     if (this.factura.estado !== undefined && this.factura.estado != null) {
       this.facturasFiltro = this.facturasFiltro.filter((factura: any) => factura.estado === this.factura.estado);
     }
+    if (this.periodoInput !== undefined && this.periodoInput !== null) {
+      this.facturasFiltro = this.facturasFiltro.filter((factura: any) => {
+        let fechaFin = new Date(factura.fechaFin);
+        return this.periodoInput.getFullYear() === fechaFin.getFullYear() &&
+          this.periodoInput.getMonth() === fechaFin.getMonth();
+      });
+    }
   }
 
   obtenerProyectosPorCliente(cliente: Cliente) {
@@ -118,7 +161,7 @@ export class FacturasComponent implements OnInit {
       this.proyectosService.obtenerProyectosPorCliente(cliente.idCliente).subscribe(data => {
         this.proyectos = data;
       }, err => {
-
+        this.snackBarService.success('Se ha producido un error en el sistema!');
       });
     } else {
       this.factura.idProyecto = undefined;
@@ -129,7 +172,7 @@ export class FacturasComponent implements OnInit {
     this.clienteService.obtenerClientes().subscribe(data => {
       this.clientes = data;
     }, err => {
-
+      this.snackBarService.success('Se ha producido un error en el sistema!');
     });
   }
 
@@ -159,7 +202,7 @@ export class FacturasComponent implements OnInit {
       this.snackBarService.success('Proyecto cerrado!');
       this.obtenerFacturas();
     }, err => {
-
+      this.snackBarService.success('Se ha producido un error en el sistema!');
     });
   }
 
@@ -167,7 +210,7 @@ export class FacturasComponent implements OnInit {
     this.parametroService.obtenerParametros().subscribe(data => {
       this.diasGarantia = Number(data.find((parametro: any) => parametro.clave === 'fact_garantia').valor) + 1;
     }, err => {
-
+      this.snackBarService.success('Se ha producido un error en el sistema!');
     });
   }
 
@@ -191,7 +234,7 @@ export class FacturasComponent implements OnInit {
       this.snackBarService.success('Proyecto abierto!');
       this.obtenerFacturas();
     }, err => {
-
+      this.snackBarService.success('Se ha producido un error en el sistema!');
     });
   }
 
@@ -201,6 +244,14 @@ export class FacturasComponent implements OnInit {
       total += this.facturasFiltro[j][columna];
     }
     return total;
+  }
+
+  setMonthAndYear(normalizedMonthAndYear: Moment, datepicker: MatDatepicker<Moment>) {
+    this.periodoInput = new Date();
+    this.periodoInput.setMonth(normalizedMonthAndYear.month());
+    this.periodoInput.setFullYear(normalizedMonthAndYear.year());
+    datepicker.close();
+    this.filtrarLista(undefined);
   }
 
 }

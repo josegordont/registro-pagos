@@ -50,7 +50,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let usuario of usuariosFiltro;">
+                    <tr *ngFor="let usuario of usuariosFiltro | slice: (page-1) * pageSize : page * pageSize">
                         <td scope="row">{{ usuario.correo }}</td>
                         <td>{{ usuario.apellidos }}</td>
                         <td>{{ usuario.nombres }} </td>
@@ -64,6 +64,11 @@
                     </tr>
                 </tbody>
             </table>
+            <ngb-pagination class="d-flex justify-content-end" [collectionSize]="usuariosFiltro.length" [(page)]="page"
+                [boundaryLinks]="true" [pageSize]="pageSize">
+                <ng-template ngbPaginationPrevious>Atras</ng-template>
+                <ng-template ngbPaginationNext>Sig.</ng-template>
+            </ngb-pagination>
             <br />
         </mat-card-actions>
     </mat-card>

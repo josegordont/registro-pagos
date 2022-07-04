@@ -1,12 +1,16 @@
 import { NgModule } from "@angular/core";
-import { FormatPriceDirective } from "./custom.directivemodule";
+import { CustomEmailDirective, FormatPriceDirective, LettersNumbersDirective } from "./custom.directivemodule";
 
 @NgModule({
     declarations: [
-        FormatPriceDirective
+        FormatPriceDirective,
+        CustomEmailDirective,
+        LettersNumbersDirective
     ],
     exports: [
-        FormatPriceDirective
+        FormatPriceDirective,
+        CustomEmailDirective,
+        LettersNumbersDirective
     ]
 })
 export class CustomDirectiveModule { }

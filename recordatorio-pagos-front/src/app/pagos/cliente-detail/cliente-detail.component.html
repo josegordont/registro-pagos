@@ -13,11 +13,11 @@
         <mat-card-actions>
             <form class="form-horizontal" #clienteForm="ngForm" (ngSubmit)="save()">
                 <div class="mb-3 row">
-                    <label for="inputRuc" class="col-sm-2 col-form-label">Ruc</label>
+                    <label for="inputRuc" class="col-sm-2 col-form-label">RUC</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" [(ngModel)]="cliente.ruc" #inputRuc="ngModel"
-                            placeholder="Identificación cliente" id="inputRuc" name="inputRuc"
-                            onkeydown="return /[a-z,0-9, ]/i.test(event.key)" required>
+                            placeholder="Identificación cliente" id="inputRuc" name="inputRuc" onlyLettersNumbers
+                            required>
                         <div *ngIf="inputRuc.invalid && (clienteForm.submitted || inputRuc.dirty || inputRuc.touched)"
                             class="alert alert-danger">
                             <div>Ruc es requerido</div>

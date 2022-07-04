@@ -37,6 +37,26 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="control-label text-right col-md-3 col-form-label">Periodo:
+                                </label>
+                                <div class="col-md-9">
+                                    <div class="input-group mb-2">
+                                        <span class="input-group-text">mm/aaaa</span>
+                                        <input matInput [matDatepicker]="periodo" [(ngModel)]="periodoInput"
+                                            #inputFechaInicio="ngModel" name="inputFechaInicio" class="form-control"
+                                            (change)="filtrarListaFecha($event)" (paste)="filtrarListaFecha($event)"
+                                            name="periodo" placeholder="Selecciona una fecha" required>
+                                        <mat-datepicker-toggle matSuffiX [for]="periodo"></mat-datepicker-toggle>
+                                        <mat-datepicker #periodo startView="year"
+                                            (monthSelected)="setMonthAndYear($event, periodo)"></mat-datepicker>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </mat-card-actions>
                 <mat-card-actions class="overflow-auto">
                     <table class="table table-striped">
@@ -96,6 +116,27 @@
                                         placeholder="Selecciona un proyecto" name="inputProyecto"
                                         (ngModelChange)="filtrarListaHis($event)" (paste)="filtrarLista($event)">
                                     </ng-select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="control-label text-right col-md-3 col-form-label">Periodo:
+                                </label>
+                                <div class="col-md-9">
+                                    <div class="input-group mb-2">
+                                        <span class="input-group-text">mm/aaaa</span>
+                                        <input matInput [matDatepicker]="periodoHis" [(ngModel)]="periodoInputHis"
+                                            #inputFechaInicio="ngModel" name="inputFechaInicio" class="form-control"
+                                            (change)="filtrarListaFechaHis($event)"
+                                            (paste)="filtrarListaFechaHis($event)" name="periodoHis"
+                                            placeholder="Selecciona una fecha" required>
+                                        <mat-datepicker-toggle matSuffiX [for]="periodoHis"></mat-datepicker-toggle>
+                                        <mat-datepicker #periodoHis startView="year"
+                                            (monthSelected)="setMonthAndYearHis($event, periodoHis)"></mat-datepicker>
+                                    </div>
                                 </div>
                             </div>
                         </div>

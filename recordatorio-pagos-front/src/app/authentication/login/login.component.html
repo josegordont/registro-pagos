@@ -4,12 +4,13 @@
             <br><br>
             <img class="mb-4" src="/assets/images/logo-grupo-plaza.svg" alt="" width="250" height="120"
                 style="margin-left: 20px;">
-            <h1 class="h3 mb-3 fw-normal" style="margin-left: 30px; color: rgb(244, 148, 4, 0.8);">Recordatorio Pagos</h1>
+            <h1 class="h3 mb-3 fw-normal" style="margin-left: 30px; color: rgb(244, 148, 4, 0.8);">Recordatorio Pagos
+            </h1>
 
             <div class="form-floating">
                 <input type="text" [(ngModel)]="usuario.correo" #inputCorreo="ngModel" name="inputCorreo"
                     (change)="refresco()" class="form-control" id="inputCorreo" placeholder="name@example.com" required>
-                <label for="inputCorreo">Usuario</label>
+                <label for="inputCorreo">Correo</label>
             </div>
             <div class="form-floating">
                 <input type="password" [(ngModel)]="usuario.contrasena" #inputContrasena="ngModel" (change)="refresco()"

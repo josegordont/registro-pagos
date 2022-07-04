@@ -43,10 +43,14 @@
                     <div class="col-sm-10">
                         <input type="text" class="form-control" [(ngModel)]="factura.numeroFactura"
                             placeholder="Número Factura" #inputNumeroFactura="ngModel" id="inputNumeroFactura"
-                            name="inputNumeroFactura" required>
+                            (change)="existeNumeroFacturaFuncion(factura.numeroFactura)" name="inputNumeroFactura"
+                            required>
                         <div *ngIf="inputNumeroFactura.invalid && (facturaForm.submitted || inputNumeroFactura.dirty || inputNumeroFactura.touched)"
                             class="alert alert-danger">
                             <div>Número Factura es requerido</div>
+                        </div>
+                        <div *ngIf="existeNumeroFactura" class="alert alert-danger">
+                            <div>Ya existe una factura con ese número</div>
                         </div>
                     </div>
                 </div>

@@ -5,6 +5,7 @@ import { Proyecto } from 'src/app/model/proyecto';
 import { ClienteService } from 'src/app/service/cliente.service';
 import { ProyectoService } from 'src/app/service/proyecto.service';
 import { SnackBarService } from 'src/app/service/snack-bar.service';
+import { UsuarioService } from 'src/app/service/usuario.service';
 import { DialogAnimationComponent } from '../dialog-animation/dialog-animation.component';
 
 @Component({
@@ -15,19 +16,24 @@ import { DialogAnimationComponent } from '../dialog-animation/dialog-animation.c
 export class ProyectoComponent implements OnInit {
 
   proyectos: any;
-  proyectosFiltro: any;
+  proyectosFiltro: any = [];
   proyecto: Proyecto = new Proyecto;
   clientes: any = [];
+  rol: string;
+  page: number = 1;
+  pageSize: number = 10;
 
   constructor(
     private proyectosService: ProyectoService,
     private router: Router,
     public dialog: MatDialog,
     private snackBarService: SnackBarService,
-    private clienteService: ClienteService
+    private clienteService: ClienteService,
+    private usuarioService: UsuarioService
   ) { }
 
   ngOnInit(): void {
+    this.rol = this.usuarioService.obtenerRol();
     this.obtenerProyectos();
     this.obtenerClientes();
   }

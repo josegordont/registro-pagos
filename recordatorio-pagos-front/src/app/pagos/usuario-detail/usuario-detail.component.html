@@ -16,10 +16,11 @@
                     <label for="inputCorreo" class="col-sm-2 col-form-label">Correo</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" [(ngModel)]="usuario.correo" #inputCorreo="ngModel"
-                            placeholder="correo@email.com" id="inputCorreo" name="inputCorreo" required>
+                            placeholder="correo@email.com" id="inputCorreo" name="inputCorreo" required customEmail>
                         <div *ngIf="inputCorreo.invalid && (usuarioForm.submitted || inputCorreo.dirty || inputCorreo.touched)"
                             class="alert alert-danger">
-                            <div>Correo es requerido</div>
+                            <div *ngIf="inputCorreo.errors['required']">Correo es requerido</div>
+                            <div *ngIf="inputCorreo.errors['email']">Ingresa una dirección de correo válida</div>
                         </div>
                     </div>
                 </div>

@@ -26,7 +26,7 @@ export class FacturaService {
   obtenerFacturaPorId(id: number) {
     let header = new HttpHeaders().
       set('Content-Type', 'application/json');
-    return this.httpClient.get(`${this.path}/${id}`, {
+    return this.httpClient.get(`${this.path}/obtenerFacturaPorId/${id}`, {
       headers: header
     });
   }
@@ -59,6 +59,14 @@ export class FacturaService {
     let header = new HttpHeaders().
       set('Content-Type', 'application/json');
     return this.httpClient.put(`${this.path}/abrirFacturasPorProyecto`, idProyecto, {
+      headers: header
+    });
+  }
+
+  existeNumeroFactura(numeroFactura: string) {
+    let header = new HttpHeaders().
+      set('Content-Type', 'application/json');
+    return this.httpClient.get<boolean>(`${this.path}/existeNumeroFactura/${numeroFactura}`, {
       headers: header
     });
   }

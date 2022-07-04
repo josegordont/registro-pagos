@@ -1,3 +1,5 @@
+import { Data } from "@angular/router";
+
 export class Garantia {
     public idCliente?: number;
     public nombreCliente?: string;

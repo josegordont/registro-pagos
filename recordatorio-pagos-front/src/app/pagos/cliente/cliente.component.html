@@ -48,7 +48,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let cliente of clientesFiltro;">
+                    <tr *ngFor="let cliente of clientesFiltro | slice: (page-1) * pageSize : page * pageSize">
                         <td>{{ cliente.ruc }}</td>
                         <td>{{ cliente.nombre }} </td>
                         <td class="btn-table">
@@ -60,6 +60,11 @@
                     </tr>
                 </tbody>
             </table>
+            <ngb-pagination class="d-flex justify-content-end" [collectionSize]="clientesFiltro.length" [(page)]="page"
+                [boundaryLinks]="true" [pageSize]="pageSize">
+                <ng-template ngbPaginationPrevious>Atras</ng-template>
+                <ng-template ngbPaginationNext>Sig.</ng-template>
+            </ngb-pagination>
             <br />
         </mat-card-actions>
     </mat-card>

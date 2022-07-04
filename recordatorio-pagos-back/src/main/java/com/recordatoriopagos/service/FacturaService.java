@@ -60,4 +60,9 @@ public class FacturaService {
 		garantiaService.eliminarGarantiaPorProyecto(idProyecto);
 	}
 
+	public Boolean existeNumeroFactura(String numeroFactura) {
+		Factura factura = facturaRepository.findByNumeroFactura(numeroFactura);
+		return factura != null;
+	}
+
 }

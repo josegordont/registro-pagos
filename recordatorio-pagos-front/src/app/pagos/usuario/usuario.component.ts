@@ -14,8 +14,10 @@ import { DialogAnimationComponent } from '../dialog-animation/dialog-animation.c
 export class UsuarioComponent implements OnInit {
 
   usuarios: any;
-  usuariosFiltro: any;
+  usuariosFiltro: any = [];
   usuario: Usuario = new Usuario();
+  page: number = 1;
+  pageSize: number = 10;
 
   constructor(
     private usuariosService: UsuarioService,

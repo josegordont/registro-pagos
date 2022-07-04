@@ -55,7 +55,7 @@ export class ParametrosComponent implements OnInit {
       this.parametroService.guardarParametro(this.parametros).subscribe(data => {
         this.snackBarService.success('Parametros guardados!');
       }, err => {
-
+        this.snackBarService.success('Se ha producido un error en el sistema!');
       });
     }
   }
@@ -83,7 +83,7 @@ export class ParametrosComponent implements OnInit {
         }
       })
     }, err => {
-
+      this.snackBarService.success('Se ha producido un error en el sistema!');
     });
   }
 

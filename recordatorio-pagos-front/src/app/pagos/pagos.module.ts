@@ -26,6 +26,7 @@ import { ProyectoComponent } from './proyecto/proyecto.component';
 import { UsuarioDetailComponent } from './usuario-detail/usuario-detail.component';
 import { UsuarioComponent } from './usuario/usuario.component';
 import { ParametrosComponent } from './parametros/parametros.component';
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { ParametrosComponent } from './parametros/parametros.component';
     NgxMaskModule.forChild(),
     MatDatepickerModule,
     MatNativeDateModule,
+    MatMomentDateModule,
     FormsModule,
     MatCardModule,
     MatButtonModule,

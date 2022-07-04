@@ -31,6 +31,7 @@ export class FacturasDetailComponent implements OnInit {
   diasVencimiento: number;
   fechaSugerida: Date = new Date();
   fechaFinIgualSugerida: boolean;
+  existeNumeroFactura: boolean;
 
   @ViewChild('facturaForm') facturaForm: FormGroup;
 
@@ -64,8 +65,8 @@ export class FacturasDetailComponent implements OnInit {
   obtenerClientes() {
     this.clienteService.obtenerClientes().subscribe(data => {
       this.clientes = data;
-    }, error => {
-
+    }, err => {
+      this.snackBarService.success('Se ha producido un error en el sistema!');
     });
   }
 
@@ -74,7 +75,7 @@ export class FacturasDetailComponent implements OnInit {
       this.proyectosService.obtenerProyectosPorCliente(cliente.idCliente).subscribe(data => {
         this.proyectos = data;
       }, err => {
-
+        this.snackBarService.success('Se ha producido un error en el sistema!');
       });
     } else {
       this.factura.idProyecto = undefined;
@@ -82,12 +83,12 @@ export class FacturasDetailComponent implements OnInit {
   }
 
   guardar() {
-    if (this.facturaForm.valid) {
+    if (this.facturaForm.valid && !this.existeNumeroFactura) {
       this.facturasService.guardarFactura(this.factura).subscribe(data => {
         this.snackBarService.success('Factura guardada!');
         this.router.navigateByUrl("/facturas");
-      }, error => {
-
+      }, err => {
+        this.snackBarService.success('Se ha producido un error en el sistema!');
       });
     }
   }
@@ -100,7 +101,7 @@ export class FacturasDetailComponent implements OnInit {
       this.obtenerProyectosPorCliente({ idCliente: idCliente, ruc: '', nombre: '' });
       this.obtenerParametros();
     }, err => {
-
+      this.snackBarService.success('Se ha producido un error en el sistema!');
     });
   }
 
@@ -129,6 +130,15 @@ export class FacturasDetailComponent implements OnInit {
     return fecha1.getFullYear() === fecha2.getFullYear() &&
       fecha1.getMonth() === fecha2.getMonth() &&
       fecha1.getDay() === fecha2.getDay();
+  }
+
+  existeNumeroFacturaFuncion(numeroFactura: string) {
+    this.facturasService.existeNumeroFactura(numeroFactura).subscribe(data => {
+      this.existeNumeroFactura = data;
+    }, err => {
+      this.existeNumeroFactura = true;
+      this.snackBarService.success('Se ha producido un error en el sistema!');
+    });
   }
 
 }

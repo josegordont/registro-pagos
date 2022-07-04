@@ -38,4 +38,6 @@ public interface FacturaRepository extends CrudRepository<Factura, BigInteger> {
 	@Query(nativeQuery = true, value = "UPDATE factura f set numNotificaciones = IFNULL(numNotificaciones, 0)+ 1 WHERE idFactura = :idFactura")
 	public abstract void actualizarNumNotificaciones(BigInteger idFactura);
 
+	public abstract Factura findByNumeroFactura(String numeroFactura);
+
 }

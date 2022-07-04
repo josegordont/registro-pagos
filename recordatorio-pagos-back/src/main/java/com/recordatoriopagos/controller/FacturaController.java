@@ -33,7 +33,7 @@ public class FacturaController {
 		return facturaService.obtenerFacturas();
 	}
 
-	@GetMapping(path = "/{id}")
+	@GetMapping(path = "/obtenerFacturaPorId/{id}")
 	public Optional<Factura> obtenerFacturaPorId(@PathVariable("id") BigInteger id) {
 		return this.facturaService.obtenerPorId(id);
 	}
@@ -68,5 +68,10 @@ public class FacturaController {
 			String error = "Se produjo un error en el sistema";
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
 		}
+	}
+
+	@GetMapping(path = "/existeNumeroFactura/{numeroFactura}")
+	public Boolean existeNumeroFactura(@PathVariable(value = "numeroFactura") String numeroFactura) {
+		return this.facturaService.existeNumeroFactura(numeroFactura);
 	}
 }

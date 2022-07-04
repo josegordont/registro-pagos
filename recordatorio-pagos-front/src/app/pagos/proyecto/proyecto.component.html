@@ -51,19 +51,25 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let proyecto of proyectosFiltro;">
+                    <tr *ngFor="let proyecto of proyectosFiltro | slice: (page-1) * pageSize : page * pageSize">
                         <td>{{ proyecto.nombreCliente }}</td>
                         <th>{{ proyecto.nombre }}</th>
                         <td>{{ proyecto.descripcion }} </td>
                         <td class="btn-table">
                             <button class="btn btn-primary" type="button" (click)="editar(proyecto.idProyecto)"> Editar
                             </button>&nbsp;
-                            <button class="btn btn-danger" type="button" (click)="confirmarEliminar(proyecto)"> Eliminar
+                            <button *ngIf="rol === 'admin'"
+                             class="btn btn-danger" type="button" (click)="confirmarEliminar(proyecto)"> Eliminar
                             </button>
                         </td>
                     </tr>
                 </tbody>
             </table>
+            <ngb-pagination class="d-flex justify-content-end" [collectionSize]="proyectosFiltro.length" [(page)]="page"
+                [boundaryLinks]="true" [pageSize]="pageSize">
+                <ng-template ngbPaginationPrevious>Atras</ng-template>
+                <ng-template ngbPaginationNext>Sig.</ng-template>
+            </ngb-pagination>
             <br />
         </mat-card-actions>
     </mat-card>
