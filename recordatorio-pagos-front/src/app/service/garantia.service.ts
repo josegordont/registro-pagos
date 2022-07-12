@@ -55,4 +55,12 @@ export class GarantiaService {
     });
   }
 
+  cerrarVariasGarantias(garantias: number[]) {
+    let header = new HttpHeaders().
+      set('Content-Type', 'application/json');
+    return this.httpClient.put(`${this.path}/cerrarVariasGarantias`, garantias, {
+      headers: header
+    });
+  }
+
 }

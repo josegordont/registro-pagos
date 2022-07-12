@@ -83,4 +83,15 @@ public class FacturaController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
 		}
 	}
+
+	@PutMapping(path = "/cerrarVariasFacturas")
+	public ResponseEntity<?> cerrarVariasFacturas(@RequestBody List<BigInteger> idFacturas) {
+		try {
+			facturaService.cerrarVariasFacturas(idFacturas);
+			return new ResponseEntity<>(HttpStatus.OK);
+		} catch (Exception e) {
+			String error = "Se produjo un error en el sistema";
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
+		}
+	}
 }

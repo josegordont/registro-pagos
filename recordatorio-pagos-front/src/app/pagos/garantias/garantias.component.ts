@@ -1,3 +1,4 @@
+import { SelectionModel } from '@angular/cdk/collections';
 import { Component, OnInit } from '@angular/core';
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
@@ -66,6 +67,9 @@ export class GarantiasComponent implements OnInit {
   // facturas históricas
   facturasHis: any = [];
   facturasHisFiltro: any = [];
+  // seleccion
+  selectionFacturas = new SelectionModel<Factura>(true, []);
+  selectionGarantias = new SelectionModel<Garantia>(true, []);
 
   constructor(
     private snackBarService: SnackBarService,
@@ -341,6 +345,100 @@ export class GarantiasComponent implements OnInit {
     this.proyectosService.abrirProyecto(idProyecto).subscribe(data => {
       this.snackBarService.success('Proyecto abierto!');
       this.obtenerFacturas();
+    }, err => {
+      this.snackBarService.success('Se ha producido un error en el sistema!');
+    });
+  }
+
+  masterToggleFacturas() {
+    this.isAllSelectedFacturas() ?
+      this.selectionFacturas.clear() :
+      this.facturasFiltro.forEach((row: any) => { this.selectionFacturas.select(row) });
+  }
+
+  isAllSelectedFacturas() {
+    const numSelected = this.selectionFacturas.selected.length;
+    const numRows = this.facturasFiltro.length;
+    return numSelected === numRows;
+  }
+
+  cerrarVariasFacturasConfirmacion() {
+    let numeroFacturas = '<ul>';
+    this.selectionFacturas.selected.forEach(factura => {
+      numeroFacturas += '<li>'.concat(factura.numeroFactura);
+    });
+    numeroFacturas += '</ul>';
+    const dialogRef = this.dialog.open(DialogAnimationComponent, {
+      width: '250px',
+      data: {
+        'body': `¿Estás seguro que deseas cerrar las siguientes facturas? <b> ${numeroFacturas}</b>`
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.cerrarVariasFacturas(this.selectionFacturas.selected);
+      }
+    });
+  }
+
+  cerrarVariasFacturas(facturasSeleccionadas: Factura[]) {
+    let idFacturas: number[] = [];
+    facturasSeleccionadas.forEach(factura => {
+      idFacturas.push(factura.idFactura);
+    });
+    this.facturaService.cerrarVariasFacturas(idFacturas).subscribe(data => {
+      this.snackBarService.success('Facturas cerradas!');
+      this.selectionFacturas.clear();
+      this.obtenerFacturas();
+      this.obtenerFacturasHistoricas();
+    }, err => {
+      this.snackBarService.success('Se ha producido un error en el sistema!');
+    });
+  }
+
+  masterToggleGarantias() {
+    this.isAllSelectedGarantias() ?
+      this.selectionGarantias.clear() :
+      this.garantiasFiltro.forEach((row: any) => { this.selectionGarantias.select(row) });
+  }
+
+  isAllSelectedGarantias() {
+    const numSelected = this.selectionGarantias.selected.length;
+    const numRows = this.garantiasFiltro.length;
+    return numSelected === numRows;
+  }
+
+  cerrarVariasGarantiasConfirmacion() {
+    let nombreProyectos = '<ul>';
+    this.selectionGarantias.selected.forEach(garantia => {
+      nombreProyectos += '<li>'.concat(garantia.nombreProyecto ?? '');
+    });
+    nombreProyectos += '</ul>';
+    const dialogRef = this.dialog.open(DialogAnimationComponent, {
+      width: '250px',
+      data: {
+        'body': `¿Estás seguro que deseas cerrar las garantias de los siguientes proyectos? <b> ${nombreProyectos}</b>`
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.cerrarVariasGarantias(this.selectionGarantias.selected);
+      }
+    });
+  }
+
+  cerrarVariasGarantias(garantiasSeleccionadas: Garantia[]) {
+    let idGarantias: number[] = [];
+    garantiasSeleccionadas.forEach(garantia => {
+      idGarantias.push(garantia.idGarantia);
+    });
+    this.garantiaService.cerrarVariasGarantias(idGarantias).subscribe(data => {
+      this.snackBarService.success('Garantías cerradas!');
+      this.selectionGarantias.clear();
+      this.obtenerGarantias();
+      this.obtenerGarantiasHistoricas();
     }, err => {
       this.snackBarService.success('Se ha producido un error en el sistema!');
     });

@@ -67,4 +67,15 @@ public class GarantiaController {
 		}
 	}
 
+	@PutMapping(path = "/cerrarVariasGarantias")
+	public ResponseEntity<?> cerrarVariasGarantias(@RequestBody List<BigInteger> idGarantias) {
+		try {
+			garantiaService.cerrarVariasGarantias(idGarantias);
+			return new ResponseEntity<>(HttpStatus.OK);
+		} catch (Exception e) {
+			String error = "Se produjo un error en el sistema";
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
+		}
+	}
+
 }

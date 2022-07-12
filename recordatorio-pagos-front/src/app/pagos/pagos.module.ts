@@ -28,6 +28,7 @@ import { ProyectoDetailComponent } from './proyecto-detail/proyecto-detail.compo
 import { ProyectoComponent } from './proyecto/proyecto.component';
 import { UsuarioDetailComponent } from './usuario-detail/usuario-detail.component';
 import { UsuarioComponent } from './usuario/usuario.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,8 @@ import { UsuarioComponent } from './usuario/usuario.component';
     MatSnackBarModule,
     NgbModule,
     MatTabsModule,
-    MatRadioModule
+    MatRadioModule,
+    MatCheckboxModule
   ]
 })
 export class PagosModule { }

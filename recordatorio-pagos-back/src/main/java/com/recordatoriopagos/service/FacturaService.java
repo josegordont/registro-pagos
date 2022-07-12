@@ -74,4 +74,8 @@ public class FacturaService {
 		facturaRepository.save(factura);
 	}
 
+	public void cerrarVariasFacturas(List<BigInteger> idFacturas) {
+		facturaRepository.cerrarVariasFacturas(idFacturas);
+	}
+
 }

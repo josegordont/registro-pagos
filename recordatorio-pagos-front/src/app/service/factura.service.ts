@@ -79,18 +79,26 @@ export class FacturaService {
     });
   }
 
-  cerrarFactura(idProyecto: number) {
+  cerrarFactura(idFactura: number) {
     let header = new HttpHeaders().
       set('Content-Type', 'application/json');
-    return this.httpClient.put(`${this.path}/cerrarFactura`, idProyecto, {
+    return this.httpClient.put(`${this.path}/cerrarFactura`, idFactura, {
       headers: header
     });
   }
 
-  abrirFactura(idProyecto: number) {
+  abrirFactura(idFactura: number) {
     let header = new HttpHeaders().
       set('Content-Type', 'application/json');
-    return this.httpClient.put(`${this.path}/abrirFactura`, idProyecto, {
+    return this.httpClient.put(`${this.path}/abrirFactura`, idFactura, {
+      headers: header
+    });
+  }
+
+  cerrarVariasFacturas(idFacturas: number[]) {
+    let header = new HttpHeaders().
+      set('Content-Type', 'application/json');
+    return this.httpClient.put(`${this.path}/cerrarVariasFacturas`, idFacturas, {
       headers: header
     });
   }

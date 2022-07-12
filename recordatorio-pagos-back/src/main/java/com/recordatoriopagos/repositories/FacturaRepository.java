@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,5 +36,10 @@ public interface FacturaRepository extends CrudRepository<Factura, BigInteger> {
 	public abstract void actualizarNumNotificaciones(BigInteger idFactura);
 
 	public abstract Factura findByNumeroFactura(String numeroFactura);
+
+	@Transactional
+	@Modifying
+	@Query(nativeQuery = true, value = "UPDATE factura f set estado = 'cerrado', fechaCierre = now() WHERE idFactura IN :idFacturas")
+	public abstract void cerrarVariasFacturas(@Param("idFacturas") List<BigInteger> idFacturas);
 
 }

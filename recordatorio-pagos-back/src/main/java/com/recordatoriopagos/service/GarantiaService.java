@@ -56,4 +56,8 @@ public class GarantiaService {
 		garantiaRepository.save(garantia);
 	}
 
+	public void cerrarVariasGarantias(List<BigInteger> idGarantias) {
+		garantiaRepository.cerrarVariasGarantias(idGarantias);
+	}
+
 }

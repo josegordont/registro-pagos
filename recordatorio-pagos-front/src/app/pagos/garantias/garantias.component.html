@@ -73,9 +73,19 @@
                 </mat-card-actions>
                 <mat-card-actions class="overflow-auto">
                     <span *ngIf="tipoVistaInput === 'garantia'">
+                        <button *ngIf="this.selectionGarantias.selected.length > 0" class="btn btn-success"
+                            type="button" (click)="cerrarVariasGarantiasConfirmacion()">
+                            Cerrar Garantias
+                        </button>
                         <table class="table table-striped">
                             <thead>
                                 <tr>
+                                    <th scope="col">
+                                        <mat-checkbox (change)="$event ? masterToggleGarantias() : null;"
+                                            [checked]="selectionGarantias.hasValue() && isAllSelectedGarantias()"
+                                            [indeterminate]="selectionGarantias.hasValue() && !isAllSelectedGarantias()">
+                                        </mat-checkbox>
+                                    </th>
                                     <th scope="col">Cliente</th>
                                     <th scope="col">Proyecto</th>
                                     <th scope="col">Fecha Devolución</th>
@@ -85,11 +95,18 @@
                             <tbody>
                                 <tr
                                     *ngFor="let garantia of garantiasFiltro | slice: (page-1) * pageSize : page * pageSize">
+                                    <td>
+                                        <mat-checkbox (click)="$event.stopPropagation()"
+                                            (change)="$event ? selectionGarantias.toggle(garantia) : null;"
+                                            [checked]="selectionGarantias.isSelected(garantia)">
+                                        </mat-checkbox>
+                                    </td>
                                     <td>{{ garantia.nombreCliente }}</td>
                                     <td>{{ garantia.nombreProyecto }} </td>
                                     <td>{{ garantia.fechaDevolucion | date:'dd/MMM/yyyy' }}</td>
                                     <td class="btn-table">
                                         <button class="btn btn-success" type="button"
+                                            *ngIf="this.selectionGarantias.selected.length === 0"
                                             (click)="cerrarGarantiaConfirmacion(garantia)">
                                             Cerrar
                                         </button>
@@ -104,9 +121,19 @@
                         </ngb-pagination>
                     </span>
                     <span *ngIf="tipoVistaInput === 'factura'">
+                        <button *ngIf="this.selectionFacturas.selected.length > 0" class="btn btn-success" type="button"
+                            (click)="cerrarVariasFacturasConfirmacion()">
+                            Cerrar Facturas
+                        </button>
                         <table class="table table-striped">
                             <thead>
                                 <tr>
+                                    <th scope="col">
+                                        <mat-checkbox (change)="$event ? masterToggleFacturas() : null;"
+                                            [checked]="selectionFacturas.hasValue() && isAllSelectedFacturas()"
+                                            [indeterminate]="selectionFacturas.hasValue() && !isAllSelectedFacturas()">
+                                        </mat-checkbox>
+                                    </th>
                                     <th scope="col">Cliente</th>
                                     <th scope="col">Proyecto</th>
                                     <th scope="col">Número Factura</th>
@@ -118,6 +145,12 @@
                             <tbody>
                                 <tr
                                     *ngFor="let factura of facturasFiltro | slice: (page-1) * pageSize : page * pageSize">
+                                    <td>
+                                        <mat-checkbox (click)="$event.stopPropagation()"
+                                            (change)="$event ? selectionFacturas.toggle(factura) : null;"
+                                            [checked]="selectionFacturas.isSelected(factura)">
+                                        </mat-checkbox>
+                                    </td>
                                     <td>{{ factura.nombreCliente }}</td>
                                     <td>{{ factura.nombreProyecto }} </td>
                                     <td>{{ factura.numeroFactura }} </td>
@@ -125,6 +158,7 @@
                                     <td>{{ factura.fechaFin | date:'dd/MMM/yyyy' }}</td>
                                     <td class="btn-table">
                                         <button class="btn btn-success" type="button"
+                                            *ngIf="this.selectionFacturas.selected.length === 0"
                                             (click)="cerrarFacturaConfirmacion(factura)">
                                             Cerrar
                                         </button>&nbsp;
