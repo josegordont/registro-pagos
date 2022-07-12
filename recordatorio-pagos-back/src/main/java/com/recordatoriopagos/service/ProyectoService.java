@@ -8,6 +8,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.recordatoriopagos.models.Garantia;
 import com.recordatoriopagos.models.Proyecto;
 import com.recordatoriopagos.repositories.ProyectoRepository;
 
@@ -17,12 +18,15 @@ public class ProyectoService {
 	@Autowired
 	ProyectoRepository proyectoRepository;
 
+	@Autowired
+	GarantiaService garantiaService;
+
 	public List<Proyecto> obtenerProyectos() {
 		return proyectoRepository.obtenerProyectos();
 	}
 
 	public List<Proyecto> obtenerProyectosPorCliente(BigInteger idCliente) {
-		return proyectoRepository.findByIdCliente(idCliente);
+		return proyectoRepository.findByIdClienteAndEstado(idCliente, "abierto");
 	}
 
 	public Optional<Proyecto> obtenerPorId(BigInteger id) {
@@ -38,7 +42,7 @@ public class ProyectoService {
 		return proyectoRepository.save(proyecto);
 	}
 
-	public boolean eliminarUsuario(BigInteger idProyecto) {
+	public boolean eliminarProyecto(BigInteger idProyecto) {
 		try {
 			if (proyectoRepository.obtenerFacturasPorProyecto(idProyecto).size() > 0) {
 				return false;
@@ -48,5 +52,17 @@ public class ProyectoService {
 		} catch (Exception err) {
 			return false;
 		}
+	}
+
+	public void cerrarProyecto(Garantia garantia) {
+		proyectoRepository.cerrarProyecto(garantia.getIdProyecto());
+		garantiaService.eliminarGarantiaPorProyecto(garantia.getIdProyecto());
+		garantia.setEstado("abierto");
+		garantiaService.guardarGarantia(garantia);
+	}
+
+	public void abrirProyecto(BigInteger idProyecto) {
+		proyectoRepository.abrirProyecto(idProyecto);
+		garantiaService.eliminarGarantiaPorProyecto(idProyecto);
 	}
 }

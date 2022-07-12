@@ -35,6 +35,8 @@ public class Factura {
 
 	private Date fechaFin;
 
+	private Date fechaCierre;
+
 	private Integer numNotificaciones;
 
 	private Date fechaCreacion;
@@ -122,6 +124,14 @@ public class Factura {
 
 	public void setFechaFin(Date fechaFin) {
 		this.fechaFin = fechaFin;
+	}
+
+	public Date getFechaCierre() {
+		return fechaCierre;
+	}
+
+	public void setFechaCierre(Date fechaCierre) {
+		this.fechaCierre = fechaCierre;
 	}
 
 	public Integer getNumNotificaciones() {

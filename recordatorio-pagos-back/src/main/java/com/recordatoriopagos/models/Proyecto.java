@@ -31,6 +31,8 @@ public class Proyecto {
 
 	private String descripcion;
 
+	private String estado;
+
 	private Date fechaCreacion;
 
 	@JsonIgnore
@@ -86,6 +88,14 @@ public class Proyecto {
 
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
+	}
+
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
 	}
 
 	public Date getFechaCreacion() {

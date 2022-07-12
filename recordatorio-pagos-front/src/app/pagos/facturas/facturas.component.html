@@ -52,20 +52,6 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-group row">
-                        <label class="control-label text-right col-md-3 col-form-label">Estado:
-                        </label>
-                        <div class="col-md-9">
-                            <ng-select [items]="estados" [(ngModel)]="factura.estado" #inputEstado="ngModel"
-                                placeholder="Selecciona un estado" name="inputEstado"
-                                (ngModelChange)="filtrarLista($event)" (paste)="filtrarLista($event)">
-                            </ng-select>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group row">
                         <label class="control-label text-right col-md-3 col-form-label">Periodo:
                         </label>
                         <div class="col-md-9">
@@ -97,7 +83,6 @@
                         <th scope="col">Proyecto</th>
                         <th scope="col">Número Factura</th>
                         <th scope="col">Monto</th>
-                        <th scope="col">Estado</th>
                         <th scope="col">Fecha Inicio</th>
                         <th scope="col">Fecha Fin</th>
                         <th scope="col">Acciones</th>
@@ -109,19 +94,14 @@
                         <td>{{ factura.nombreProyecto }} </td>
                         <th>{{ factura.numeroFactura }}</th>
                         <td class="text-end">{{ factura.monto | number:'.2-2' }}</td>
-                        <td>{{ factura.estado }}</td>
                         <td>{{ factura.fechaInicio | date:'dd/MMM/yyyy' }}</td>
                         <td>{{ factura.fechaFin | date:'dd/MMM/yyyy' }}</td>
                         <td class="btn-table">
                             <button class="btn btn-primary" type="button"
                                 (click)="editar(factura.idFactura, factura.idCliente)"> Editar
                             </button>&nbsp;
-                            <button *ngIf="factura.rankFechaFin === 1 && factura.estado === 'abierto'"
+                            <button *ngIf="factura.rankFechaFin === 1 && factura.estadoProyecto === 'abierto'"
                                 class="btn btn-success" type="button" (click)="cerrarProyecto(factura)"> Cerrar
-                            </button>
-                            <button
-                                *ngIf="factura.rankFechaFin === 1 && factura.estado === 'cerrado' && rol === 'admin'"
-                                class="btn btn-success" type="button" (click)="abrirProyecto(factura)"> Abrir
                             </button>&nbsp;
                             <button class="btn btn-danger" type="button" (click)="confirmarEliminar(factura)"> Eliminar
                             </button>

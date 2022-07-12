@@ -23,6 +23,30 @@ export class FacturaService {
     });
   }
 
+  obtenerFacturasHistoricas() {
+    let header = new HttpHeaders().
+      set('Content-Type', 'application/json');
+    return this.httpClient.get(`${this.path}`, {
+      headers: header
+    });
+  }
+
+  obtenerFacturasACerrar() {
+    let header = new HttpHeaders().
+      set('Content-Type', 'application/json');
+    return this.httpClient.get(`${this.path}/obtenerFacturasACerrar`, {
+      headers: header
+    });
+  }
+
+  obtenerFacturasCerradas() {
+    let header = new HttpHeaders().
+      set('Content-Type', 'application/json');
+    return this.httpClient.get(`${this.path}/obtenerFacturasCerradas`, {
+      headers: header
+    });
+  }
+
   obtenerFacturaPorId(id: number) {
     let header = new HttpHeaders().
       set('Content-Type', 'application/json');
@@ -47,26 +71,26 @@ export class FacturaService {
     });
   }
 
-  cerrarFacturasPorProyecto(garantia: Garantia) {
-    let header = new HttpHeaders().
-      set('Content-Type', 'application/json');
-    return this.httpClient.post(`${this.path}/cerrarFacturasPorProyecto`, garantia, {
-      headers: header
-    });
-  }
-
-  abrirFacturasPorProyecto(idProyecto: number) {
-    let header = new HttpHeaders().
-      set('Content-Type', 'application/json');
-    return this.httpClient.put(`${this.path}/abrirFacturasPorProyecto`, idProyecto, {
-      headers: header
-    });
-  }
-
   existeNumeroFactura(numeroFactura: string) {
     let header = new HttpHeaders().
       set('Content-Type', 'application/json');
     return this.httpClient.get<boolean>(`${this.path}/existeNumeroFactura/${numeroFactura}`, {
+      headers: header
+    });
+  }
+
+  cerrarFactura(idProyecto: number) {
+    let header = new HttpHeaders().
+      set('Content-Type', 'application/json');
+    return this.httpClient.put(`${this.path}/cerrarFactura`, idProyecto, {
+      headers: header
+    });
+  }
+
+  abrirFactura(idProyecto: number) {
+    let header = new HttpHeaders().
+      set('Content-Type', 'application/json');
+    return this.httpClient.put(`${this.path}/abrirFactura`, idProyecto, {
       headers: header
     });
   }

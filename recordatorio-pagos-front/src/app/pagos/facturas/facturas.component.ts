@@ -53,7 +53,6 @@ export class FacturasComponent implements OnInit {
   factura: any = new Factura();
   clientes: any = [];
   proyectos: any = [];
-  estados: string[] = ['abierto', 'cerrado'];
   diasGarantia: number;
   rol: string;
   periodoInput: Date;
@@ -144,9 +143,6 @@ export class FacturasComponent implements OnInit {
         factura.numeroFactura.toUpperCase().includes(this.factura.numeroFactura.toUpperCase())
       );
     }
-    if (this.factura.estado !== undefined && this.factura.estado != null) {
-      this.facturasFiltro = this.facturasFiltro.filter((factura: any) => factura.estado === this.factura.estado);
-    }
     if (this.periodoInput !== undefined && this.periodoInput !== null) {
       this.facturasFiltro = this.facturasFiltro.filter((factura: any) => {
         let fechaFin = new Date(factura.fechaFin);
@@ -198,7 +194,7 @@ export class FacturasComponent implements OnInit {
   }
 
   cerrar(garantia: Garantia) {
-    this.facturasService.cerrarFacturasPorProyecto(garantia).subscribe(data => {
+    this.proyectosService.cerrarProyecto(garantia).subscribe(data => {
       this.snackBarService.success('Proyecto cerrado!');
       this.obtenerFacturas();
     }, err => {
@@ -209,30 +205,6 @@ export class FacturasComponent implements OnInit {
   obtenerParametros() {
     this.parametroService.obtenerParametros().subscribe(data => {
       this.diasGarantia = Number(data.find((parametro: any) => parametro.clave === 'fact_garantia').valor) + 1;
-    }, err => {
-      this.snackBarService.success('Se ha producido un error en el sistema!');
-    });
-  }
-
-  abrirProyecto(factura: Factura) {
-    const dialogRef = this.dialog.open(DialogAnimationComponent, {
-      width: '250px',
-      data: {
-        'body': `¿Estás seguro que deseas abrir el proyecto <b> ${factura.nombreProyecto}</b>?`
-      }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.abrir(factura.idProyecto);
-      }
-    });
-  }
-
-  abrir(idProyecto: number) {
-    this.facturasService.abrirFacturasPorProyecto(idProyecto).subscribe(data => {
-      this.snackBarService.success('Proyecto abierto!');
-      this.obtenerFacturas();
     }, err => {
       this.snackBarService.success('Se ha producido un error en el sistema!');
     });

@@ -56,36 +56,93 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="control-label text-right col-md-3 col-form-label">Vista:
+                                </label>
+                                <div class="col-md-9">
+                                    <mat-radio-group aria-label="Select an option" [(ngModel)]="tipoVistaInput"
+                                        #tipoVista="ngModel" name="tipoVista">
+                                        <mat-radio-button value="garantia">Garantías</mat-radio-button>
+                                        <mat-radio-button value="factura">Facturas</mat-radio-button>
+                                    </mat-radio-group>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </mat-card-actions>
                 <mat-card-actions class="overflow-auto">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th scope="col">Cliente</th>
-                                <th scope="col">Proyecto</th>
-                                <th scope="col">Fecha Devolución</th>
-                                <th scope="col">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let garantia of garantiasFiltro | slice: (page-1) * pageSize : page * pageSize">
-                                <td>{{ garantia.nombreCliente }}</td>
-                                <td>{{ garantia.nombreProyecto }} </td>
-                                <td>{{ garantia.fechaDevolucion | date:'dd/MMM/yyyy' }}</td>
-                                <td class="btn-table">
-                                    <button class="btn btn-success" type="button" (click)="cerrarGarantia(garantia)">
-                                        Cerrar
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <ngb-pagination class="d-flex justify-content-end" [collectionSize]="garantiasFiltro.length"
-                        [(page)]="page" [boundaryLinks]="true" [pageSize]="pageSize">
-                        <ng-template ngbPaginationPrevious>Atras</ng-template>
-                        <ng-template ngbPaginationNext>Sig.</ng-template>
-                    </ngb-pagination>
+                    <span *ngIf="tipoVistaInput === 'garantia'">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Cliente</th>
+                                    <th scope="col">Proyecto</th>
+                                    <th scope="col">Fecha Devolución</th>
+                                    <th scope="col">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr
+                                    *ngFor="let garantia of garantiasFiltro | slice: (page-1) * pageSize : page * pageSize">
+                                    <td>{{ garantia.nombreCliente }}</td>
+                                    <td>{{ garantia.nombreProyecto }} </td>
+                                    <td>{{ garantia.fechaDevolucion | date:'dd/MMM/yyyy' }}</td>
+                                    <td class="btn-table">
+                                        <button class="btn btn-success" type="button"
+                                            (click)="cerrarGarantiaConfirmacion(garantia)">
+                                            Cerrar
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <ngb-pagination class="d-flex justify-content-end" [collectionSize]="garantiasFiltro.length"
+                            [(page)]="page" [boundaryLinks]="true" [pageSize]="pageSize">
+                            <ng-template ngbPaginationPrevious>Atras</ng-template>
+                            <ng-template ngbPaginationNext>Sig.</ng-template>
+                        </ngb-pagination>
+                    </span>
+                    <span *ngIf="tipoVistaInput === 'factura'">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Cliente</th>
+                                    <th scope="col">Proyecto</th>
+                                    <th scope="col">Número Factura</th>
+                                    <th scope="col">Monto</th>
+                                    <th scope="col">Fecha Fin</th>
+                                    <th scope="col">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr
+                                    *ngFor="let factura of facturasFiltro | slice: (page-1) * pageSize : page * pageSize">
+                                    <td>{{ factura.nombreCliente }}</td>
+                                    <td>{{ factura.nombreProyecto }} </td>
+                                    <td>{{ factura.numeroFactura }} </td>
+                                    <td class="text-end">{{ factura.monto | number:'.2-2' }}</td>
+                                    <td>{{ factura.fechaFin | date:'dd/MMM/yyyy' }}</td>
+                                    <td class="btn-table">
+                                        <button class="btn btn-success" type="button"
+                                            (click)="cerrarFacturaConfirmacion(factura)">
+                                            Cerrar
+                                        </button>&nbsp;
+                                        <button class="btn btn-primary" type="button"
+                                            *ngIf="factura.rankFechaFin === 1 && rol === 'admin'"
+                                            (click)="abrirProyectoConfirmacion(factura)">
+                                            Abrir Proyecto
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <ngb-pagination class="d-flex justify-content-end" [collectionSize]="facturasFiltro.length"
+                            [(page)]="page" [boundaryLinks]="true" [pageSize]="pageSize">
+                            <ng-template ngbPaginationPrevious>Atras</ng-template>
+                            <ng-template ngbPaginationNext>Sig.</ng-template>
+                        </ngb-pagination>
+                    </span>
                     <br />
                 </mat-card-actions>
             </mat-tab>
@@ -140,33 +197,92 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="control-label text-right col-md-3 col-form-label">Vista:
+                                </label>
+                                <div class="col-md-9">
+                                    <mat-radio-group aria-label="Select an option" [(ngModel)]="tipoVistaInput"
+                                        #tipoVistaHis="ngModel" name="tipoVistaHis">
+                                        <mat-radio-button value="garantia">Garantías</mat-radio-button>
+                                        <mat-radio-button value="factura">Facturas</mat-radio-button>
+                                    </mat-radio-group>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </mat-card-actions>
                 <mat-card-actions class="overflow-auto">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th scope="col">Cliente</th>
-                                <th scope="col">Proyecto</th>
-                                <th scope="col">Fecha Devolución</th>
-                                <th scope="col">Fecha Cierre</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr
-                                *ngFor="let garantia of garantiasHisFiltro | slice: (page-1) * pageSize : page * pageSize">
-                                <td>{{ garantia.nombreCliente }}</td>
-                                <td>{{ garantia.nombreProyecto }} </td>
-                                <td>{{ garantia.fechaDevolucion | date:'dd/MMM/yyyy' }}</td>
-                                <td>{{ garantia.fechaCierre | date:'dd/MMM/yyyy' }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <ngb-pagination class="d-flex justify-content-end" [collectionSize]="garantiasHisFiltro.length"
-                        [(page)]="page" [boundaryLinks]="true" [pageSize]="pageSize">
-                        <ng-template ngbPaginationPrevious>Atras</ng-template>
-                        <ng-template ngbPaginationNext>Sig.</ng-template>
-                    </ngb-pagination>
+                    <span *ngIf="tipoVistaInput === 'garantia'">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Cliente</th>
+                                    <th scope="col">Proyecto</th>
+                                    <th scope="col">Fecha Devolución</th>
+                                    <th scope="col">Fecha Cierre</th>
+                                    <th scope="col">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr
+                                    *ngFor="let garantia of garantiasHisFiltro | slice: (page-1) * pageSize : page * pageSize">
+                                    <td>{{ garantia.nombreCliente }}</td>
+                                    <td>{{ garantia.nombreProyecto }} </td>
+                                    <td>{{ garantia.fechaDevolucion | date:'dd/MMM/yyyy' }}</td>
+                                    <td>{{ garantia.fechaCierre | date:'dd/MMM/yyyy' }}</td>
+                                    <td class="btn-table">
+                                        <button *ngIf="rol === 'admin'" class="btn btn-success" type="button"
+                                            (click)="abrirGarantiaConfirmacion(garantia)">
+                                            Abrir
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <ngb-pagination class="d-flex justify-content-end" [collectionSize]="garantiasHisFiltro.length"
+                            [(page)]="page" [boundaryLinks]="true" [pageSize]="pageSize">
+                            <ng-template ngbPaginationPrevious>Atras</ng-template>
+                            <ng-template ngbPaginationNext>Sig.</ng-template>
+                        </ngb-pagination>
+                    </span>
+                    <span *ngIf="tipoVistaInput === 'factura'">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Cliente</th>
+                                    <th scope="col">Proyecto</th>
+                                    <th scope="col">Número Factura</th>
+                                    <th scope="col">Monto</th>
+                                    <th scope="col">Fecha Fin</th>
+                                    <th scope="col">Fecha Cierre</th>
+                                    <th scope="col">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr
+                                    *ngFor="let factura of facturasHisFiltro | slice: (page-1) * pageSize : page * pageSize">
+                                    <td>{{ factura.nombreCliente }}</td>
+                                    <td>{{ factura.nombreProyecto }} </td>
+                                    <td>{{ factura.numeroFactura }} </td>
+                                    <td class="text-end">{{ factura.monto | number:'.2-2' }}</td>
+                                    <td>{{ factura.fechaFin | date:'dd/MMM/yyyy' }}</td>
+                                    <td>{{ factura.fechaCierre | date:'dd/MMM/yyyy' }}</td>
+                                    <td class="btn-table">
+                                        <button *ngIf="rol === 'admin'" class="btn btn-success" type="button"
+                                            (click)="abrirFacturaConfirmacion(factura)">
+                                            Abrir
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <ngb-pagination class="d-flex justify-content-end" [collectionSize]="facturasHisFiltro.length"
+                            [(page)]="page" [boundaryLinks]="true" [pageSize]="pageSize">
+                            <ng-template ngbPaginationPrevious>Atras</ng-template>
+                            <ng-template ngbPaginationNext>Sig.</ng-template>
+                        </ngb-pagination>
+                    </span>
                     <br />
                 </mat-card-actions>
             </mat-tab>

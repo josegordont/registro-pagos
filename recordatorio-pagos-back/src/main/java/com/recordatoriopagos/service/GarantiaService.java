@@ -49,4 +49,11 @@ public class GarantiaService {
 		garantiaRepository.save(garantia);
 	}
 
+	public void abrirGarantia(BigInteger idGarantia) {
+		Garantia garantia = garantiaRepository.findById(idGarantia).get();
+		garantia.setEstado("abierto");
+		garantia.setFechaCierre(null);
+		garantiaRepository.save(garantia);
+	}
+
 }

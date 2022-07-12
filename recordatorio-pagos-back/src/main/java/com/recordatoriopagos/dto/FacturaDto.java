@@ -27,5 +27,9 @@ public interface FacturaDto {
 	Integer getRankFechaFin();
 
 	String getEstado();
+	
+	String getEstadoProyecto();
+	
+	Date getFechaCierre();
 
 }

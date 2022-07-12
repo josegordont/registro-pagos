@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import com.recordatoriopagos.dto.FacturaDto;
 import com.recordatoriopagos.models.Factura;
-import com.recordatoriopagos.models.Garantia;
 import com.recordatoriopagos.repositories.FacturaRepository;
 
 @Service
@@ -24,6 +23,14 @@ public class FacturaService {
 
 	public List<FacturaDto> obtenerFacturas() {
 		return facturaRepository.obtenerFacturas();
+	}
+
+	public List<FacturaDto> obtenerFacturasACerrar() {
+		return facturaRepository.obtenerFacturasACerrar();
+	}
+
+	public List<FacturaDto> obtenerFacturasCerradas() {
+		return facturaRepository.obtenerFacturasCerradas();
 	}
 
 	public Optional<Factura> obtenerPorId(BigInteger id) {
@@ -48,21 +55,23 @@ public class FacturaService {
 		}
 	}
 
-	public void cerrarFacturasPorProyecto(Garantia garantia) {
-		facturaRepository.cerrarFacturasPorProyecto(garantia.getIdProyecto());
-		garantiaService.eliminarGarantiaPorProyecto(garantia.getIdProyecto());
-		garantia.setEstado("abierto");
-		garantiaService.guardarGarantia(garantia);
-	}
-
-	public void abrirFacturasPorProyecto(BigInteger idProyecto) {
-		facturaRepository.abrirFacturasPorProyecto(idProyecto);
-		garantiaService.eliminarGarantiaPorProyecto(idProyecto);
-	}
-
 	public Boolean existeNumeroFactura(String numeroFactura) {
 		Factura factura = facturaRepository.findByNumeroFactura(numeroFactura);
 		return factura != null;
+	}
+
+	public void cerrarFactura(BigInteger idFactura) {
+		Factura factura = facturaRepository.findById(idFactura).get();
+		factura.setEstado("cerrado");
+		factura.setFechaCierre(new Date());
+		facturaRepository.save(factura);
+	}
+
+	public void abrirFactura(BigInteger idFactura) {
+		Factura factura = facturaRepository.findById(idFactura).get();
+		factura.setEstado("abierto");
+		factura.setFechaCierre(null);
+		facturaRepository.save(factura);
 	}
 
 }

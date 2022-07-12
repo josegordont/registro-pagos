@@ -56,4 +56,15 @@ public class GarantiaController {
 		}
 	}
 
+	@PutMapping(path = "/abrirGarantia")
+	public ResponseEntity<?> abrirGarantia(@RequestBody BigInteger idGarantia) {
+		try {
+			garantiaService.abrirGarantia(idGarantia);
+			return new ResponseEntity<Garantia>(HttpStatus.OK);
+		} catch (Exception e) {
+			String error = "Se produjo un error en el sistema";
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
+		}
+	}
+
 }

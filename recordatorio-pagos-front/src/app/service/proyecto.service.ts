@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { Garantia } from '../model/garantia';
 import { Proyecto } from '../model/proyecto';
 
 @Injectable({
@@ -53,4 +54,21 @@ export class ProyectoService {
       headers: header
     });
   }
+
+  cerrarProyecto(garantia: Garantia) {
+    let header = new HttpHeaders().
+      set('Content-Type', 'application/json');
+    return this.httpClient.put(`${this.path}/cerrarProyecto`, garantia, {
+      headers: header
+    });
+  }
+
+  abrirProyecto(idProyecto: number) {
+    let header = new HttpHeaders().
+      set('Content-Type', 'application/json');
+    return this.httpClient.put(`${this.path}/abrirProyecto`, idProyecto, {
+      headers: header
+    });
+  }
+
 }

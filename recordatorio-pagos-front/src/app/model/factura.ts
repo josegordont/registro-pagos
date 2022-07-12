@@ -2,6 +2,7 @@ export class Factura {
     public idCliente?: number;
     public nombreCliente?: string;
     public nombreProyecto?: string;
+    public estadoProyecto?: string;
     public idFactura: number;
     public idProyecto: number;
     public tipo: string;
@@ -10,6 +11,7 @@ export class Factura {
     public estado: string;
     public fechaInicio: Date;
     public fechaFin: Date;
+    public fechaCierre: Date;
     public numNotificaciones: number;
     public rankFechaFin:number;
 

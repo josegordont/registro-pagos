@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.recordatoriopagos.dto.FacturaDto;
 import com.recordatoriopagos.models.Factura;
-import com.recordatoriopagos.models.Garantia;
 import com.recordatoriopagos.service.FacturaService;
 
 @RestController
@@ -31,6 +30,16 @@ public class FacturaController {
 	@GetMapping()
 	public List<FacturaDto> obtenerFacturas() {
 		return facturaService.obtenerFacturas();
+	}
+
+	@GetMapping(path = "/obtenerFacturasACerrar")
+	public List<FacturaDto> obtenerFacturasACerrar() {
+		return facturaService.obtenerFacturasACerrar();
+	}
+
+	@GetMapping(path = "/obtenerFacturasCerradas")
+	public List<FacturaDto> obtenerFacturasCerradas() {
+		return facturaService.obtenerFacturasCerradas();
 	}
 
 	@GetMapping(path = "/obtenerFacturaPorId/{id}")
@@ -48,30 +57,30 @@ public class FacturaController {
 		return this.facturaService.eliminarFactura(id);
 	}
 
-	@PostMapping(path = "cerrarFacturasPorProyecto")
-	public ResponseEntity<?> cerrarFacturasPorProyecto(@RequestBody Garantia garantia) {
-		try {
-			facturaService.cerrarFacturasPorProyecto(garantia);
-			return new ResponseEntity<>(HttpStatus.OK);
-		} catch (Exception e) {
-			String error = "Se produjo un error en el sistema";
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
-		}
-	}
-
-	@PutMapping(path = "abrirFacturasPorProyecto")
-	public ResponseEntity<?> abrirFacturasPorProyecto(@RequestBody BigInteger idProyecto) {
-		try {
-			facturaService.abrirFacturasPorProyecto(idProyecto);
-			return new ResponseEntity<>(HttpStatus.OK);
-		} catch (Exception e) {
-			String error = "Se produjo un error en el sistema";
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
-		}
-	}
-
 	@GetMapping(path = "/existeNumeroFactura/{numeroFactura}")
 	public Boolean existeNumeroFactura(@PathVariable(value = "numeroFactura") String numeroFactura) {
 		return this.facturaService.existeNumeroFactura(numeroFactura);
+	}
+
+	@PutMapping(path = "abrirFactura")
+	public ResponseEntity<?> abrirFactura(@RequestBody BigInteger idProyecto) {
+		try {
+			facturaService.abrirFactura(idProyecto);
+			return new ResponseEntity<>(HttpStatus.OK);
+		} catch (Exception e) {
+			String error = "Se produjo un error en el sistema";
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
+		}
+	}
+
+	@PutMapping(path = "cerrarFactura")
+	public ResponseEntity<?> cerrarFactura(@RequestBody BigInteger idProyecto) {
+		try {
+			facturaService.cerrarFactura(idProyecto);
+			return new ResponseEntity<>(HttpStatus.OK);
+		} catch (Exception e) {
+			String error = "Se produjo un error en el sistema";
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
+		}
 	}
 }

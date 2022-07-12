@@ -47,4 +47,12 @@ export class GarantiaService {
     });
   }
 
+  abrirGarantia(idGarantia: number) {
+    let header = new HttpHeaders().
+      set('Content-Type', 'application/json');
+    return this.httpClient.put(`${this.path}/abrirGarantia`, idGarantia, {
+      headers: header
+    });
+  }
+
 }
