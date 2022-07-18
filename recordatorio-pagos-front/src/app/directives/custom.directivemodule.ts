@@ -84,4 +84,12 @@ export class LettersNumbersDirective {
         }
     }
 
+    @HostListener('keydown', ['$event'])
+    onkeyDown(event: KeyboardEvent): any {
+        const CLAVE_REGEXP = /^[A-Za-z0-9]+$/;
+        if (!CLAVE_REGEXP.test(event.key)) {
+            return false;
+        }
+    }
+
 }

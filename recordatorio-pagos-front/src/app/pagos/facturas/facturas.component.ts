@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatDatepicker } from '@angular/material/datepicker';
@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
 import { Moment } from 'moment';
+import { NgbdSortableHeader, SortEvent } from 'src/app/directives/sortable.directive';
 import { Cliente } from 'src/app/model/cliente';
 import { Factura } from 'src/app/model/factura';
 import { Garantia } from 'src/app/model/garantia';
@@ -56,6 +57,8 @@ export class FacturasComponent implements OnInit {
   diasGarantia: number;
   rol: string;
   periodoInput: Date;
+
+  @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>;
 
   constructor(
     private facturasService: FacturaService,

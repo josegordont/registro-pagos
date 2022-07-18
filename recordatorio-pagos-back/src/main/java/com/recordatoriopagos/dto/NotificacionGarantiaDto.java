@@ -1,10 +1,9 @@
 package com.recordatoriopagos.dto;
 
-import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;
 
-public interface NotificacionFacturaDto {
+public interface NotificacionGarantiaDto {
 
 	BigInteger getIdCliente();
 
@@ -14,15 +13,11 @@ public interface NotificacionFacturaDto {
 
 	String getNombreProyecto();
 
-	BigInteger getIdFactura();
+	BigInteger getIdGarantia();
 
-	String getNumeroFactura();
+	Date getFechaDevolucion();
 
-	BigDecimal getMonto();
-
-	Date getFechaInicio();
-
-	Date getFechaFin();
+	Date getFechaCierre();
 
 	String getEstado();
 
