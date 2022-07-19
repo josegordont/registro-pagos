@@ -229,5 +229,21 @@ export class FacturasComponent implements OnInit {
     this.filtrarLista(undefined);
   }
 
+  onSort({ column, direction }: SortEvent) {
+    switch (direction) {
+      case 'asc':
+        this.facturasFiltro.sort((factura: any, facturaSiguiente: any) => {
+          return facturaSiguiente[column] < factura[column];
+        });
+        break;
+      case 'desc':
+        this.facturasFiltro.sort((factura: any, facturaSiguiente: any) => {
+          return facturaSiguiente[column] > factura[column];
+        });
+        break;
+      default:
+    }
+  }
+
 }
 

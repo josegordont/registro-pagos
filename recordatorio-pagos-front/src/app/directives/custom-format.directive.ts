@@ -1,5 +1,5 @@
 import { NgModule } from "@angular/core";
-import { CustomEmailDirective, FormatPriceDirective, LettersNumbersDirective } from "./custom.directivemodule";
+import { CustomEmailDirective, FormatPriceDirective, LettersNumbersDirective, LettersNumbersValidationDirective } from "./custom.directivemodule";
 import { NgbdSortableHeader } from "./sortable.directive";
 
 @NgModule({
@@ -7,13 +7,15 @@ import { NgbdSortableHeader } from "./sortable.directive";
         FormatPriceDirective,
         CustomEmailDirective,
         LettersNumbersDirective,
-        NgbdSortableHeader
+        NgbdSortableHeader,
+        LettersNumbersValidationDirective
     ],
     exports: [
         FormatPriceDirective,
         CustomEmailDirective,
         LettersNumbersDirective,
-        NgbdSortableHeader
+        NgbdSortableHeader,
+        LettersNumbersValidationDirective
     ]
 })
 export class CustomDirectiveModule { }

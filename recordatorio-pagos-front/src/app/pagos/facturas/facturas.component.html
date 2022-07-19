@@ -79,12 +79,12 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th scope="col" sortable="nombreCliente">Cliente</th>
-                        <th scope="col" sortable="nombreProyecto">Proyecto</th>
-                        <th scope="col" sortable="numeroFactura">Número Factura</th>
-                        <th scope="col" sortable="monto">Monto</th>
-                        <th scope="col" sortable="fechaInicio">Fecha Inicio</th>
-                        <th scope="col" sortable="fechaFin">Fecha Fin</th>
+                        <th scope="col" sortable="nombreCliente" (sort)="onSort($event)">Cliente</th>
+                        <th scope="col" sortable="nombreProyecto " (sort)="onSort($event)">Proyecto</th>
+                        <th scope="col" sortable="numeroFactura" (sort)="onSort($event)">Número Factura</th>
+                        <th scope="col" sortable="monto" (sort)="onSort($event)">Monto</th>
+                        <th scope="col" sortable="fechaInicio" (sort)="onSort($event)">Fecha Inicio</th>
+                        <th scope="col" sortable="fechaFin" (sort)="onSort($event)">Fecha Fin</th>
                         <th scope="col">Acciones</th>
                     </tr>
                 </thead>

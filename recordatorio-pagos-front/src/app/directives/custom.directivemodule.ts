@@ -84,12 +84,24 @@ export class LettersNumbersDirective {
         }
     }
 
-    @HostListener('keydown', ['$event'])
-    onkeyDown(event: KeyboardEvent): any {
-        const CLAVE_REGEXP = /^[A-Za-z0-9]+$/;
-        if (!CLAVE_REGEXP.test(event.key)) {
-            return false;
-        }
-    }
+}
 
+@Directive({
+    selector: '[onlyLettersNumbersValidation]',
+    providers: [{ provide: NG_VALIDATORS, useExisting: LettersNumbersValidationDirective, multi: true }]
+})
+export class LettersNumbersValidationDirective implements Validator {
+
+    constructor(private el: ElementRef) { }
+
+    validate(control: AbstractControl): { [key: string]: any } | null {
+        let value = this.el.nativeElement.value;
+        if (value.length > 0) {
+            const CLAVE_REGEXP = /^[A-Za-z0-9]+$/;
+            if (!CLAVE_REGEXP.test(value)) {
+                return { format: true };
+            }
+        }
+        return null;
+    }
 }
