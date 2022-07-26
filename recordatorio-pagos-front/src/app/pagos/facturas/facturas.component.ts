@@ -232,12 +232,12 @@ export class FacturasComponent implements OnInit {
   onSort({ column, direction }: SortEvent) {
     switch (direction) {
       case 'asc':
-        this.facturasFiltro.sort((factura: any, facturaSiguiente: any) => {
+        this.facturasFiltro = this.facturasFiltro.sort((factura: any, facturaSiguiente: any) => {
           return facturaSiguiente[column] < factura[column];
         });
         break;
       case 'desc':
-        this.facturasFiltro.sort((factura: any, facturaSiguiente: any) => {
+        this.facturasFiltro = this.facturasFiltro.sort((factura: any, facturaSiguiente: any) => {
           return facturaSiguiente[column] > factura[column];
         });
         break;
