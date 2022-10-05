@@ -31,6 +31,14 @@ export class ProyectoService {
     });
   }
 
+  obtenerTodosProyectosPorCliente(idCliente: number) {
+    let header = new HttpHeaders().
+      set('Content-Type', 'application/json');
+    return this.httpClient.get(`${this.path}/obtenerTodosProyectosPorCliente/${idCliente}`, {
+      headers: header
+    });
+  }
+
   obtenerProyectoPorId(id: number) {
     let header = new HttpHeaders().
       set('Content-Type', 'application/json');

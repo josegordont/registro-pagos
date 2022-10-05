@@ -5,4 +5,8 @@ export class Proyecto {
     public nombre: string;
     public descripcion: string;
     public estado: string;
+
+    constructor() {
+        this.estado = "abierto";
+    }
 }

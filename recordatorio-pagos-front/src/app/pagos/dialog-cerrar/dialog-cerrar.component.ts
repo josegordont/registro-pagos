@@ -17,6 +17,7 @@ export class DialogCerrarComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.garantia.fechaFin = data.fechaFinSugerida;
+    this.garantia.total = data.totalGarantia;
     this.fechaSugerida = data.fechaFinSugerida;
   }
 

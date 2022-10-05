@@ -13,14 +13,14 @@
         <mat-card-actions>
             <form class="form-horizontal" #clienteForm="ngForm" (ngSubmit)="save()">
                 <div class="mb-3 row">
-                    <label for="inputRuc" class="col-sm-2 col-form-label">RUC</label>
+                    <label for="inputRuc" class="col-sm-2 col-form-label">CIF</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" [(ngModel)]="cliente.ruc" #inputRuc="ngModel"
                             placeholder="Identificación cliente" id="inputRuc" name="inputRuc" onlyLettersNumbers
                             onlyLettersNumbersValidation required>
                         <div *ngIf="inputRuc.invalid && (clienteForm.submitted || inputRuc.dirty || inputRuc.touched)"
                             class="alert alert-danger">
-                            <div *ngIf="inputRuc.errors['required']">RUC es requerido</div>
+                            <div *ngIf="inputRuc.errors['required']">CIF es requerido</div>
                             <div *ngIf="inputRuc.errors['format']">No se permite caracteres especiales</div>
                         </div>
                     </div>

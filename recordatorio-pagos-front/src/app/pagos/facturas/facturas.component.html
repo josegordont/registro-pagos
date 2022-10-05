@@ -82,7 +82,7 @@
                         <th scope="col" sortable="nombreCliente" (sort)="onSort($event)">Cliente</th>
                         <th scope="col" sortable="nombreProyecto " (sort)="onSort($event)">Proyecto</th>
                         <th scope="col" sortable="numeroFactura" (sort)="onSort($event)">Número Factura</th>
-                        <th scope="col" sortable="monto" (sort)="onSort($event)">Monto</th>
+                        <th scope="col" sortable="monto" (sort)="onSort($event)">Importe</th>
                         <th scope="col" sortable="fechaInicio" (sort)="onSort($event)">Fecha Inicio</th>
                         <th scope="col" sortable="fechaFin" (sort)="onSort($event)">Fecha Fin</th>
                         <th scope="col">Acciones</th>
@@ -93,7 +93,7 @@
                         <td scope="row">{{ factura.nombreCliente }}</td>
                         <td>{{ factura.nombreProyecto }} </td>
                         <th>{{ factura.numeroFactura }}</th>
-                        <td class="text-end">{{ factura.monto | number:'.2-2' }}</td>
+                        <td class="text-end">{{ factura.total | number:'.2-2' }}</td>
                         <td>{{ factura.fechaInicio | date:'dd/MMM/yyyy' }}</td>
                         <td>{{ factura.fechaFin | date:'dd/MMM/yyyy' }}</td>
                         <td class="btn-table">
@@ -101,8 +101,12 @@
                                 (click)="editar(factura.idFactura, factura.idCliente)"> Editar
                             </button>&nbsp;
                             <button *ngIf="factura.rankFechaFin === 1 && factura.estadoProyecto === 'abierto'"
-                                class="btn btn-success" type="button" (click)="cerrarProyecto(factura)"> Cerrar
+                                class="btn btn-success" type="button" (click)="cerrarProyecto(factura)"> Cerrar Proyecto
+                            </button>
+                            <button *ngIf="factura.rankFechaFin !== 1 && factura.estado === 'abierto'"
+                                class="btn btn-success" type="button" (click)="cerrarFacturaConfirmacion(factura)"> Cerrar
                             </button>&nbsp;
+                            &nbsp;
                             <button class="btn btn-danger" type="button" (click)="confirmarEliminar(factura)"> Eliminar
                             </button>
                         </td>

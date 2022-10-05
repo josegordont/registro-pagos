@@ -24,6 +24,17 @@
             <div *ngIf="inputFechaFin.hasError('matDatepickerParse')"> La fecha esta en formato incorrecto. </div>
         </div>
     </div>
+    <div class="col-md-12">
+        <label for="inputTotal" class="col-form-label">Total Garantía:</label>
+        <div class="col-sm-6">
+            <div class="input-group mb-2">
+                <span class="input-group-text">€</span>
+                <input type="text" class="form-control" [(ngModel)]="garantia.total" #inputTotal="ngModel"
+                    id="inputTotal" name="inputTotal" mask="separator.2" placeholder="0 000,00" required
+                    style="text-align: right;" [disabled]="true">
+            </div>
+        </div>
+    </div>
 </div>
 <div mat-dialog-actions class="rounded float-end">
     <button class="btn btn-secondary" type="button" [mat-dialog-close]="false"> No </button>&nbsp;&nbsp;&nbsp;

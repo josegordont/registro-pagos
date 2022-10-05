@@ -8,12 +8,15 @@ export class Factura {
     public tipo: string;
     public numeroFactura: string;
     public monto: number;
+    public retencion: number;
+    public iva: number;
+    public total: number;
     public estado: string;
     public fechaInicio: Date;
     public fechaFin: Date;
     public fechaCierre: Date;
     public numNotificaciones: number;
-    public rankFechaFin:number;
+    public rankFechaFin: number;
 
     constructor() {
         this.estado = "abierto";

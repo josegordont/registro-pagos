@@ -120,7 +120,7 @@ export class GarantiasComponent implements OnInit {
 
   obtenerProyectosPorCliente(cliente: Cliente) {
     if (cliente !== undefined) {
-      this.proyectosService.obtenerProyectosPorCliente(cliente.idCliente).subscribe(data => {
+      this.proyectosService.obtenerTodosProyectosPorCliente(cliente.idCliente).subscribe(data => {
         this.proyectos = data;
       }, err => {
         this.snackBarService.success('Se ha producido un error en el sistema!');

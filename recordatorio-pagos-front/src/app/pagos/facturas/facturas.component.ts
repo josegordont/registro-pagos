@@ -68,7 +68,8 @@ export class FacturasComponent implements OnInit {
     private clienteService: ClienteService,
     private proyectosService: ProyectoService,
     private parametroService: ParametroService,
-    private usuarioService: UsuarioService
+    private usuarioService: UsuarioService,
+    private facturaService: FacturaService,
   ) { }
 
   ngOnInit(): void {
@@ -178,11 +179,18 @@ export class FacturasComponent implements OnInit {
   cerrarProyecto(factura: Factura) {
     let fechaSugerida = new Date();
     fechaSugerida.setDate(new Date(factura.fechaFin).getDate() + this.diasGarantia);
+    let total = 0;
+    this.facturas.forEach((row: any) => {
+      if (factura.idCliente === row.idCliente && factura.idProyecto === row.idProyecto) {
+        total += row.retencion;
+      }
+    });
     const dialogRef = this.dialog.open(DialogCerrarComponent, {
       width: '500px',
       data: {
         body: `¿Estás seguro que deseas cerrar el proyecto <b> ${factura.nombreProyecto}</b>?`,
-        fechaFinSugerida: fechaSugerida
+        fechaFinSugerida: fechaSugerida,
+        totalGarantia: total
       }
     });
 
@@ -191,6 +199,7 @@ export class FacturasComponent implements OnInit {
         let garantia: Garantia = new Garantia();
         garantia.fechaDevolucion = result;
         garantia.idProyecto = factura.idProyecto;
+        garantia.total = total;
         this.cerrar(garantia);
       }
     });
@@ -199,6 +208,30 @@ export class FacturasComponent implements OnInit {
   cerrar(garantia: Garantia) {
     this.proyectosService.cerrarProyecto(garantia).subscribe(data => {
       this.snackBarService.success('Proyecto cerrado!');
+      this.obtenerFacturas();
+    }, err => {
+      this.snackBarService.success('Se ha producido un error en el sistema!');
+    });
+  }
+
+  cerrarFacturaConfirmacion(factura: Factura) {
+    const dialogRef = this.dialog.open(DialogAnimationComponent, {
+      width: '250px',
+      data: {
+        'body': `¿Estás seguro que deseas cerrar la factura <b> ${factura.numeroFactura}</b>?`
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.cerrarFactura(factura.idFactura);
+      }
+    });
+  }
+
+  cerrarFactura(idFactura: number) {
+    this.facturaService.cerrarFactura(idFactura).subscribe(data => {
+      this.snackBarService.success('Factura cerrada!');
       this.obtenerFacturas();
     }, err => {
       this.snackBarService.success('Se ha producido un error en el sistema!');

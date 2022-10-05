@@ -26,13 +26,13 @@
                     </div>
                 </div>
                 <div class="mb-3 row">
-                    <label for="inputNombre" class="col-sm-2 col-form-label">Nombre</label>
+                    <label for="inputNombre" class="col-sm-2 col-form-label">Proyecto</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" [(ngModel)]="proyecto.nombre" #inputNombre="ngModel"
                             id="inputNombre" name="inputNombre" placeholder="Nombre proyecto" required>
                         <div *ngIf="inputNombre.invalid && (proyectoForm.submitted || inputNombre.dirty || inputNombre.touched)"
                             class="alert alert-danger">
-                            <div>Nombre es requerido</div>
+                            <div>Proyecto es requerido</div>
                         </div>
                     </div>
                 </div>

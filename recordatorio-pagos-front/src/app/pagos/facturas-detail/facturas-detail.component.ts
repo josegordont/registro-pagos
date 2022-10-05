@@ -141,4 +141,26 @@ export class FacturasDetailComponent implements OnInit {
     });
   }
 
+  calcularImpuestos() {
+    if (this.factura.monto !== undefined && this.factura.monto !== '') {
+      this.factura.retencion = this.factura.monto * 0.05;
+      this.factura.iva = this.factura.monto * 0.21;
+      this.factura.total = this.factura.monto - this.factura.retencion + this.factura.iva;
+    } else {
+      this.factura.retencion = 0;
+      this.factura.iva = 0;
+      this.factura.total = 0;
+    }
+  }
+
+  cambioInpuestos() {
+    if (this.factura.retencion === undefined && this.factura.retencion === '') {
+      this.factura.retencion = 0;
+    }
+    if (this.factura.iva === undefined && this.factura.iva === '') {
+      this.factura.iva = 0;
+    }
+    this.factura.total = this.factura.monto - this.factura.retencion + this.factura.iva;
+  }
+
 }

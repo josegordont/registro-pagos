@@ -6,7 +6,7 @@
         <mat-card-title>Proyectos Anuales</mat-card-title>
 
         <mat-tab-group mat-align-tabs="start">
-            <mat-tab label="A cerrarse">
+            <mat-tab label="Pendientes">
                 <mat-card-actions>
                     <div class="row">
                         <div class="col-md-6">
@@ -88,6 +88,7 @@
                                     </th>
                                     <th scope="col">Cliente</th>
                                     <th scope="col">Proyecto</th>
+                                    <th scope="col">Total</th>
                                     <th scope="col">Fecha Devolución</th>
                                     <th scope="col">Acciones</th>
                                 </tr>
@@ -103,6 +104,7 @@
                                     </td>
                                     <td>{{ garantia.nombreCliente }}</td>
                                     <td>{{ garantia.nombreProyecto }} </td>
+                                    <td class="text-end">{{ garantia.total | number:'.2-2' }}  </td>
                                     <td>{{ garantia.fechaDevolucion | date:'dd/MMM/yyyy' }}</td>
                                     <td class="btn-table">
                                         <button class="btn btn-success" type="button"
@@ -137,7 +139,7 @@
                                     <th scope="col">Cliente</th>
                                     <th scope="col">Proyecto</th>
                                     <th scope="col">Número Factura</th>
-                                    <th scope="col">Monto</th>
+                                    <th scope="col">Importe</th>
                                     <th scope="col">Fecha Fin</th>
                                     <th scope="col">Acciones</th>
                                 </tr>
@@ -253,6 +255,7 @@
                                 <tr>
                                     <th scope="col">Cliente</th>
                                     <th scope="col">Proyecto</th>
+                                    <th scope="col">Total</th>
                                     <th scope="col">Fecha Devolución</th>
                                     <th scope="col">Fecha Cierre</th>
                                     <th scope="col">Acciones</th>
@@ -263,6 +266,7 @@
                                     *ngFor="let garantia of garantiasHisFiltro | slice: (page-1) * pageSize : page * pageSize">
                                     <td>{{ garantia.nombreCliente }}</td>
                                     <td>{{ garantia.nombreProyecto }} </td>
+                                    <td class="text-end">{{ garantia.toatl | number:'.2-2' }} </td>
                                     <td>{{ garantia.fechaDevolucion | date:'dd/MMM/yyyy' }}</td>
                                     <td>{{ garantia.fechaCierre | date:'dd/MMM/yyyy' }}</td>
                                     <td class="btn-table">
@@ -287,7 +291,7 @@
                                     <th scope="col">Cliente</th>
                                     <th scope="col">Proyecto</th>
                                     <th scope="col">Número Factura</th>
-                                    <th scope="col">Monto</th>
+                                    <th scope="col">Importe</th>
                                     <th scope="col">Fecha Fin</th>
                                     <th scope="col">Fecha Cierre</th>
                                     <th scope="col">Acciones</th>

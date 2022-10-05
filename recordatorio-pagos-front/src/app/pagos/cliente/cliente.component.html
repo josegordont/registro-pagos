@@ -12,10 +12,10 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group row">
-                        <label class="control-label text-right col-md-3 col-form-label">RUC:
+                        <label class="control-label text-right col-md-3 col-form-label">CIF:
                         </label>
                         <div class="col-md-9">
-                            <input type="text" class="form-control" [(ngModel)]="cliente.ruc" placeholder="RUC"
+                            <input type="text" class="form-control" [(ngModel)]="cliente.ruc" placeholder="CIF"
                                 #inputRuc="ngModel" id="inputRuc" name="inputRuc" (ngModelChange)="filtrarLista($event)"
                                 (paste)="filtrarLista($event)">
                         </div>
@@ -42,7 +42,7 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th scope="col">RUC</th>
+                        <th scope="col">CIF</th>
                         <th scope="col">Nombre</th>
                         <th scope="col">Acciones</th>
                     </tr>
