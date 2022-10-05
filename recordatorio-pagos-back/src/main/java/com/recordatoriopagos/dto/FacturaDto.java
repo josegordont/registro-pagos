@@ -20,6 +20,12 @@ public interface FacturaDto {
 
 	BigDecimal getMonto();
 
+	BigDecimal getRetencion();
+
+	BigDecimal getIva();
+
+	BigDecimal getTotal();
+
 	Date getFechaInicio();
 
 	Date getFechaFin();
@@ -27,9 +33,9 @@ public interface FacturaDto {
 	Integer getRankFechaFin();
 
 	String getEstado();
-	
+
 	String getEstadoProyecto();
-	
+
 	Date getFechaCierre();
 
 }

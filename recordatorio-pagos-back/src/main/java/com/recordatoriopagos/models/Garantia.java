@@ -1,5 +1,6 @@
 package com.recordatoriopagos.models;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;
 
@@ -30,6 +31,8 @@ public class Garantia {
 	private String estado;
 
 	private Date fechaCreacion;
+
+	private BigDecimal total;
 
 	@JsonIgnore
 	private Date fechaActualizacion;
@@ -80,6 +83,14 @@ public class Garantia {
 
 	public void setEstado(String estado) {
 		this.estado = estado;
+	}
+
+	public BigDecimal getTotal() {
+		return total;
+	}
+
+	public void setTotal(BigDecimal total) {
+		this.total = total;
 	}
 
 	public Date getFechaActualizacion() {

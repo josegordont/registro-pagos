@@ -29,6 +29,12 @@ public class Factura {
 
 	private BigDecimal monto;
 
+	private BigDecimal retencion;
+
+	private BigDecimal iva;
+
+	private BigDecimal total;
+
 	private String estado;
 
 	private Date fechaInicio;
@@ -100,6 +106,30 @@ public class Factura {
 
 	public void setMonto(BigDecimal monto) {
 		this.monto = monto;
+	}
+
+	public BigDecimal getRetencion() {
+		return retencion;
+	}
+
+	public void setRetencion(BigDecimal retencion) {
+		this.retencion = retencion;
+	}
+
+	public BigDecimal getIva() {
+		return iva;
+	}
+
+	public void setIva(BigDecimal iva) {
+		this.iva = iva;
+	}
+
+	public BigDecimal getTotal() {
+		return total;
+	}
+
+	public void setTotal(BigDecimal total) {
+		this.total = total;
 	}
 
 	public String getEstado() {

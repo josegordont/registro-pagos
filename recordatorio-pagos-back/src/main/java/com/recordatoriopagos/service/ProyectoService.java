@@ -25,6 +25,10 @@ public class ProyectoService {
 		return proyectoRepository.obtenerProyectos();
 	}
 
+	public List<Proyecto> obtenerTodosProyectosPorCliente(BigInteger idCliente) {
+		return proyectoRepository.findByIdCliente(idCliente);
+	}
+
 	public List<Proyecto> obtenerProyectosPorCliente(BigInteger idCliente) {
 		return proyectoRepository.findByIdClienteAndEstado(idCliente, "abierto");
 	}

@@ -38,7 +38,8 @@ public class RecordatorioPagoFactura {
 	@Autowired
 	GarantiaRepository garantiaRepository;
 
-	@Scheduled(cron = "0 30 8 * * *", zone = TIME_ZONE)
+//	@Scheduled(cron = "0 30 8 * * *", zone = TIME_ZONE)
+	@Scheduled(cron = "0 0 17 * * *", zone = TIME_ZONE)
 	public void notificacionFactura1() {
 		try {
 			envioNotificacionFacturas("dias_notificacion1", 0, "3");
@@ -47,7 +48,8 @@ public class RecordatorioPagoFactura {
 		}
 	}
 
-	@Scheduled(cron = "0 35 8 * * *", zone = TIME_ZONE)
+//	@Scheduled(cron = "0 35 8 * * *", zone = TIME_ZONE)
+	@Scheduled(cron = "0 1 17 * * *", zone = TIME_ZONE)
 	public void notificacionGarantia1() {
 		try {
 			envioNotificacionGarantias("dias_notificacion1", 0, "3");
@@ -102,19 +104,31 @@ public class RecordatorioPagoFactura {
 		bodyNotificacion.append("<th>Cliente</th>");
 		bodyNotificacion.append("<th>Proyecto</th>");
 		bodyNotificacion.append("<th>Número Factura</th>");
-		bodyNotificacion.append("<th>Monto</th>");
+		bodyNotificacion.append("<th>Importe</th>");
+		bodyNotificacion.append("<th>Retención</th>");
+		bodyNotificacion.append("<th>Iva</th>");
+		bodyNotificacion.append("<th>Total</th>");
 		bodyNotificacion.append("<th>Fecha Fin</th>");
 		bodyNotificacion.append("<th>Días para Finalizar</th>");
 		bodyNotificacion.append("</tr>");
 		bodyNotificacion.append("</thead><tbody>");
-		BigDecimal total = new BigDecimal(0);
+		BigDecimal totalMonto = new BigDecimal(0);
+		BigDecimal totalRetencion = new BigDecimal(0);
+		BigDecimal totalIva = new BigDecimal(0);
+		BigDecimal totalTotal = new BigDecimal(0);
 		for (NotificacionFacturaDto factura : facturasNotificar) {
-			total = total.add(factura.getMonto());
+			totalMonto = totalMonto.add(factura.getMonto());
+			totalRetencion = totalRetencion.add(factura.getRetencion());
+			totalIva = totalIva.add(factura.getIva());
+			totalTotal = totalTotal.add(factura.getTotal());
 			bodyNotificacion.append("<tr>");
 			bodyNotificacion.append("<td>".concat(factura.getNombreCliente()).concat("</td>"));
 			bodyNotificacion.append("<td>".concat(factura.getNombreProyecto()).concat("</td>"));
 			bodyNotificacion.append("<td>".concat(factura.getNumeroFactura()).concat("</td>"));
 			bodyNotificacion.append("<td class=\"right\">".concat(factura.getMonto().toString()).concat("</td>"));
+			bodyNotificacion.append("<td class=\"right\">".concat(factura.getRetencion().toString()).concat("</td>"));
+			bodyNotificacion.append("<td class=\"right\">".concat(factura.getIva().toString()).concat("</td>"));
+			bodyNotificacion.append("<td class=\"right\">".concat(factura.getTotal().toString()).concat("</td>"));
 			bodyNotificacion.append("<td>".concat(factura.getFechaFin().toString()).concat("</td>"));
 			bodyNotificacion
 					.append("<td class=\"right\">".concat(factura.getDiasFechaFin().toString()).concat("</td>"));
@@ -124,7 +138,10 @@ public class RecordatorioPagoFactura {
 		bodyNotificacion.append("<tfoot>");
 		bodyNotificacion.append("<tr><td></td><td></td>");
 		bodyNotificacion.append("<td class=\"right\"><b>Total:</b></td>");
-		bodyNotificacion.append("<td class=\"right\"><b>".concat(total.toString()).concat("</b></td>"));
+		bodyNotificacion.append("<td class=\"right\"><b>".concat(totalMonto.toString()).concat("</b></td>"));
+		bodyNotificacion.append("<td class=\"right\"><b>".concat(totalRetencion.toString()).concat("</b></td>"));
+		bodyNotificacion.append("<td class=\"right\"><b>".concat(totalIva.toString()).concat("</b></td>"));
+		bodyNotificacion.append("<td class=\"right\"><b>".concat(totalTotal.toString()).concat("</b></td>"));
 		bodyNotificacion.append("<td></td><td></td></tr>");
 		bodyNotificacion.append("</tfoot></table><br>");
 		bodyNotificacion.append(
@@ -171,6 +188,7 @@ public class RecordatorioPagoFactura {
 		bodyNotificacion.append("<tr>");
 		bodyNotificacion.append("<th>Cliente</th>");
 		bodyNotificacion.append("<th>Proyecto</th>");
+		bodyNotificacion.append("<th>Total</th>");
 		bodyNotificacion.append("<th>Fecha Fin</th>");
 		bodyNotificacion.append("<th>Días para Finalizar</th>");
 		bodyNotificacion.append("</tr>");
@@ -179,6 +197,7 @@ public class RecordatorioPagoFactura {
 			bodyNotificacion.append("<tr>");
 			bodyNotificacion.append("<td>".concat(garantia.getNombreCliente()).concat("</td>"));
 			bodyNotificacion.append("<td>".concat(garantia.getNombreProyecto()).concat("</td>"));
+			bodyNotificacion.append("<td class=\"right\">".concat(garantia.getTotal().toString()).concat("</td>"));
 			bodyNotificacion.append("<td>".concat(garantia.getFechaDevolucion().toString()).concat("</td>"));
 			bodyNotificacion
 					.append("<td class=\"right\">".concat(garantia.getDiasFechaFin().toString()).concat("</td>"));

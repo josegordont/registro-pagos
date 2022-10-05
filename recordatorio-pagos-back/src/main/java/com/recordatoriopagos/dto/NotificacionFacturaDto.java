@@ -19,6 +19,12 @@ public interface NotificacionFacturaDto {
 	String getNumeroFactura();
 
 	BigDecimal getMonto();
+	
+	BigDecimal getRetencion();
+	
+	BigDecimal getIva();
+	
+	BigDecimal getTotal();
 
 	Date getFechaInicio();
 

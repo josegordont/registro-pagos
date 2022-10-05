@@ -37,6 +37,11 @@ public class ProyectoController {
 		return proyectoService.obtenerProyectosPorCliente(id);
 	}
 
+	@GetMapping(path = "/obtenerTodosProyectosPorCliente/{id}")
+	public List<Proyecto> obtenerTodosProyectosPorCliente(@PathVariable("id") BigInteger id) {
+		return proyectoService.obtenerTodosProyectosPorCliente(id);
+	}
+
 	@GetMapping(path = "/{id}")
 	public Optional<Proyecto> obtenerProyectoPorId(@PathVariable("id") BigInteger id) {
 		return this.proyectoService.obtenerPorId(id);

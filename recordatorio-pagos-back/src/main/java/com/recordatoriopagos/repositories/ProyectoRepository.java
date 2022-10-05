@@ -21,6 +21,8 @@ public interface ProyectoRepository extends CrudRepository<Proyecto, BigInteger>
 	@Query(nativeQuery = true, value = "SELECT * FROM factura f WHERE idProyecto = :idProyecto")
 	public abstract List<Factura> obtenerFacturasPorProyecto(BigInteger idProyecto);
 
+	public abstract List<Proyecto> findByIdCliente(BigInteger idCliente);
+
 	public abstract List<Proyecto> findByIdClienteAndEstado(BigInteger idCliente, String estado);
 
 	@Transactional
