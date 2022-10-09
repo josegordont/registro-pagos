@@ -9,6 +9,7 @@ import { Cliente } from 'src/app/model/cliente';
 import { Factura } from 'src/app/model/factura';
 import { ClienteService } from 'src/app/service/cliente.service';
 import { FacturaService } from 'src/app/service/factura.service';
+import { ParametroService } from 'src/app/service/parametro.service';
 import { ProyectoService } from 'src/app/service/proyecto.service';
 import { SnackBarService } from 'src/app/service/snack-bar.service';
 
@@ -42,7 +43,8 @@ export class FacturasDetailComponent implements OnInit {
     private router: Router,
     private clienteService: ClienteService,
     private proyectosService: ProyectoService,
-    private snackBarService: SnackBarService
+    private snackBarService: SnackBarService,
+    private parametroService: ParametroService
   ) {
     this.translate.setDefaultLang(DEFAULT_LANGUAGE);
     this.fechaActual.setHours(0);
@@ -110,14 +112,18 @@ export class FacturasDetailComponent implements OnInit {
   }
 
   obtenerParametros() {
-    this.diasVencimiento = 20;
-    this.fechaSugerida.setDate(new Date(this.factura.fechaInicio).getDate() + this.diasVencimiento);
-    if (this.idFactura === '0') {
-      this.factura.fechaFin = this.fechaSugerida;
-      this.fechaFinIgualSugerida = true;
-    } else {
-      this.fechasIguales(new Date(this.factura.fechaFin), this.fechaSugerida);
-    }
+    this.parametroService.obtenerParametros().subscribe(data => {
+      this.diasVencimiento = Number(data.find((parametro: any) => parametro.clave === 'fact_mensual').valor);
+      this.fechaSugerida.setDate(new Date(this.factura.fechaInicio).getDate() + this.diasVencimiento);
+      if (this.idFactura === '0') {
+        this.factura.fechaFin = this.fechaSugerida;
+        this.fechaFinIgualSugerida = true;
+      } else {
+        this.fechaFinIgualSugerida = this.fechasIguales(new Date(this.factura.fechaFin), this.fechaSugerida);
+      }
+    }, err => {
+      this.snackBarService.success('Se ha producido un error en el sistema!');
+    });
   }
 
   cambioFechaFin(event: any) {

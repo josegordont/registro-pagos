@@ -120,6 +120,8 @@ export class GarantiasComponent implements OnInit {
 
   obtenerProyectosPorCliente(cliente: Cliente) {
     if (cliente !== undefined) {
+      this.garantia.idProyecto = undefined;
+      this.garantiaHis.idProyecto = undefined;
       this.proyectosService.obtenerTodosProyectosPorCliente(cliente.idCliente).subscribe(data => {
         this.proyectos = data;
       }, err => {
@@ -175,15 +177,23 @@ export class GarantiasComponent implements OnInit {
 
   filtrarListaHis(event: any) {
     this.garantiasHisFiltro = this.garantiasHis;
+    this.facturasHisFiltro = this.facturasHis;
     if (this.garantiaHis.idCliente !== undefined && this.garantiaHis.idCliente !== null) {
       this.garantiasHisFiltro = this.garantiasHisFiltro.filter((garantia: any) => garantia.idCliente === this.garantiaHis.idCliente);
+      this.facturasHisFiltro = this.facturasHisFiltro.filter((factura: any) => factura.idCliente === this.garantiaHis.idCliente);
     }
     if (this.garantiaHis.idProyecto !== undefined && this.garantiaHis.idProyecto !== null) {
       this.garantiasHisFiltro = this.garantiasHisFiltro.filter((garantia: any) => garantia.idProyecto === this.garantiaHis.idProyecto);
+      this.facturasHisFiltro = this.facturasHisFiltro.filter((factura: any) => factura.idProyecto === this.garantiaHis.idProyecto);
     }
     if (this.periodoInputHis !== undefined && this.periodoInputHis !== null) {
       this.garantiasHisFiltro = this.garantiasHisFiltro.filter((garantia: any) => {
         let fechaDevolucion = new Date(garantia.fechaDevolucion);
+        return this.periodoInputHis.getFullYear() === fechaDevolucion.getFullYear() &&
+          this.periodoInputHis.getMonth() === fechaDevolucion.getMonth();
+      });
+      this.facturasHisFiltro = this.facturasHisFiltro.filter((factura: any) => {
+        let fechaDevolucion = new Date(factura.fechaFin);
         return this.periodoInputHis.getFullYear() === fechaDevolucion.getFullYear() &&
           this.periodoInputHis.getMonth() === fechaDevolucion.getMonth();
       });
@@ -345,6 +355,7 @@ export class GarantiasComponent implements OnInit {
     this.proyectosService.abrirProyecto(idProyecto).subscribe(data => {
       this.snackBarService.success('Proyecto abierto!');
       this.obtenerFacturas();
+      this.obtenerGarantias();
     }, err => {
       this.snackBarService.success('Se ha producido un error en el sistema!');
     });

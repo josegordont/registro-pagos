@@ -74,6 +74,15 @@ export class FacturasComponent implements OnInit {
 
   ngOnInit(): void {
     this.rol = this.usuarioService.obtenerRol();
+    if (sessionStorage.getItem('factura') !== null) {
+      this.factura = JSON.parse(sessionStorage.getItem('factura'));
+      sessionStorage.removeItem('factura');
+      if (this.factura.idCliente !== null) {
+        let cliente: Cliente = new Cliente();
+        cliente.idCliente = this.factura.idCliente;
+        this.obtenerProyectosPorCliente(cliente);
+      }
+    }
     this.obtenerFacturas();
     this.obtenerClientes();
     this.obtenerParametros();
@@ -90,6 +99,7 @@ export class FacturasComponent implements OnInit {
   }
 
   editar(idFactura: string, idCliente: string) {
+    sessionStorage.setItem('factura', JSON.stringify(this.factura));
     this.router.navigateByUrl(`/facturas/editar/${idFactura}/${idCliente}`);
   }
 
@@ -122,6 +132,7 @@ export class FacturasComponent implements OnInit {
   }
 
   navegar(ruta: string) {
+    sessionStorage.setItem('factura', JSON.stringify(this.factura));
     this.router.navigateByUrl(ruta);
   }
 

@@ -59,7 +59,7 @@
                                 <span class="input-group-text">mm/aaaa</span>
                                 <input matInput [matDatepicker]="periodoHis" [(ngModel)]="periodoInput"
                                     #inputFechaInicio="ngModel" name="inputFechaInicio" class="form-control"
-                                    (change)="filtrarListaFecha($event)" (paste)="filtrarListaFecha($event)"
+                                    (ngModelChange)="filtrarListaFecha($event)" (paste)="filtrarListaFecha($event)"
                                     name="periodoHis" placeholder="Selecciona una fecha" required>
                                 <mat-datepicker-toggle matSuffiX [for]="periodoHis"></mat-datepicker-toggle>
                                 <mat-datepicker #periodoHis startView="year"
@@ -104,9 +104,13 @@
                                 class="btn btn-success" type="button" (click)="cerrarProyecto(factura)"> Cerrar Proyecto
                             </button>
                             <button *ngIf="factura.rankFechaFin !== 1 && factura.estado === 'abierto'"
-                                class="btn btn-success" type="button" (click)="cerrarFacturaConfirmacion(factura)"> Cerrar
+                                class="btn btn-success" type="button" (click)="cerrarFacturaConfirmacion(factura)">
+                                Cerrar
+                            </button>
+                            <button *ngIf="factura.rankFechaFin !== 1 && factura.estado === 'cerrado'"
+                                class="btn btn-secondary" type="button" [disabled]="true">
+                                Cerrada
                             </button>&nbsp;
-                            &nbsp;
                             <button class="btn btn-danger" type="button" (click)="confirmarEliminar(factura)"> Eliminar
                             </button>
                         </td>
