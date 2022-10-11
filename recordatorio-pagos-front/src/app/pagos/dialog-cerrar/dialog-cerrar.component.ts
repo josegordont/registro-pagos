@@ -11,6 +11,7 @@ export class DialogCerrarComponent implements OnInit {
   garantia: any = new Object();
   fechaSugerida: Date;
   errorFechas: number = 0;
+  numeroFacturas: number;
 
   constructor(
     public dialogRef: MatDialogRef<DialogCerrarComponent>,
@@ -19,6 +20,7 @@ export class DialogCerrarComponent implements OnInit {
     this.garantia.fechaFin = data.fechaFinSugerida;
     this.garantia.total = data.totalGarantia;
     this.fechaSugerida = data.fechaFinSugerida;
+    this.numeroFacturas = data.numeroFacturas;
   }
 
   ngOnInit(): void {

@@ -7,7 +7,6 @@ import { Router } from '@angular/router';
 import * as moment from 'moment';
 import { Moment } from 'moment';
 import { NgbdSortableHeader, SortEvent } from 'src/app/directives/sortable.directive';
-import { Cliente } from 'src/app/model/cliente';
 import { Factura } from 'src/app/model/factura';
 import { Garantia } from 'src/app/model/garantia';
 import { ClienteService } from 'src/app/service/cliente.service';
@@ -78,9 +77,7 @@ export class FacturasComponent implements OnInit {
       this.factura = JSON.parse(sessionStorage.getItem('factura'));
       sessionStorage.removeItem('factura');
       if (this.factura.idCliente !== null) {
-        let cliente: Cliente = new Cliente();
-        cliente.idCliente = this.factura.idCliente;
-        this.obtenerProyectosPorCliente(cliente);
+        this.obtenerProyectosPorCliente(this.factura.idCliente);
       }
     }
     this.obtenerFacturas();
@@ -147,8 +144,9 @@ export class FacturasComponent implements OnInit {
 
   filtrarLista(event: any) {
     this.facturasFiltro = this.facturas;
+    this.facturasFiltro = this.facturasFiltro.filter((factura: any) => factura.estado === this.factura.estado);
     if (this.factura.idCliente !== undefined && this.factura.idCliente !== null) {
-      this.facturasFiltro = this.facturas.filter((factura: any) => factura.idCliente === this.factura.idCliente);
+      this.facturasFiltro = this.facturasFiltro.filter((factura: any) => factura.idCliente === this.factura.idCliente);
     }
     if (this.factura.idProyecto !== undefined && this.factura.idProyecto !== null) {
       this.facturasFiltro = this.facturasFiltro.filter((factura: any) => factura.idProyecto === this.factura.idProyecto);
@@ -167,15 +165,18 @@ export class FacturasComponent implements OnInit {
     }
   }
 
-  obtenerProyectosPorCliente(cliente: Cliente) {
-    if (cliente !== undefined) {
-      this.proyectosService.obtenerProyectosPorCliente(cliente.idCliente).subscribe(data => {
+  obtenerProyectosPorCliente(idCliente: number) {
+    if (idCliente !== undefined && idCliente !== null) {
+      this.factura.idProyecto = undefined;
+      this.filtrarLista(undefined);
+      this.proyectosService.obtenerProyectosPorCliente(idCliente).subscribe(data => {
         this.proyectos = data;
       }, err => {
         this.snackBarService.success('Se ha producido un error en el sistema!');
       });
     } else {
       this.factura.idProyecto = undefined;
+      this.filtrarLista(undefined);
     }
   }
 
@@ -191,9 +192,11 @@ export class FacturasComponent implements OnInit {
     let fechaSugerida = new Date();
     fechaSugerida.setDate(new Date(factura.fechaFin).getDate() + this.diasGarantia);
     let total = 0;
+    let numeroFacturas = 0;
     this.facturas.forEach((row: any) => {
       if (factura.idCliente === row.idCliente && factura.idProyecto === row.idProyecto) {
         total += row.retencion;
+        numeroFacturas++;
       }
     });
     const dialogRef = this.dialog.open(DialogCerrarComponent, {
@@ -201,7 +204,8 @@ export class FacturasComponent implements OnInit {
       data: {
         body: `¿Estás seguro que deseas cerrar el proyecto <b> ${factura.nombreProyecto}</b>?`,
         fechaFinSugerida: fechaSugerida,
-        totalGarantia: total
+        totalGarantia: total,
+        numeroFacturas: numeroFacturas
       }
     });
 

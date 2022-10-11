@@ -17,8 +17,7 @@
                         <div class="col-md-9">
                             <ng-select [items]="clientes" [(ngModel)]="factura.idCliente" #inputCliente="ngModel"
                                 name="inputCliente" placeholder="Selecciona un cliente" bindValue="idCliente"
-                                bindLabel="nombre" (change)="obtenerProyectosPorCliente($event)"
-                                (ngModelChange)="filtrarLista($event)" (paste)="filtrarLista($event)">
+                                bindLabel="nombre" (ngModelChange)="obtenerProyectosPorCliente($event)">
                             </ng-select>
                         </div>
                     </div>
@@ -102,11 +101,7 @@
                             </button>&nbsp;
                             <button *ngIf="factura.rankFechaFin === 1 && factura.estadoProyecto === 'abierto'"
                                 class="btn btn-success" type="button" (click)="cerrarProyecto(factura)"> Cerrar Proyecto
-                            </button>
-                            <button *ngIf="factura.rankFechaFin !== 1 && factura.estado === 'abierto'"
-                                class="btn btn-success" type="button" (click)="cerrarFacturaConfirmacion(factura)">
-                                Cerrar
-                            </button>
+                            </button>&nbsp;
                             <button *ngIf="factura.rankFechaFin !== 1 && factura.estado === 'cerrado'"
                                 class="btn btn-secondary" type="button" [disabled]="true">
                                 Cerrada

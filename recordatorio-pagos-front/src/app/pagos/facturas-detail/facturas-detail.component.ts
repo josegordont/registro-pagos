@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { CUSTOM_DATE_FORMAT, DEFAULT_LANGUAGE } from 'src/app/directives/constants';
@@ -12,6 +13,7 @@ import { FacturaService } from 'src/app/service/factura.service';
 import { ParametroService } from 'src/app/service/parametro.service';
 import { ProyectoService } from 'src/app/service/proyecto.service';
 import { SnackBarService } from 'src/app/service/snack-bar.service';
+import { DialogAnimationComponent } from '../dialog-animation/dialog-animation.component';
 
 @Component({
   selector: 'app-facturas-detail',
@@ -33,6 +35,8 @@ export class FacturasDetailComponent implements OnInit {
   fechaSugerida: Date = new Date();
   fechaFinIgualSugerida: boolean;
   existeNumeroFactura: boolean;
+  montoOriginal: number;
+  retencionOriginal: number;
 
   @ViewChild('facturaForm') facturaForm: FormGroup;
 
@@ -44,7 +48,8 @@ export class FacturasDetailComponent implements OnInit {
     private clienteService: ClienteService,
     private proyectosService: ProyectoService,
     private snackBarService: SnackBarService,
-    private parametroService: ParametroService
+    private parametroService: ParametroService,
+    public dialog: MatDialog,
   ) {
     this.translate.setDefaultLang(DEFAULT_LANGUAGE);
     this.fechaActual.setHours(0);
@@ -84,20 +89,43 @@ export class FacturasDetailComponent implements OnInit {
     }
   }
 
-  guardar() {
+  guardarConfirmacion() {
     if (this.facturaForm.valid && !this.existeNumeroFactura) {
-      this.facturasService.guardarFactura(this.factura).subscribe(data => {
-        this.snackBarService.success('Factura guardada!');
-        this.router.navigateByUrl("/facturas");
-      }, err => {
-        this.snackBarService.success('Se ha producido un error en el sistema!');
-      });
+      if (this.factura.idFactura !== null && this.factura.idFactura !== undefined) {
+        if (this.factura.monto !== this.montoOriginal || this.factura.retencion !== this.retencionOriginal) {
+          const dialogRef = this.dialog.open(DialogAnimationComponent, {
+            width: '250px',
+            data: {
+              'body': `¿Estás seguro que deseas guardar la factura?. Se ha actualizado el monto ó la retención.`
+            }
+          });
+      
+          dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+              this.guardar();
+            }
+          });
+        } else {
+          this.guardar();
+        }
+      }
     }
+  }
+
+  guardar() {
+    this.facturasService.guardarFactura(this.factura).subscribe(data => {
+      this.snackBarService.success('Factura guardada!');
+      this.router.navigateByUrl("/facturas");
+    }, err => {
+      this.snackBarService.success('Se ha producido un error en el sistema!');
+    });
   }
 
   obtenerFacturaPorId(id: any) {
     this.facturasService.obtenerFacturaPorId(id).subscribe(data => {
       this.factura = data;
+      this.montoOriginal = this.factura.monto;
+      this.retencionOriginal = this.factura.retencion;
       let idCliente = Number(this.activeteRoute.snapshot.paramMap.get('idCliente'));
       this.factura.idCliente = idCliente;
       this.obtenerProyectosPorCliente({ idCliente: idCliente, ruc: '', nombre: '' });

@@ -25,6 +25,13 @@
         </div>
     </div>
     <div class="col-md-12">
+        <label for="inputNumeroFacturas" class="col-form-label">Número Facturas:</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" [(ngModel)]="numeroFacturas" #inputNumeroFacturas="ngModel"
+                id="inputNumeroFacturas" name="inputNumeroFacturas" style="text-align: right;" [disabled]="true">
+        </div>
+    </div>
+    <div class="col-md-12">
         <label for="inputTotal" class="col-form-label">Total Garantía:</label>
         <div class="col-sm-6">
             <div class="input-group mb-2">
