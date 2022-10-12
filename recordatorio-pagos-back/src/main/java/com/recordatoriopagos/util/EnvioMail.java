@@ -33,7 +33,6 @@ public class EnvioMail {
 		for (String toMail : toMails) {
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(toMail));
 		}
-		message.addRecipient(Message.RecipientType.BCC, new InternetAddress("pepe.jpgt@gmail.com"));
 		message.setSubject(subject);
 		message.setContent(mensaje, "text/html; charset=utf-8");
 		message.addHeader("X-Priority", prioridad);
