@@ -320,7 +320,6 @@ export class GarantiasComponent implements OnInit {
     this.facturaService.obtenerFacturasACerrar().subscribe(data => {
       this.facturas = data;
       this.facturasFiltro = data;
-      console.log(this.facturasFiltro);
       this.filtrarLista(undefined);
     }, err => {
       this.snackBarService.success('Se ha producido un error en el sistema!');

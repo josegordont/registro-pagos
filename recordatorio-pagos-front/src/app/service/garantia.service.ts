@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Garantia } from '../model/garantia';
+import { UsuarioService } from './usuario.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,8 @@ export class GarantiaService {
   path: string = environment.apiEndpoint.concat('garantia');
 
   constructor(
-    private httpClient: HttpClient
+    private httpClient: HttpClient,
+    private usuarioService: UsuarioService
   ) { }
 
   obtenerGarantias(): Observable<any[]> {
@@ -32,6 +34,7 @@ export class GarantiaService {
   }
 
   guardarGarantia(garantia: Garantia) {
+    garantia.usuarioActualizacion = this.usuarioService.obtenerInformacionUsuario().idUsuario;
     let header = new HttpHeaders().
       set('Content-Type', 'application/json');
     return this.httpClient.post(`${this.path}`, garantia, {

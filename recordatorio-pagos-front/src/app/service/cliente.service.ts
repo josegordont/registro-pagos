@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Cliente } from '../model/cliente';
+import { UsuarioService } from './usuario.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,8 @@ export class ClienteService {
   path: string = environment.apiEndpoint.concat('cliente');
 
   constructor(
-    private httpClient: HttpClient
+    private httpClient: HttpClient,
+    private usuarioService: UsuarioService
   ) { }
 
   obtenerClientes() {
@@ -31,6 +33,7 @@ export class ClienteService {
   }
 
   guardarCliente(cliente: Cliente) {
+    cliente.usuarioActualizacion = this.usuarioService.obtenerInformacionUsuario().idUsuario;
     let header = new HttpHeaders().
       set('Content-Type', 'application/json');
     return this.httpClient.post(`${this.path}`, cliente, {

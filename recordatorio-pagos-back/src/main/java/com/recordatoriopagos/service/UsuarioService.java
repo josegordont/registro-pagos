@@ -48,6 +48,8 @@ public class UsuarioService {
 			bodyMail.append("Saludos,<br>Recordatorio Pagos.</p>");
 			String contrasena = Contrasena.alphaNumericString();
 			usuario.setFechaCreacion(new Date());
+			usuario.setUsuarioCreacion(usuario.getUsuarioActualizacion());
+			usuario.setUsuarioActualizacion(null);
 			usuario.setContrasena(BCrypt.hashpw(contrasena, BCrypt.gensalt()));
 			usuario.setCambiarContrasena(Boolean.TRUE);
 			EnvioMail envioMail = new EnvioMail();

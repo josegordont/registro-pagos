@@ -40,6 +40,8 @@ public class ProyectoService {
 	public Proyecto guardarProyecto(Proyecto proyecto) {
 		if (proyecto.getFechaCreacion() == null) {
 			proyecto.setFechaCreacion(new Date());
+			proyecto.setUsuarioCreacion(proyecto.getUsuarioActualizacion());
+			proyecto.setUsuarioActualizacion(null);
 		} else {
 			proyecto.setFechaActualizacion(new Date());
 		}

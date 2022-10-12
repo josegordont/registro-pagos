@@ -40,6 +40,10 @@ public class Usuario {
 	@JsonIgnore
 	private Date fechaActualizacion;
 
+	private BigInteger usuarioCreacion;
+
+	private BigInteger usuarioActualizacion;
+
 	public BigInteger getIdUsuario() {
 		return idUsuario;
 	}
@@ -112,4 +116,20 @@ public class Usuario {
 		this.cambiarContrasena = cambiarContrasena;
 	}
 
+	public BigInteger getUsuarioCreacion() {
+		return usuarioCreacion;
+	}
+
+	public void setUsuarioCreacion(BigInteger usuarioCreacion) {
+		this.usuarioCreacion = usuarioCreacion;
+	}
+
+	public BigInteger getUsuarioActualizacion() {
+		return usuarioActualizacion;
+	}
+
+	public void setUsuarioActualizacion(BigInteger usuarioActualizacion) {
+		this.usuarioActualizacion = usuarioActualizacion;
+	}
+	
 }

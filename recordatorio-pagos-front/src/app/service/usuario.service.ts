@@ -15,6 +15,10 @@ export class UsuarioService {
     private httpClient: HttpClient
   ) { }
 
+  obtenerInformacionUsuario(): Usuario {
+    return JSON.parse(atob(sessionStorage.getItem(btoa('currentUser'))));
+  }
+
   obtenerUsuarios() {
     let header = new HttpHeaders().
       set('Content-Type', 'application/json');
@@ -32,6 +36,7 @@ export class UsuarioService {
   }
 
   guardarUsuario(usuario: Usuario) {
+    usuario.usuarioActualizacion = this.obtenerInformacionUsuario().idUsuario;
     let header = new HttpHeaders().
       set('Content-Type', 'application/json');
     return this.httpClient.post(`${this.path}`, usuario, {

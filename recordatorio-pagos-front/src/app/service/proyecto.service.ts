@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Garantia } from '../model/garantia';
 import { Proyecto } from '../model/proyecto';
+import { UsuarioService } from './usuario.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,8 @@ export class ProyectoService {
   path: string = environment.apiEndpoint.concat('proyecto');
 
   constructor(
-    private httpClient: HttpClient
+    private httpClient: HttpClient,
+    private usuarioService: UsuarioService
   ) { }
 
   obtenerProyectos() {
@@ -48,6 +50,7 @@ export class ProyectoService {
   }
 
   guardarProyecto(proyecto: Proyecto) {
+    proyecto.usuarioActualizacion = this.usuarioService.obtenerInformacionUsuario().idUsuario;
     let header = new HttpHeaders().
       set('Content-Type', 'application/json');
     return this.httpClient.post(`${this.path}`, proyecto, {

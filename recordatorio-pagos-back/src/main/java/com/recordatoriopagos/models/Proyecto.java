@@ -38,6 +38,10 @@ public class Proyecto {
 	@JsonIgnore
 	private Date fechaActualizacion;
 
+	private BigInteger usuarioCreacion;
+
+	private BigInteger usuarioActualizacion;
+
 	public Proyecto() {
 	}
 
@@ -112,6 +116,22 @@ public class Proyecto {
 
 	public void setFechaActualizacion(Date fechaActualizacion) {
 		this.fechaActualizacion = fechaActualizacion;
+	}
+
+	public BigInteger getUsuarioCreacion() {
+		return usuarioCreacion;
+	}
+
+	public void setUsuarioCreacion(BigInteger usuarioCreacion) {
+		this.usuarioCreacion = usuarioCreacion;
+	}
+
+	public BigInteger getUsuarioActualizacion() {
+		return usuarioActualizacion;
+	}
+
+	public void setUsuarioActualizacion(BigInteger usuarioActualizacion) {
+		this.usuarioActualizacion = usuarioActualizacion;
 	}
 
 }

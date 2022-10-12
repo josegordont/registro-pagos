@@ -6,4 +6,5 @@ export class Usuario {
     public apellidos: string;
     public rol: string;
     public cambiarContrasena: boolean;
+    public usuarioActualizacion?: number;
 }

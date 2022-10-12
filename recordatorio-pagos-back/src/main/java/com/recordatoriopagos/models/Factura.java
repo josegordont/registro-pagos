@@ -50,6 +50,10 @@ public class Factura {
 	@JsonIgnore
 	private Date fechaActualizacion;
 
+	private BigInteger usuarioCreacion;
+
+	private BigInteger usuarioActualizacion;
+
 	@Transient
 	private BigInteger idCliente;
 
@@ -210,6 +214,22 @@ public class Factura {
 
 	public void setNombreProyecto(String nombreProyecto) {
 		this.nombreProyecto = nombreProyecto;
+	}
+
+	public BigInteger getUsuarioCreacion() {
+		return usuarioCreacion;
+	}
+
+	public void setUsuarioCreacion(BigInteger usuarioCreacion) {
+		this.usuarioCreacion = usuarioCreacion;
+	}
+
+	public BigInteger getUsuarioActualizacion() {
+		return usuarioActualizacion;
+	}
+
+	public void setUsuarioActualizacion(BigInteger usuarioActualizacion) {
+		this.usuarioActualizacion = usuarioActualizacion;
 	}
 
 }

@@ -28,6 +28,8 @@ public class ClienteService {
 	public Cliente guardarCliente(Cliente cliente) {
 		if (cliente.getFechaCreacion() == null) {
 			cliente.setFechaCreacion(new Date());
+			cliente.setUsuarioCreacion(cliente.getUsuarioActualizacion());
+			cliente.setUsuarioActualizacion(null);
 		} else {
 			cliente.setFechaActualizacion(new Date());
 		}

@@ -29,6 +29,8 @@ public class GarantiaService {
 	public Garantia guardarGarantia(Garantia garantia) {
 		if (garantia.getFechaCreacion() == null) {
 			garantia.setFechaCreacion(new Date());
+			garantia.setUsuarioCreacion(garantia.getUsuarioActualizacion());
+			garantia.setUsuarioActualizacion(null);
 		} else {
 			garantia.setFechaActualizacion(new Date());
 		}

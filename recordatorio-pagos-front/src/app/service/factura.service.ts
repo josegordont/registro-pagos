@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Factura } from '../model/factura';
 import { Garantia } from '../model/garantia';
+import { UsuarioService } from './usuario.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,8 @@ export class FacturaService {
   path: string = environment.apiEndpoint.concat('factura');
 
   constructor(
-    private httpClient: HttpClient
+    private httpClient: HttpClient,
+    private usuarioService: UsuarioService
   ) { }
 
   obtenerFacturas() {
@@ -56,6 +58,7 @@ export class FacturaService {
   }
 
   guardarFactura(factura: Factura) {
+    factura.usuarioActualizacion = this.usuarioService.obtenerInformacionUsuario().idUsuario;
     let header = new HttpHeaders().
       set('Content-Type', 'application/json');
     return this.httpClient.post(`${this.path}`, factura, {

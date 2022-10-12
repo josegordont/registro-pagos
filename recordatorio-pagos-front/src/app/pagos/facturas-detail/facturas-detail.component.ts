@@ -33,7 +33,7 @@ export class FacturasDetailComponent implements OnInit {
   fechaActual: Date = new Date();
   diasVencimiento: number;
   fechaSugerida: Date = new Date();
-  fechaFinIgualSugerida: boolean;
+  fechaFinIgualSugerida: boolean = true;
   existeNumeroFactura: boolean;
   montoOriginal: number;
   retencionOriginal: number;

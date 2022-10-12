@@ -5,6 +5,7 @@ export class Proyecto {
     public nombre: string;
     public descripcion: string;
     public estado: string;
+    public usuarioActualizacion?: number;
 
     constructor() {
         this.estado = "abierto";

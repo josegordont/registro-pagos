@@ -10,4 +10,5 @@ export class Garantia {
     public fechaCierre: Date;
     public estado: string;
     public total: number;
+    public usuarioActualizacion?: number;
 }

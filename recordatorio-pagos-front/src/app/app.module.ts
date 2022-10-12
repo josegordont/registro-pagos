@@ -2,7 +2,7 @@ import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { registerLocaleData } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import localeESEC from '@angular/common/locales/es-EC';
 import { FormsModule } from '@angular/forms';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
@@ -14,6 +14,7 @@ import { AppComponent } from './app.component';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { DATE_FORMAT_LOCAL } from './directives/constants';
 import { PagosModule } from './pagos/pagos.module';
+import { AuthInterceptor } from './_helpers/auth-interceptor';
 
 registerLocaleData(localeESEC);
 
@@ -41,6 +42,11 @@ registerLocaleData(localeESEC);
       provide: LOCALE_ID,
       useValue: DATE_FORMAT_LOCAL
     },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

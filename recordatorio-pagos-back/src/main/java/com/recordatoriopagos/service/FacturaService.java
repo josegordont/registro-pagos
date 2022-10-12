@@ -40,6 +40,8 @@ public class FacturaService {
 	public Factura guardarFactura(Factura factura) {
 		if (factura.getFechaCreacion() == null) {
 			factura.setFechaCreacion(new Date());
+			factura.setUsuarioCreacion(factura.getUsuarioActualizacion());
+			factura.setUsuarioActualizacion(null);
 		} else {
 			factura.setFechaActualizacion(new Date());
 		}

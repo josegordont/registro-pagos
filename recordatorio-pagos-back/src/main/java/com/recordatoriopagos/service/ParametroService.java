@@ -1,5 +1,6 @@
 package com.recordatoriopagos.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,13 @@ public class ParametroService {
 
 	public void guardarParametro(List<Parametro> parametros) {
 		for (Parametro parametro : parametros) {
+			if (parametro.getFechaCreacion() == null) {
+				parametro.setFechaCreacion(new Date());
+				parametro.setUsuarioCreacion(parametro.getUsuarioActualizacion());
+				parametro.setUsuarioActualizacion(null);
+			} else {
+				parametro.setFechaActualizacion(new Date());
+			}
 			parametroRepository.save(parametro);
 		}
 	}
