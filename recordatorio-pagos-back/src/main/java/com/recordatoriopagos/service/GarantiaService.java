@@ -8,6 +8,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.recordatoriopagos.dto.DatosGarantiaDto;
 import com.recordatoriopagos.dto.GarantiaDto;
 import com.recordatoriopagos.models.Garantia;
 import com.recordatoriopagos.repositories.GarantiaRepository;
@@ -60,6 +61,10 @@ public class GarantiaService {
 
 	public void cerrarVariasGarantias(List<BigInteger> idGarantias) {
 		garantiaRepository.cerrarVariasGarantias(idGarantias);
+	}
+
+	public DatosGarantiaDto obtenerDatosGarantia(BigInteger idProyecto) {
+		return garantiaRepository.obtenerDatosGarantia(idProyecto);
 	}
 
 }

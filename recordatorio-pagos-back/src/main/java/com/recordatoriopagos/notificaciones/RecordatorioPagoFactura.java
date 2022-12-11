@@ -143,7 +143,7 @@ public class RecordatorioPagoFactura {
 		bodyNotificacion.append("<td></td><td></td></tr>");
 		bodyNotificacion.append("</tfoot></table><br>");
 		bodyNotificacion.append(
-				"Para ingresar presione aquí: <a href=\"http://192.168.100.174:4200/login\">Recordatorio Pagos</a><br><br>");
+				"Para ingresar presione aquí: <a href=\"http://69.61.102.89/login\">Recordatorio Pagos</a><br><br>");
 		bodyNotificacion.append("Saludos,<br><br>");
 		bodyNotificacion.append("Recordatorio Pagos.</p>");
 		bodyNotificacion.append("</body></html>");
@@ -204,7 +204,7 @@ public class RecordatorioPagoFactura {
 		bodyNotificacion.append("</tbody>");
 		bodyNotificacion.append("</table><br>");
 		bodyNotificacion.append(
-				"Para ingresar presione aquí: <a href=\"http://192.168.100.174:4200/login\">Recordatorio Pagos</a><br><br>");
+				"Para ingresar presione aquí: <a href=\"http://69.61.102.89/login\">Recordatorio Pagos</a><br><br>");
 		bodyNotificacion.append("Saludos,<br><br>");
 		bodyNotificacion.append("Recordatorio Pagos.</p>");
 		bodyNotificacion.append("</body></html>");

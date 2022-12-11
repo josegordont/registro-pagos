@@ -66,4 +66,12 @@ export class GarantiaService {
     });
   }
 
+  obtenerDatosGarantia(idProyecto: number): Observable<any> {
+    let header = new HttpHeaders().
+      set('Content-Type', 'application/json');
+    return this.httpClient.get<any>(`${this.path}/obtenerDatosGarantia/${idProyecto}`, {
+      headers: header
+    });
+  }
+
 }

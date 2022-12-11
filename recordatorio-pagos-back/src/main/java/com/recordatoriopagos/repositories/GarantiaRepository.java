@@ -11,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.recordatoriopagos.dto.DatosGarantiaDto;
 import com.recordatoriopagos.dto.GarantiaDto;
 import com.recordatoriopagos.dto.NotificacionGarantiaDto;
 import com.recordatoriopagos.models.Garantia;
@@ -27,6 +28,9 @@ public interface GarantiaRepository extends CrudRepository<Garantia, BigInteger>
 	@Query(nativeQuery = true, value = "SELECT c.idCliente, c.nombre nombreCliente, p.idProyecto , p.nombre nombreProyecto, g.idGarantia, g.total, g.fechaDevolucion , g.fechaCierre , g.estado, TIMESTAMPDIFF(DAY, CURDATE(), g.fechaDevolucion) diasFechaFin FROM garantia g LEFT JOIN proyecto p ON g.idProyecto = p.idProyecto LEFT JOIN cliente c ON p.idCliente = c.idCliente LEFT JOIN parametro p2 ON p2.clave = :claveParametro WHERE g.estado = 'abierto' AND IFNULL(g.numNotificaciones, 0) = :numNotificacion AND TIMESTAMPDIFF(DAY, CURDATE(), g.fechaDevolucion) <= CONVERT(p2.valor, UNSIGNED INTEGER) ORDER BY g.fechaDevolucion")
 	public abstract List<NotificacionGarantiaDto> obtenerGarantiasNotificacion(String claveParametro,
 			Integer numNotificacion);
+
+	@Query(nativeQuery = true, value = "SELECT COUNT(numeroFactura) numeroFacturas, SUM(retencion) totalRetencion FROM factura f WHERE idProyecto = :idProyecto")
+	public abstract DatosGarantiaDto obtenerDatosGarantia(BigInteger idProyecto);
 
 	@Transactional
 	@Modifying

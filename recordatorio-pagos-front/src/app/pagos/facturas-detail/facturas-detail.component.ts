@@ -99,7 +99,7 @@ export class FacturasDetailComponent implements OnInit {
               'body': `¿Estás seguro que deseas guardar la factura?. Se ha actualizado el monto ó la retención.`
             }
           });
-      
+
           dialogRef.afterClosed().subscribe(result => {
             if (result) {
               this.guardar();
@@ -108,6 +108,8 @@ export class FacturasDetailComponent implements OnInit {
         } else {
           this.guardar();
         }
+      } else {
+        this.guardar();
       }
     }
   }

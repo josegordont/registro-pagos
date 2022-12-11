@@ -7,12 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.recordatoriopagos.dto.DatosGarantiaDto;
 import com.recordatoriopagos.dto.GarantiaDto;
 import com.recordatoriopagos.models.Garantia;
 import com.recordatoriopagos.service.GarantiaService;
@@ -76,6 +78,11 @@ public class GarantiaController {
 			String error = "Se produjo un error en el sistema";
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
 		}
+	}
+
+	@GetMapping(path = "/obtenerDatosGarantia/{idProyecto}")
+	public DatosGarantiaDto obtenerDatosGarantia(@PathVariable("idProyecto") BigInteger idProyecto) {
+		return garantiaService.obtenerDatosGarantia(idProyecto);
 	}
 
 }

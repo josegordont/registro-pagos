@@ -12,10 +12,12 @@ import { Garantia } from 'src/app/model/garantia';
 import { ClienteService } from 'src/app/service/cliente.service';
 import { FacturaService } from 'src/app/service/factura.service';
 import { GarantiaService } from 'src/app/service/garantia.service';
+import { ParametroService } from 'src/app/service/parametro.service';
 import { ProyectoService } from 'src/app/service/proyecto.service';
 import { SnackBarService } from 'src/app/service/snack-bar.service';
 import { UsuarioService } from 'src/app/service/usuario.service';
 import { DialogAnimationComponent } from '../dialog-animation/dialog-animation.component';
+import { DialogCerrarComponent } from '../dialog-cerrar/dialog-cerrar.component';
 
 export const MY_FORMATS = {
   parse: {
@@ -70,6 +72,7 @@ export class GarantiasComponent implements OnInit {
   // seleccion
   selectionFacturas = new SelectionModel<Factura>(true, []);
   selectionGarantias = new SelectionModel<Garantia>(true, []);
+  diasGarantia: number;
 
   constructor(
     private snackBarService: SnackBarService,
@@ -78,7 +81,8 @@ export class GarantiasComponent implements OnInit {
     private garantiaService: GarantiaService,
     private facturaService: FacturaService,
     private usuarioService: UsuarioService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private parametroService: ParametroService
   ) { }
 
   ngOnInit(): void {
@@ -88,6 +92,15 @@ export class GarantiasComponent implements OnInit {
     this.obtenerGarantiasHistoricas();
     this.obtenerFacturas();
     this.obtenerFacturasHistoricas();
+    this.obtenerParametros();
+  }
+
+  obtenerParametros() {
+    this.parametroService.obtenerParametros().subscribe(data => {
+      this.diasGarantia = Number(data.find((parametro: any) => parametro.clave === 'fact_garantia').valor) + 1;
+    }, err => {
+      this.snackBarService.success('Se ha producido un error en el sistema!');
+    });
   }
 
   obtenerGarantias() {
@@ -455,9 +468,63 @@ export class GarantiasComponent implements OnInit {
     });
   }
 
-  cambioRadioButton(){
+  cambioRadioButton() {
     this.selectionFacturas.clear();
     this.selectionGarantias.clear();
+  }
+
+  cerrarProyecto(factura: Factura) {
+    let fechaSugerida = new Date();
+    fechaSugerida.setDate(new Date(factura.fechaFin).getDate() + this.diasGarantia);
+
+    this.garantiaService.obtenerDatosGarantia(factura.idProyecto).subscribe(data => {
+      const dialogRef = this.dialog.open(DialogCerrarComponent, {
+        width: '500px',
+        data: {
+          body: `¿Estás seguro que deseas cerrar el proyecto <b> ${factura.nombreProyecto}</b>?`,
+          fechaFinSugerida: fechaSugerida,
+          totalGarantia: data.totalRetencion,
+          numeroFacturas: data.numeroFacturas
+        }
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          let garantia: Garantia = new Garantia();
+          garantia.fechaDevolucion = result;
+          garantia.idProyecto = factura.idProyecto;
+          garantia.total = data.totalRetencion;
+          this.cerrar(garantia);
+        }
+      });
+    }, err => {
+      this.snackBarService.success('Se ha producido un error en el sistema!');
+    });
+  }
+
+  cerrar(garantia: Garantia) {
+    this.proyectosService.cerrarProyecto(garantia).subscribe(data => {
+      this.snackBarService.success('Proyecto cerrado!');
+      this.obtenerFacturas();
+      this.obtenerGarantias();
+    }, err => {
+      this.snackBarService.success('Se ha producido un error en el sistema!');
+    });
+  }
+
+  getTotal(columna: string): number {
+    let total = 0;
+    for (let j = 0; j < this.facturasFiltro.length; j++) {
+      total += this.facturasFiltro[j][columna];
+    }
+    return total;
+  }
+
+  getTotalHis(columna: string): number {
+    let total = 0;
+    for (let j = 0; j < this.facturasHisFiltro.length; j++) {
+      total += this.facturasHisFiltro[j][columna];
+    }
+    return total;
   }
 
 }
