@@ -278,7 +278,7 @@
                                     *ngFor="let garantia of garantiasHisFiltro | slice: (page-1) * pageSize : page * pageSize">
                                     <td>{{ garantia.nombreCliente }}</td>
                                     <td>{{ garantia.nombreProyecto }} </td>
-                                    <td class="text-end">{{ garantia.toatl | number:'.2-2' }} </td>
+                                    <td class="text-end">{{ garantia.total | number:'.2-2' }} </td>
                                     <td>{{ garantia.fechaDevolucion | date:'dd/MMM/yyyy' }}</td>
                                     <td>{{ garantia.fechaCierre | date:'dd/MMM/yyyy' }}</td>
                                     <td class="btn-table">
@@ -322,6 +322,16 @@
                                         <button *ngIf="rol === 'admin'" class="btn btn-success" type="button"
                                             (click)="abrirFacturaConfirmacion(factura)">
                                             Abrir
+                                        </button>&nbsp;
+                                        <button
+                                            *ngIf="factura.rankFechaFin === 1 && factura.estadoProyecto === 'abierto'"
+                                            class="btn btn-primary" type="button" (click)="cerrarProyecto(factura)">
+                                            Cerrar Proyecto
+                                        </button>&nbsp;
+                                        <button class="btn btn-primary" type="button"
+                                            *ngIf="factura.estadoProyecto === 'cerrado' && factura.rankFechaFin === 1 && rol === 'admin'"
+                                            (click)="abrirProyectoConfirmacion(factura)">
+                                            Abrir Proyecto
                                         </button>
                                     </td>
                                 </tr>
