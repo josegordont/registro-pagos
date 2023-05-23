@@ -1,12 +1,14 @@
 # Compile   : docker build -t pepetj321/recordatorio-pagos:v1.0.0 .
 # Run       : docker run --name pagosjar -d -p 8080:8080 -it pepetj321/recordatorio-pagos:v1.0.0
 FROM openjdk:8
-ENV TZ=America/Guayaquil
+# ENV TZ=America/Guayaquil
+ENV TZ=Europe/Madrid
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN mkdir /opt/pagos
 RUN mkdir /data
 RUN mkdir /data/pagos
 ADD target/recordatorio-pagos-0.0.1-SNAPSHOT.jar /opt/pagos/
+# ADD keystore.p12 /
 ADD application-prod.properties /opt/pagos/
 EXPOSE 8080
 CMD ["java", "-jar", "/opt/pagos/recordatorio-pagos-0.0.1-SNAPSHOT.jar", "--spring.config.location=file:/opt/pagos/application-prod.properties"]

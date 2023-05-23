@@ -27,7 +27,8 @@ public class RecordatorioPagoFactura {
 
 	private static final Logger logger = LogManager.getLogger(RecordatorioPagoFactura.class);
 
-	private static final String TIME_ZONE = "America/Guayaquil";
+//	private static final String TIME_ZONE = "America/Guayaquil";
+	private static final String TIME_ZONE = "Europe/Madrid";
 
 	@Autowired
 	ParametroRepository parametroRepository;
@@ -143,7 +144,7 @@ public class RecordatorioPagoFactura {
 		bodyNotificacion.append("<td></td><td></td></tr>");
 		bodyNotificacion.append("</tfoot></table><br>");
 		bodyNotificacion.append(
-				"Para ingresar presione aquí: <a href=\"http://69.61.102.89/login\">Recordatorio Pagos</a><br><br>");
+				"Para ingresar presione aquí: <a href=\"http://h2992490.stratoserver.net:801/login\">Recordatorio Pagos</a><br><br>");
 		bodyNotificacion.append("Saludos,<br><br>");
 		bodyNotificacion.append("Recordatorio Pagos.</p>");
 		bodyNotificacion.append("</body></html>");
@@ -204,7 +205,7 @@ public class RecordatorioPagoFactura {
 		bodyNotificacion.append("</tbody>");
 		bodyNotificacion.append("</table><br>");
 		bodyNotificacion.append(
-				"Para ingresar presione aquí: <a href=\"http://69.61.102.89/login\">Recordatorio Pagos</a><br><br>");
+				"Para ingresar presione aquí: <a href=\"http://h2992490.stratoserver.net:801/login\">Recordatorio Pagos</a><br><br>");
 		bodyNotificacion.append("Saludos,<br><br>");
 		bodyNotificacion.append("Recordatorio Pagos.</p>");
 		bodyNotificacion.append("</body></html>");

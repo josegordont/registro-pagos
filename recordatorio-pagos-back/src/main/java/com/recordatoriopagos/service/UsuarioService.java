@@ -44,7 +44,7 @@ public class UsuarioService {
 					"Para acceder a la aplicaci&oacute;n recordatorio de pagos por favor utiliza la siguiente contrase&ntilde;a:<br>");
 			bodyMail.append("<b>{{contrasena}}</b><br>");
 			bodyMail.append(
-					"Para ingresar presione aquí: <a href=\"http://69.61.102.89/login\">Recordatorio Pagos</a><br><br>");
+					"Para ingresar presione aquí: <a href=\"http://h2992490.stratoserver.net:801/login\">Recordatorio Pagos</a><br><br>");
 			bodyMail.append("Saludos,<br>Recordatorio Pagos.</p>");
 			String contrasena = Contrasena.alphaNumericString();
 			usuario.setFechaCreacion(new Date());
