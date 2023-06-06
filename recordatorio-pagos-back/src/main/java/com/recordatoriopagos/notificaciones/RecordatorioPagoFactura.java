@@ -39,7 +39,7 @@ public class RecordatorioPagoFactura {
 	@Autowired
 	GarantiaRepository garantiaRepository;
 
-	@Scheduled(cron = "0 30 8 * * *", zone = TIME_ZONE)
+//	@Scheduled(cron = "0 30 8 * * *", zone = TIME_ZONE)
 	public void notificacionFactura1() {
 		try {
 			envioNotificacionFacturas("dias_notificacion1", 0, "3");
@@ -57,7 +57,7 @@ public class RecordatorioPagoFactura {
 		}
 	}
 
-	@Scheduled(cron = "0 40 8 * * *", zone = TIME_ZONE)
+//	@Scheduled(cron = "0 40 8 * * *", zone = TIME_ZONE)
 	public void notificacionFactura2() {
 		try {
 			envioNotificacionFacturas("dias_notificacion2", 1, "1");

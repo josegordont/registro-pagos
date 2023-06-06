@@ -319,7 +319,7 @@
                                     <td>{{ factura.fechaFin | date:'dd/MMM/yyyy' }}</td>
                                     <td>{{ factura.fechaCierre | date:'dd/MMM/yyyy' }}</td>
                                     <td class="btn-table">
-                                        <button *ngIf="rol === 'admin'" class="btn btn-success" type="button"
+                                        <button class="btn btn-success" type="button"
                                             (click)="abrirFacturaConfirmacion(factura)">
                                             Abrir
                                         </button>&nbsp;

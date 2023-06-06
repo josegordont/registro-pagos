@@ -91,7 +91,7 @@
                             <span class="input-group-text"  style="color: blue">(+) €</span>
                             <input type="text" class="form-control" [(ngModel)]="factura.iva" #inputIva="ngModel"
                                 id="inputIva" name="inputIva" mask="separator.2" placeholder="0 000,00" required
-                                style="text-align: right;">
+                                style="text-align: right;" (blur)="cambioInpuestos()">
                         </div>
                         <div *ngIf="inputIva.invalid && (facturaForm.submitted || inputIva.dirty || inputIva.touched)"
                             class="alert alert-danger">
@@ -134,7 +134,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="mb-3 row">
+                <div class="mb-3 row" [hidden]="true">
                     <label for="inputFechaFin" class="col-sm-2 col-form-label">Fecha Fin</label>
                     <div class="col-md-5">
                         <div class="input-group mb-2">
