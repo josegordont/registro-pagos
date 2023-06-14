@@ -47,7 +47,10 @@ export const MY_FORMATS = {
 })
 export class GarantiasComponent implements OnInit {
 
-  page: number = 1;
+  pageFacturas: number = 1;
+  pageGarantias: number = 1;
+  pageFacturasHist: number = 1;
+  pageGarantiasHist: number = 1;
   pageSize: number = 10;
   clientes: any = [];
   proyectos: any = [];

@@ -95,7 +95,7 @@
                             </thead>
                             <tbody>
                                 <tr
-                                    *ngFor="let garantia of garantiasFiltro | slice: (page-1) * pageSize : page * pageSize">
+                                    *ngFor="let garantia of garantiasFiltro | slice: (pageGarantias-1) * pageSize : pageGarantias * pageSize">
                                     <td>
                                         <mat-checkbox (click)="$event.stopPropagation()"
                                             (change)="$event ? selectionGarantias.toggle(garantia) : null;"
@@ -117,7 +117,7 @@
                             </tbody>
                         </table>
                         <ngb-pagination class="d-flex justify-content-end" [collectionSize]="garantiasFiltro.length"
-                            [(page)]="page" [boundaryLinks]="true" [pageSize]="pageSize">
+                            [(page)]="pageGarantias" [boundaryLinks]="true" [pageSize]="pageSize">
                             <ng-template ngbPaginationPrevious>Atras</ng-template>
                             <ng-template ngbPaginationNext>Sig.</ng-template>
                         </ngb-pagination>
@@ -146,7 +146,7 @@
                             </thead>
                             <tbody>
                                 <tr
-                                    *ngFor="let factura of facturasFiltro | slice: (page-1) * pageSize : page * pageSize">
+                                    *ngFor="let factura of facturasFiltro | slice: (pageFacturas-1) * pageSize : pageFacturas * pageSize">
                                     <td>
                                         <mat-checkbox (click)="$event.stopPropagation()"
                                             (change)="$event ? selectionFacturas.toggle(factura) : null;"
@@ -186,7 +186,7 @@
                             </tfoot>
                         </table>
                         <ngb-pagination class="d-flex justify-content-end" [collectionSize]="facturasFiltro.length"
-                            [(page)]="page" [boundaryLinks]="true" [pageSize]="pageSize">
+                            [(page)]="pageFacturas" [boundaryLinks]="true" [pageSize]="pageSize">
                             <ng-template ngbPaginationPrevious>Atras</ng-template>
                             <ng-template ngbPaginationNext>Sig.</ng-template>
                         </ngb-pagination>
@@ -275,7 +275,7 @@
                             </thead>
                             <tbody>
                                 <tr
-                                    *ngFor="let garantia of garantiasHisFiltro | slice: (page-1) * pageSize : page * pageSize">
+                                    *ngFor="let garantia of garantiasHisFiltro | slice: (pageGarantiasHist-1) * pageSize : pageGarantiasHist * pageSize">
                                     <td>{{ garantia.nombreCliente }}</td>
                                     <td>{{ garantia.nombreProyecto }} </td>
                                     <td class="text-end">{{ garantia.total | number:'.2-2' }} </td>
@@ -291,7 +291,7 @@
                             </tbody>
                         </table>
                         <ngb-pagination class="d-flex justify-content-end" [collectionSize]="garantiasHisFiltro.length"
-                            [(page)]="page" [boundaryLinks]="true" [pageSize]="pageSize">
+                            [(page)]="pageGarantiasHist" [boundaryLinks]="true" [pageSize]="pageSize">
                             <ng-template ngbPaginationPrevious>Atras</ng-template>
                             <ng-template ngbPaginationNext>Sig.</ng-template>
                         </ngb-pagination>
@@ -311,7 +311,7 @@
                             </thead>
                             <tbody>
                                 <tr
-                                    *ngFor="let factura of facturasHisFiltro | slice: (page-1) * pageSize : page * pageSize">
+                                    *ngFor="let factura of facturasHisFiltro | slice: (pageFacturasHist-1) * pageSize : pageFacturasHist * pageSize">
                                     <td>{{ factura.nombreCliente }}</td>
                                     <td>{{ factura.nombreProyecto }} </td>
                                     <td>{{ factura.numeroFactura }} </td>
@@ -345,7 +345,7 @@
                             </tfoot>
                         </table>
                         <ngb-pagination class="d-flex justify-content-end" [collectionSize]="facturasHisFiltro.length"
-                            [(page)]="page" [boundaryLinks]="true" [pageSize]="pageSize">
+                            [(page)]="pageFacturasHist" [boundaryLinks]="true" [pageSize]="pageSize">
                             <ng-template ngbPaginationPrevious>Atras</ng-template>
                             <ng-template ngbPaginationNext>Sig.</ng-template>
                         </ngb-pagination>
